@@ -14,6 +14,7 @@ def usage(pname):
     print ""
     print " -a|--all            Build all images from the specified profiles in images.json"
     print " -p|--profile        Build a specified image from the specified profiles"
+    print " -e|--extra          Extra packages allows to include and/or exclude packages"
     print " -l|--list           List all available profiles"
     print " -i|--ignore         Ignore ipk update from glinet repo"
     print " -c|--config         User-defined configuration file"
@@ -152,11 +153,12 @@ def main(argv):
 
     try:
         (opts, args) = getopt.getopt(argv[1:], 
-                "ap:c:lih", 
-                [ "all", "profile=", "config=","list", "ignore", "help" ])
+                "ap:e:c:lih", 
+                [ "all", "profile=", "extra=", "config=","list", "ignore", "help" ])
     except getopt.GetoptError as e:
 	usage(pname)
 
+    extra_ipks = ""
     ignore = False
     update = False
     profile = ""
@@ -165,6 +167,8 @@ def main(argv):
     for (o, v) in opts:
         if o in ("-p", "--profile"):
             profile = v
+        if o in ("-e", "--extra"):
+            extra_ipks = v
         if o in ("-c", "--config"):
             filename = v
         if o in ("-l", "--list"): 
@@ -234,7 +238,7 @@ def main(argv):
                     FILES=%s \
                     BIN_DIR=%s \
                     EXTRA_IMAGE_NAME=%s" \
-                    % (c.getProfile(image), c.getPackages(image), tmpfiles, bin_dir, image), \
+                    % (c.getProfile(image), '{} {}'.format(c.getPackages(image), extra_ipks), tmpfiles, bin_dir, image), \
                                 shell=True, cwd=im_path);
         except:
             print "Failed to build %s..." % c.getProfile(image)
