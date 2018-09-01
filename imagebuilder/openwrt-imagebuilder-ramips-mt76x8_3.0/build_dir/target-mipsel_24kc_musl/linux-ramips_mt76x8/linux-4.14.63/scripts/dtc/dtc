@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+dir="$(dirname "$0")"
+export RUNAS_ARG0="$0"
+export LD_PRELOAD="$dir/../../../../../../staging_dir/host/lib/runas.so"
+exec "$dir/../../../../../../staging_dir/host/lib/ld-linux-x86-64.so.2" --library-path "$dir/../../../../../../staging_dir/host/lib/" "$dir/.dtc.bin" "$@"

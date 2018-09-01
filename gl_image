@@ -1,0 +1,241 @@
+#!/usr/bin/env python
+
+import re
+import os
+import sys
+import json
+import getopt
+from subprocess import call
+from subprocess import check_call
+from subprocess import check_output
+
+def usage(pname):
+    print "GL.iNet imagebuilder tool"
+    print "Usage: " + pname + " [OPTIONS]"
+    print ""
+    print " -a|--all            Build all images from the specified profiles in images.json"
+    print " -p|--profile        Build a specified image from the specified profiles"
+    print " -l|--list           List all available profiles"
+    print " -i|--ignore         Ignore ipk update from glinet repo"
+    print " -h|--help           Show this text message"
+
+    sys.exit(1)
+
+class Config:
+    def __init__(self, filename):
+        self.filename = filename
+        self.parse()
+
+    def parse(self):
+        self.data = {}
+
+        try:
+            with open(self.filename) as fd:
+                self.data = json.load(fd)
+                fd.close()
+        except:
+            print "Oops! Failed to parse %s" % self.filename
+            sys.exit(1) 
+
+    def dump(self):
+        print "%s" % self.data
+
+    def imagesList(self):
+        if self.data.has_key("profiles"):
+            return self.data["profiles"].keys()
+
+    def getUrl(self):
+        if self.data.has_key("url"):
+            return self.data["url"]
+
+    def getProfile(self, name):
+        if self.data["profiles"][name].has_key("profile"):
+            return self.data["profiles"][name]["profile"]
+
+    def getVersion(self, name):
+        if self.data["profiles"][name].has_key("version"):
+            return self.data["profiles"][name]["version"]
+
+    def getImagebuilderPath(self, name):
+        if self.data["profiles"][name].has_key("imagebuilder"):
+            return self.data["profiles"][name]["imagebuilder"]
+    
+    def getPackages(self, name):
+        packages = ""
+
+        if self.data["profiles"][name].has_key("packages"):
+            # Convert string to list
+            pkg_list = self.data["profiles"][name]["packages"].split (' ')
+            for pkg in pkg_list:
+                pkg_var = re.search(r'^\$(.*)', pkg)
+                if pkg_var and self.data.has_key("packages"):
+                    for (k, v) in self.data["packages"].items():
+                        if k == pkg_var.group(1):
+                            packages = packages + " " + v
+                elif pkg_var is None:
+                    packages = packages + " " + pkg
+
+        return packages
+
+
+    def getFilesPath(self, name):
+        if self.data["profiles"][name].has_key("files"):
+            return self.data["profiles"][name]["files"]
+
+def show_images(images = []):
+    if images:
+        print "User-defined Profiles:\n"
+        for img in images:
+            print "  %s" % img
+    else:
+        print "No any profile found"
+
+def update_glinet():
+    url = "https://github.com/gl-inet/glinet.git"
+    dir_name = "glinet"
+
+    if not os.path.isdir(dir_name):
+        check_call("git clone --depth=1 %s %s" % (url, dir_name), shell=True)
+    else:
+        check_call("git pull", shell=True, cwd=dir_name)
+
+makeIndex = re.sub('[\t\n ]+', ' ', """
+        makeIndex() {
+            local topdir=$PWD;
+            local script_dir=${topdir}/scripts;
+            export PATH="${topdir}/staging_dir/host/bin:${PATH}";
+            if [ -z $PKG_PATH ] || [ ! -d $PKG_PATH ]; then 
+                return 1;
+            fi;
+
+            (
+                cd $PKG_PATH && [ -n "$(find . -maxdepth 1 -name "*.ipk")" ] || exit 1;
+
+                [ ! -f "Packages" -o ! -f "Packages.gz" -o "`find . -cnewer Packages.gz`" ] || exit 1;
+
+                echo "Generating package index..."; 
+
+	        ${script_dir}/ipkg-make-index.sh . 2>&1 > Packages.manifest;
+	        grep -avE '^(Maintainer|LicenseFiles|Source|Require)' Packages.manifest > Packages && \
+                        gzip -9nc Packages > Packages.gz;
+
+                return 1;
+            )
+        }
+""").strip()
+
+def create_files(im_path, board, url, ver):
+    if not im_path or not board or not url or not ver:
+        return 1
+
+    tmpfiles = im_path + "/tmp/files"
+
+    # Remove directory
+    check_output("rm -fr %s" % tmpfiles, shell=True)
+
+    # Create directory
+    check_output("mkdir -p %s" % (tmpfiles+ "/etc"), shell=True)
+    check_output("mkdir -p %s" % (tmpfiles+ "/etc/opkg"), shell=True)
+
+    # glversion
+    check_output("echo %s > %s" % (ver, tmpfiles+ "/etc/glversion"), shell=True)
+
+    # distfeeds
+    try:
+        check_output("cat repositories.conf | grep -E \"^src/gz\" > %s" % \
+                (tmpfiles + "/etc/opkg/distfeeds.conf"), shell=True, cwd=im_path)
+    except:
+        pass
+
+def main(argv):
+    pname = argv[0]
+
+    c = Config("images.json")
+    images = c.imagesList()
+
+    try:
+        (opts, args) = getopt.getopt(argv[1:], 
+                "ap:lih", 
+                [ "all", "profile=", "list", "ignore", "help" ])
+    except getopt.GetoptError as e:
+	usage(pname)
+
+    ignore = False
+    update = False
+    profile = ""
+
+    for (o, v) in opts:
+        if o in ("-p", "--profile"):
+            profile = v
+        if o in ("-l", "--list"): 
+            show_images(images)
+            return 0
+        if o in ("-u", "--update"):
+            # Internal variable, use to update repository.conf file
+            update = True
+        if o in ("-i", "--ignore"):
+            ignore = True
+        if o in ("-h", "--help"):
+            usage(pname)
+
+    if not ignore:
+        update_glinet()
+
+    if profile:
+        # Clear imagelist
+        images = []
+        images.append(profile)
+
+    for image in images:
+        # Search imagebuilder path
+        im_path = os.getcwd() + "/imagebuilder/" + c.getImagebuilderPath(image)
+        if not os.path.isdir(im_path):
+            continue
+
+        # Make index for glinet
+        os.environ["TOPDIR"] = im_path
+        try:
+            board = check_output("make -f rules.mk val.BOARD V=s 2>/dev/null", shell=True, cwd=im_path).strip()
+        except:
+            print "Makefile missing..."
+            continue
+
+        env = {"PKG_PATH": "%s/glinet/%s" % (os.getcwd(), board)}
+        try:
+            check_call(['/bin/sh', '-c', '%s; if makeIndex; then makeIndex; fi'
+                % makeIndex], env=env, cwd=im_path)
+        except:
+            print "Failed to update glinet..."
+            continue
+
+        # Create link
+        glinet_dir = "%s/glinet" % os.getcwd()
+        check_call("ln -sf %s glinet 2>/dev/null" % glinet_dir, shell=True, cwd=im_path)
+
+        # Prepare files
+        if c.getFilesPath(image):
+            tmpfiles = c.getFilesPath(image)
+        else:
+            tmpfiles = im_path + "/tmp/files"
+            create_files(im_path, board, c.getUrl(), c.getVersion(image))
+
+        # Output directory
+        bin_dir = os.getcwd() + "/bin"
+        if not os.path.isdir(bin_dir):
+            os.makedirs(bin_dir)
+
+        try:
+            check_call("make image \
+                    PROFILE=%s \
+                    PACKAGES=\"%s\" \
+                    FILES=%s \
+                    BIN_DIR=%s \
+                    EXTRA_IMAGE_NAME=%s" \
+                    % (c.getProfile(image), c.getPackages(image), tmpfiles, bin_dir, image), \
+                                shell=True, cwd=im_path);
+        except:
+            print "Failed to build %s..." % c.getProfile(image)
+            continue
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
