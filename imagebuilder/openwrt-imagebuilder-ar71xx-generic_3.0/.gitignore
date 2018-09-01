@@ -9,7 +9,7 @@ packages/Packages
 packages/Packages.gz
 /.profiles.mk
 /tmp
-/staging_dir
+/staging_dir/host/.prereq-build
 /files
 /pack_up
 /glinet
