@@ -17,7 +17,7 @@ sudo apt-get install subversion build-essential git-core libncurses5-dev zlib1g-
 
 To build all the router firmwares, run **./gl_image -a**. To build a specific device, run **./gl_image -p <device_name>**. You can list all the devices names by running **./gl_image -l**.
 
-Run **gl_image -h** to see more details and advanced options.
+Run **./gl_image -h** to see more details and advanced options.
 
 ## Complete Usage Example
 
