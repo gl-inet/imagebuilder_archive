@@ -161,6 +161,7 @@ def main(argv):
     extra_ipks = ""
     ignore = False
     update = False
+    show = False
     profile = ""
     filename = "images.json"
 
@@ -172,8 +173,7 @@ def main(argv):
         if o in ("-c", "--config"):
             filename = v
         if o in ("-l", "--list"): 
-            show_images(images)
-            return 0
+            show = True
         if o in ("-u", "--update"):
             # Internal variable, use to update repository.conf file
             update = True
@@ -184,6 +184,10 @@ def main(argv):
 
     c = Config(filename)
     images = c.imagesList()
+
+    if show:
+        show_images(images)
+        return 0
 
     if not ignore:
         update_glinet()
