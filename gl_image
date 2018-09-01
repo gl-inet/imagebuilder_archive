@@ -220,9 +220,9 @@ def main(argv):
             create_files(im_path, board, c.getUrl(), c.getVersion(image))
 
         # Output directory
-        bin_dir = os.getcwd() + "/bin"
+        bin_dir = os.getcwd() + "/bin/" + image
         if not os.path.isdir(bin_dir):
-            os.makedirs(bin_dir)
+            check_output("mkdir -p %s" % bin_dir, shell=True)
 
         try:
             check_call("make image \
