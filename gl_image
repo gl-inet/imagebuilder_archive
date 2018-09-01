@@ -5,7 +5,6 @@ import os
 import sys
 import json
 import getopt
-from subprocess import call
 from subprocess import check_call
 from subprocess import check_output
 
@@ -17,6 +16,7 @@ def usage(pname):
     print " -p|--profile        Build a specified image from the specified profiles"
     print " -l|--list           List all available profiles"
     print " -i|--ignore         Ignore ipk update from glinet repo"
+    print " -c|--config         User-defined configuration file"
     print " -h|--help           Show this text message"
 
     sys.exit(1)
@@ -150,23 +150,23 @@ def create_files(im_path, board, url, ver):
 def main(argv):
     pname = argv[0]
 
-    c = Config("images.json")
-    images = c.imagesList()
-
     try:
         (opts, args) = getopt.getopt(argv[1:], 
-                "ap:lih", 
-                [ "all", "profile=", "list", "ignore", "help" ])
+                "ap:c:lih", 
+                [ "all", "profile=", "config=","list", "ignore", "help" ])
     except getopt.GetoptError as e:
 	usage(pname)
 
     ignore = False
     update = False
     profile = ""
+    filename = "images.json"
 
     for (o, v) in opts:
         if o in ("-p", "--profile"):
             profile = v
+        if o in ("-c", "--config"):
+            filename = v
         if o in ("-l", "--list"): 
             show_images(images)
             return 0
@@ -177,6 +177,9 @@ def main(argv):
             ignore = True
         if o in ("-h", "--help"):
             usage(pname)
+
+    c = Config(filename)
+    images = c.imagesList()
 
     if not ignore:
         update_glinet()
