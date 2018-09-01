@@ -9,6 +9,7 @@ packages/Packages
 packages/Packages.gz
 /.profiles.mk
 /tmp
+/staging_dir
 /files
 /pack_up
 /glinet
