@@ -45,10 +45,6 @@ class Config:
         if self.data.has_key("profiles"):
             return self.data["profiles"].keys()
 
-    def getUrl(self):
-        if self.data.has_key("url"):
-            return self.data["url"]
-
     def getProfile(self, name):
         if self.data["profiles"][name].has_key("profile"):
             return self.data["profiles"][name]["profile"]
@@ -126,8 +122,8 @@ makeIndex = re.sub('[\t\n ]+', ' ', """
         }
 """).strip()
 
-def create_files(im_path, board, url, ver):
-    if not im_path or not board or not url or not ver:
+def create_files(im_path, board, ver):
+    if not im_path or not board or not ver:
         return 1
 
     tmpfiles = im_path + "/tmp/files"
@@ -235,7 +231,7 @@ def main(argv):
             tmpfiles = c.getFilesPath(image)
         else:
             tmpfiles = im_path + "/tmp/files"
-            create_files(im_path, board, c.getUrl(), c.getVersion(image))
+            create_files(im_path, board, c.getVersion(image))
 
         # Output directory
         bin_dir = os.getcwd() + "/bin/" + c.getProfile(image).lower()

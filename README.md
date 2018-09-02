@@ -38,7 +38,6 @@ For other firmwares, the compiled firmware file is in **/bin/<device_name>/**.
 All the GL device package configuration is done with the images.json file. The following options control the configuration:
 
 
-    url: The url to the package server
     packages: The default packages included in all firmwares
     profiles: Configuration for each firmware
     {
@@ -55,7 +54,6 @@ Assuming that we have a helloworld.ipk(created by sdk), and we want to create a 
 
 ```bash
 {
-	"url": "http://download.gl-inet.com/releases",
 	"profiles": {
 		"helloworld": {
 			"profile": "gl-ar150",

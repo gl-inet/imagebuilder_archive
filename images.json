@@ -1,5 +1,4 @@
 {
-	"url": "http://download.gl-inet.com/releases",
 	"packages": {
 		"basic": "-wpad-mini iwinfo kmod-nls-cp437 kmod-nls-iso8859-1 kmod-nls-utf8 kmod-nf-nathelper-extra luci luci-mod-rpc ethtool fcgi lighttpd lighttpd-mod-access lighttpd-mod-cgi lighttpd-mod-expire lighttpd-mod-fastcgi lighttpd-mod-proxy unzip wpa-cli wpad bridge wget ip-full unbound mwan3",
 		"vpn": "openvpn-openssl wireguard gl-wg gl-wg-server gl-vpn gl-vpn-server",
