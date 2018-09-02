@@ -17,6 +17,7 @@ def usage(pname):
     print " -e|--extra          Extra packages allows to include and/or exclude packages"
     print " -l|--list           List all available profiles"
     print " -i|--ignore         Ignore ipk update from glinet repo"
+    print " -n|--clean          Remove images and temporary build files before build"
     print " -c|--config         User-defined configuration file"
     print " -h|--help           Show this text message"
 
@@ -150,13 +151,14 @@ def main(argv):
 
     try:
         (opts, args) = getopt.getopt(argv[1:], 
-                "ap:e:c:lih", 
-                [ "all", "profile=", "extra=", "config=","list", "ignore", "help" ])
+                "ap:e:c:lnih", 
+                [ "all", "profile=", "extra=", "config=", "list", "clean", "ignore", "help" ])
     except getopt.GetoptError as e:
 	usage(pname)
 
     extra_ipks = ""
     ignore = False
+    clean = False
     update = False
     show = False
     profile = ""
@@ -180,6 +182,8 @@ def main(argv):
             update = True
         if o in ("-i", "--ignore"):
             ignore = True
+        if o in ("-n", "--clean"):
+            clean = True
         if o in ("-h", "--help"):
             usage(pname)
 
@@ -195,6 +199,11 @@ def main(argv):
         images.append(profile)
     else:
         usage(pname)
+
+    if clean:
+        for image in images:
+            im_path = os.getcwd() + "/imagebuilder/" + c.getImagebuilderPath(image)
+            check_call("make clean", shell=True, cwd=im_path)
 
     if not ignore:
         update_glinet()
