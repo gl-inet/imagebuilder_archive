@@ -25,7 +25,7 @@ To make an image for the **Mifi** with some extra packages included:
 
 ```bash
 $ git clone https://github.com/gl-inet/imagebuilder.git
-cd imagebuilder
+$ cd imagebuilder
 $ ./gl_image -p mifi -e "openssh-sftp-server nano htop"
 ```
 
