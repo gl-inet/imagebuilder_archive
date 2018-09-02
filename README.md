@@ -9,8 +9,8 @@ Imagebuilder for GL.iNet devices. The Image Builder (previously called the Image
 - Download the build environment:
 
 ```bash
-$ sudo apt-get update
-$ sudo apt-get install subversion build-essential git-core libncurses5-dev zlib1g-dev gawk flex quilt libssl-dev xsltproc libxml-parser-perl mercurial bzr ecj cvs unzip git wget
+sudo apt-get update
+sudo apt-get install subversion build-essential git-core libncurses5-dev zlib1g-dev gawk flex quilt libssl-dev xsltproc libxml-parser-perl mercurial bzr ecj cvs unzip git wget
 ```
 
 ## Usage
@@ -24,9 +24,9 @@ Run **./gl_image -h** to see more details and advanced options.
 To make an image for the **Mifi** with some extra packages included:
 
 ```bash
-$ git clone https://github.com/gl-inet/imagebuilder.git
-$ cd imagebuilder
-$ ./gl_image -p mifi -e "openssh-sftp-server nano htop"
+git clone https://github.com/gl-inet/imagebuilder.git
+cd imagebuilder
+./gl_image -p mifi -e "openssh-sftp-server nano htop"
 ```
 
 The compiled image becomes: *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
@@ -50,20 +50,22 @@ All the GL device package configuration is done with the images.json file. The f
         }
     }
 
-Assuming that we have a helloworld.ipk(created by sdk), and we want to create a clean customized firmware for our ar150 device. Here is an example for user-defined configuration file, *myfirst.json* is filename:
+Assuming that we have a helloworld.ipk (created by the sdk), and we want to create a clean customized firmware for our AR150 device that includes this ipk, here is an example of a user-defined configuration file. We name it *myfirst.json*:
 
 ```bash
 {
-	"profiles": {
-		"helloworld": {
-			"profile": "gl-ar150",
-			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
-			"packages": "luci helloworld"
-		}
-	}
+    "profiles":
+    {
+        "helloworld":
+	{
+            "profile": "gl-ar150",
+            "version": "3.001",
+            "imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
+            "packages": "luci helloworld"
+        }
+    }
 }
 ```
 
-Placing the helloworld.ipk to *glinet/ar71xx* folder, and running **./gl_image -c myfirst.json -p helloworld**
+Placing the helloworld.ipk to *glinet/ar71xx* folder, and running **./gl_image -c myfirst.json -p helloworld** will build our clean image with our helloworld.ipk included.
 
