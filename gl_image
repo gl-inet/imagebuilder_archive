@@ -246,10 +246,12 @@ def main(argv):
                     PROFILE=%s \
                     PACKAGES=\"%s\" \
                     FILES=%s \
-                    BIN_DIR=%s \
                     EXTRA_IMAGE_NAME=%s" \
-                    % (c.getProfile(image), '{} {}'.format(c.getPackages(image), extra_ipks), tmpfiles, bin_dir, image), \
+                    % (c.getProfile(image), '{} {}'.format(c.getPackages(image), extra_ipks), tmpfiles, image), \
                                 shell=True, cwd=im_path);
+
+            check_call("find bin/ -name \"*%s*sysupgrade*\" | xargs cp -t %s/" \
+                    % (image, bin_dir), shell=True, cwd=im_path)
         except:
             print "Failed to build %s..." % c.getProfile(image)
             continue
