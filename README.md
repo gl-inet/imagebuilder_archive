@@ -60,7 +60,7 @@ Assuming that we have a helloworld.ipk (created by the sdk), and we want to crea
 	{
             "profile": "gl-ar150",
             "version": "3.001",
-            "imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
+            "imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
             "packages": "luci helloworld"
         }
     }
