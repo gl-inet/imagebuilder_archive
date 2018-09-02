@@ -112,15 +112,16 @@ makeIndex = re.sub('[\t\n ]+', ' ', """
             (
                 cd $PKG_PATH && [ -n "$(find . -maxdepth 1 -name "*.ipk")" ] || exit 1;
 
-                [ ! -f "Packages" -o ! -f "Packages.gz" -o "`find . -cnewer Packages.gz`" ] || exit 1;
+                if [ ! -f "Packages" ] || [ ! -f "Packages.gz" ] || [ "`find . -cnewer Packages.gz`" ]; then
 
-                echo "Generating package index..."; 
+                    echo "Generating package index..."; 
 
-	        ${script_dir}/ipkg-make-index.sh . 2>&1 > Packages.manifest;
-	        grep -avE '^(Maintainer|LicenseFiles|Source|Require)' Packages.manifest > Packages && \
-                        gzip -9nc Packages > Packages.gz;
+	            ${script_dir}/ipkg-make-index.sh . 2>&1 > Packages.manifest;
+	            grep -avE '^(Maintainer|LicenseFiles|Source|Require)' Packages.manifest > Packages && \
+                            gzip -9nc Packages > Packages.gz;
 
-                return 1;
+                    return 1;
+                fi;
             )
         }
 """).strip()
