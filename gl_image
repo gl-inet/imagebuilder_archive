@@ -237,7 +237,7 @@ def main(argv):
             create_files(im_path, board, c.getUrl(), c.getVersion(image))
 
         # Output directory
-        bin_dir = os.getcwd() + "/bin/" + image
+        bin_dir = os.getcwd() + "/bin/" + c.getProfile(image).lower()
         if not os.path.isdir(bin_dir):
             check_output("mkdir -p %s" % bin_dir, shell=True)
 
