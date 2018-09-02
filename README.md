@@ -31,7 +31,7 @@ $ ./gl_image -p mifi -e "openssh-sftp-server nano htop"
 
 The compiled image becomes: *bin/mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
 
-For other firmwares, the compiled firmware file is in **/bin/<device_name>/**, ending with **-squashfs-sysupgrade.bin**
+For other firmwares, the compiled firmware file is in **/bin/<device_name>/**.
 
 ## Advanced Configuration
 
