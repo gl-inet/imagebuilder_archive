@@ -51,7 +51,7 @@ All the GL device package configuration is done with the images.json file. The f
         }
     }
 
-Assuming that we have a helloworld.ipk(created by sdk), and we want to create a clean customized firmware for our ar150 device. Here is an example for user-defined configuration file, myfirst.json is filename:
+Assuming that we have a helloworld.ipk(created by sdk), and we want to create a clean customized firmware for our ar150 device. Here is an example for user-defined configuration file, *myfirst.json* is filename:
 
 ```bash
 {
@@ -67,5 +67,5 @@ Assuming that we have a helloworld.ipk(created by sdk), and we want to create a 
 }
 ```
 
-Placing the helloworld.ipk to *glinet/ar71xx* folder, and running *./gl_image -c myfirst.json -p helloworld*
+Placing the helloworld.ipk to *glinet/ar71xx* folder, and running **./gl_image -c myfirst.json -p helloworld**
 
