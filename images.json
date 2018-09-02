@@ -11,67 +11,67 @@
 		"ar150": {
 			"profile": "gl-ar150",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"mifi": {
 			"profile": "gl-mifi",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"ar300m16": {
 			"profile": "gl-300m",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"ar750": {
 			"profile": "gl-ar750",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"usb150": {
 			"profile": "gl-usb150",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-generic_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $glinet -mwan3 -gl-modem"
 		},
 		"ar300m": {
 			"profile": "GL-AR300M",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-nand_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"ar750s": {
 			"profile": "GL-AR750S",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ar71xx-nand_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$basic $vpn $storage $usb $glinet kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"mt300a": {
 			"profile": "gl-mt300a",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ramisp-mt7620_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet kmod-mmc kmod-sdhci kmod-sdhci-mt7620"
 		},
 		"mt300n": {
 			"profile": "gl-mt300n",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ramisp-mt7620_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ramisp-mt76x8_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt76x8",
 			"packages": "-kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet"
 		},
 		"mt300n-v3": {
 			"profile": "gl-mt300n-v3",
 			"version": "3.001",
-			"imagebuilder": "openwrt-imagebuilder-ramisp-mt76x8_3.0",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt76x8",
 			"packages": "$basic $glinet -kmod-mt76 kmod-mt7628 uci2dat kmod-macvlan -gl-ui gl-ui-vixmini -gl-modem -mwan3 -unbound"
 		}
 	}
