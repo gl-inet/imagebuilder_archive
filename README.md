@@ -67,5 +67,5 @@ Assuming that we have a helloworld.ipk (created by the sdk), and we want to crea
 }
 ```
 
-Placing the helloworld.ipk in *glinet/ar71xx* folder, and running **./gl_image -c myfirst.json -p helloworld** will build our clean image with our helloworld.ipk included.
+Placing the helloworld.ipk in the *glinet/ar71xx* folder, and running **./gl_image -c myfirst.json -p helloworld** will build our clean image with our helloworld.ipk included.
 
