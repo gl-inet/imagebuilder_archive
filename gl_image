@@ -195,7 +195,6 @@ def main(argv):
     if build_all:
         images = c.imagesList()
     elif profile:
-        # Clear imagelist
         images.append(profile)
     else:
         usage(pname)
@@ -227,6 +226,7 @@ def main(argv):
 
         # Create link
         glinet_dir = "%s/glinet" % os.getcwd()
+        check_call("rm -fr glinet 2>/dev/null", shell=True, cwd=im_path)
         check_call("ln -sf %s glinet 2>/dev/null" % glinet_dir, shell=True, cwd=im_path)
 
         # Prepare files
