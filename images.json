@@ -53,25 +53,25 @@
 		"mt300a": {
 			"profile": "gl-mt300a",
 			"version": "3.001",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt7620",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet kmod-mmc kmod-sdhci kmod-sdhci-mt7620"
 		},
 		"mt300n": {
 			"profile": "gl-mt300n",
 			"version": "3.001",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt7620",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
 			"version": "3.001",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt76x8",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "-kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet"
 		},
 		"mt300n-v3": {
 			"profile": "gl-mt300n-v3",
 			"version": "3.001",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ramisp-mt76x8",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "$basic $glinet -kmod-mt76 kmod-mt7628 uci2dat kmod-macvlan -gl-ui gl-ui-vixmini -gl-modem -mwan3 -unbound"
 		}
 	}
