@@ -47,6 +47,7 @@ All the GL device package configuration is done with the images.json file. The f
             version: Firmware version. Generates a version file called /etc/glversion and overrides /etc/opk/distfeeds.conf with the version number
             imagebuilder: Image builder folder
             packages: Packages in the firmware. Variables include the default packages. Add the package name to include. "-" appended to the package name excludes the package, eg: "-mwan3"
+            files: Files folder, it allows customized configuration files to be included in images built with Image Generator, all files from the folder will be copied into device's rootfs("/").
         }
     }
 
