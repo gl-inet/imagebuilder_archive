@@ -123,6 +123,10 @@ makeIndex = re.sub('[\t\n ]+', ' ', """
         }
 """).strip()
 
+def merge_files(src_dir, dst_dir):
+    if os.path.isdir(src_dir) and os.path.isdir(dst_dir):
+        check_output("cp -fr %s/* %s/" % (src_dir.rstrip('/'), dst_dir.rstrip('/')), shell=True)
+
 def create_files(im_path, board, ver):
     if not im_path or not board or not ver:
         return 1
@@ -143,16 +147,22 @@ def create_files(im_path, board, ver):
     try:
         check_output("cat repositories.conf | grep -E \"^src/gz\" > %s" % \
                 (tmpfiles + "/etc/opkg/distfeeds.conf"), shell=True, cwd=im_path)
+        check_output("cat repositories.conf | \
+                grep -E \"gli_pub\" | \
+                sed \"s/gli_pub/glinet/g\" >> %s" % \
+                (tmpfiles + "/etc/opkg/distfeeds.conf"), shell=True, cwd=im_path)
     except:
         pass
+
+    return tmpfiles
 
 def main(argv):
     pname = argv[0]
 
     try:
         (opts, args) = getopt.getopt(argv[1:], 
-                "ap:e:c:lnih", 
-                [ "all", "profile=", "extra=", "config=", "list", "clean", "ignore", "help" ])
+                "ap:e:f:c:lnih", 
+                [ "all", "profile=", "extra=", "files=", "config=", "list", "clean", "ignore", "help" ])
     except getopt.GetoptError as e:
 	usage(pname)
 
@@ -163,6 +173,7 @@ def main(argv):
     show = False
     profile = ""
     filename = "images.json"
+    files = ""
     build_all = False
     images = []
 
@@ -173,6 +184,8 @@ def main(argv):
             profile = v
         if o in ("-e", "--extra"):
             extra_ipks = v
+        if o in ("-f", "--files"):
+            files = v
         if o in ("-c", "--config"):
             filename = v
         if o in ("-l", "--list"): 
@@ -236,11 +249,12 @@ def main(argv):
         check_call("ln -sf %s glinet 2>/dev/null" % glinet_dir, shell=True, cwd=im_path)
 
         # Prepare files
+        tmpfiles = create_files(im_path, board, c.getVersion(image))
         if c.getFilesPath(image):
-            tmpfiles = c.getFilesPath(image)
-        else:
-            tmpfiles = im_path + "/tmp/files"
-            create_files(im_path, board, c.getVersion(image))
+            merge_files(c.getFilesPath(image), tmpfiles)
+
+        if files:
+            merge_files(files, tmpfiles)
 
         # Output directory
         bin_dir = os.getcwd() + "/bin/" + c.getProfile(image).lower()
