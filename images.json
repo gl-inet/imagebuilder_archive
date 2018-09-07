@@ -20,7 +20,7 @@
 			"packages": "$basic $vpn $storage $usb $glinet"
 		},
 		"ar300m16": {
-			"profile": "gl-300m",
+			"profile": "gl-ar300m",
 			"version": "3.001",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet"
@@ -45,7 +45,7 @@
 		},
 		"ar750s": {
 			"profile": "GL-AR750S",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$basic $vpn $storage $usb $glinet kmod-fast-classifier kmod-shortcut-fe"
 		},
