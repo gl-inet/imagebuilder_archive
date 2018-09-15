@@ -217,8 +217,8 @@ ramips_board_detect() {
 	*"GL-MT300N-V2")
 		name="gl-mt300n-v2"
 		;;
-	*"GL-MT300N-V3")
-		name="gl-mt300n-v3"
+	*"VIXMINI")
+		name="vixmini"
 		;;
 	*"HC5661")
 		name="hc5661"

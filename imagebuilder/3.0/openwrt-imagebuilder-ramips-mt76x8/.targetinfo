@@ -8896,11 +8896,11 @@ Target-Profile-Description:
 Build firmware images for GL-iNet GL-MT300N-V2
 @@
 
-Target-Profile: DEVICE_gl-mt300n-v3
-Target-Profile-Name: GL-iNet GL-MT300N-V3
+Target-Profile: DEVICE_vixmini
+Target-Profile-Name: GL-iNet VIXMINI
 Target-Profile-Packages:  
 Target-Profile-Description:
-Build firmware images for GL-iNet GL-MT300N-V3
+Build firmware images for GL-iNet VIXMINI
 @@
 
 Target-Profile: DEVICE_hc5661a
