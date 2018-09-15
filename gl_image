@@ -5,6 +5,8 @@ import os
 import sys
 import json
 import getopt
+import time
+import commands
 from subprocess import check_call
 from subprocess import check_output
 
@@ -20,8 +22,23 @@ def usage(pname):
     print " -n|--clean          Remove images and temporary build files before build"
     print " -c|--config         User-defined configuration file"
     print " -h|--help           Show this text message"
+    print " -o|--output         Get firmware info, firmware name/md5sum/size"
 
     sys.exit(1)
+
+def GetFirmwareInfo(f):
+    files = os.listdir(f)
+    for file in files:
+        t_path = os.path.join(f, file)
+        if not os.path.isdir(t_path):
+            # print('file: %s'%t_path)
+            return_code, output = commands.getstatusoutput("md5sum %s" % (t_path))
+            print(os.path.basename(t_path) + " " + output.split(" ")[0] + " " + str(os.path.getsize(t_path)))
+        else:
+            # print('folder: %s'%t_path)
+            print('\n')
+            print(os.path.basename(t_path))
+            GetFirmwareInfo(t_path)
 
 class Config:
     def __init__(self, filename):
@@ -46,6 +63,10 @@ class Config:
         if self.data.has_key("profiles"):
             return self.data["profiles"].keys()
 
+    def getProduct(self, name):
+        if self.data["profiles"][name].has_key("product"):
+            return self.data["profiles"][name]["product"]
+    
     def getProfile(self, name):
         if self.data["profiles"][name].has_key("profile"):
             return self.data["profiles"][name]["profile"]
@@ -127,7 +148,7 @@ def merge_files(src_dir, dst_dir):
     if os.path.isdir(src_dir) and os.path.isdir(dst_dir):
         check_output("cp -fr %s/* %s/" % (src_dir.rstrip('/'), dst_dir.rstrip('/')), shell=True)
 
-def create_files(im_path, board, ver):
+def create_files(im_path, board, ver, dev_type):
     if not im_path or not board or not ver:
         return 1
 
@@ -143,6 +164,9 @@ def create_files(im_path, board, ver):
     # glversion
     check_output("echo %s > %s" % (ver, tmpfiles+ "/etc/glversion"), shell=True)
 
+    if dev_type:
+        check_output("echo %s > %s" % (dev_type, tmpfiles+ "/etc/glproduct"), shell=True)
+
     # distfeeds
     try:
         check_output("cat repositories.conf | grep -E \"^src/gz\" > %s" % \
@@ -157,12 +181,16 @@ def create_files(im_path, board, ver):
     return tmpfiles
 
 def main(argv):
+    if os.path.exists("files") == False:
+        os.system('mkdir -p files/etc')
+    os.system('date "+%k:%M:%S %F" > files/etc/version.date')
+
     pname = argv[0]
 
     try:
         (opts, args) = getopt.getopt(argv[1:], 
-                "ap:e:f:c:lnih", 
-                [ "all", "profile=", "extra=", "files=", "config=", "list", "clean", "ignore", "help" ])
+                "ap:e:f:c:lniho", 
+                [ "all", "profile=", "extra=", "files=", "config=", "list", "clean", "ignore", "help" ,"output"])
     except getopt.GetoptError as e:
 	usage(pname)
 
@@ -199,6 +227,9 @@ def main(argv):
             clean = True
         if o in ("-h", "--help"):
             usage(pname)
+        if o in ("-o", "--output"):
+            GetFirmwareInfo(os.getcwd() + "/bin")
+            sys.exit(1)
 
     c = Config(filename)
 
@@ -249,7 +280,7 @@ def main(argv):
         check_call("ln -sf %s glinet 2>/dev/null" % glinet_dir, shell=True, cwd=im_path)
 
         # Prepare files
-        tmpfiles = create_files(im_path, board, c.getVersion(image))
+        tmpfiles = create_files(im_path, board, c.getVersion(image), c.getProduct(image))
         if c.getFilesPath(image):
             merge_files(c.getFilesPath(image), tmpfiles)
 
@@ -268,10 +299,32 @@ def main(argv):
                     FILES=%s \
                     EXTRA_IMAGE_NAME=%s" \
                     % (c.getProfile(image), '{} {}'.format(c.getPackages(image), extra_ipks), tmpfiles, image), \
-                                shell=True, cwd=im_path);
+                                shell=True, cwd=im_path)
 
             check_call("find bin/ -name \"*%s*sysupgrade*\" | xargs cp -t %s/" \
                     % (image, bin_dir), shell=True, cwd=im_path)
+            # print(c.getProfile(image))
+            # print(image)
+            return_code, output = commands.getstatusoutput("find bin/ -name \"*%s*sysupgrade*\"" % (image.lower()))
+            if filename != "images.json":
+                fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
+            else:
+                fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+            if output != "":
+                os.system('mv ' + output + ' ' + fw_name)
+
+            if c.getImagebuilderPath(image).find('nand') != -1: 
+                check_call("find bin/ -name \"*%s*ubi-factory*\" | xargs cp -t %s/" \
+                        % (image, bin_dir), shell=True, cwd=im_path)
+                
+                return_code, output = commands.getstatusoutput("find bin/ -name \"*%s*ubi-factory*\"" % (c.getProfile(image).lower()))
+                if filename != "images.json":
+                    fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
+                else:
+                    fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                if output != "":
+                    os.system('mv ' + output + ' ' + fw_name)
+
         except:
             print "Failed to build %s..." % c.getProfile(image)
             continue
