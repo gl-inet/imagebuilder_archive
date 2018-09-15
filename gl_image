@@ -183,7 +183,7 @@ def create_files(im_path, board, ver, dev_type):
 def main(argv):
     if os.path.exists("files") == False:
         os.system('mkdir -p files/etc')
-    os.system('date > files/etc/tester_version')
+    os.system('date > files/etc/version.date')
 
     pname = argv[0]
 
