@@ -1,6 +1,6 @@
 {
 	"packages": {
-		"basic": "-wpad-mini iwinfo kmod-nls-cp437 kmod-nls-iso8859-1 kmod-nls-utf8 kmod-nf-nathelper-extra luci luci-mod-rpc ethtool fcgi lighttpd lighttpd-mod-access lighttpd-mod-cgi lighttpd-mod-expire lighttpd-mod-fastcgi lighttpd-mod-proxy unzip wpa-cli wpad bridge wget ip-full unbound mwan3",
+		"basic": "-wpad-mini tar iwinfo kmod-nls-cp437 kmod-nls-iso8859-1 kmod-nls-utf8 kmod-nf-nathelper-extra luci luci-mod-rpc ethtool fcgi lighttpd lighttpd-mod-access lighttpd-mod-cgi lighttpd-mod-expire lighttpd-mod-fastcgi lighttpd-mod-proxy unzip wpa-cli wpad bridge wget ip-full unbound mwan3",
 		"vpn": "openvpn-openssl wireguard gl-wg gl-wg-server gl-vpn gl-vpn-server",
 		"storage": "blkid kmod-fs-ext4 kmod-fs-ntfs kmod-fs-vfat kmod-fs-exfat ntfs-3g samba36-server",
 		"usb": "kmod-usb-storage kmod-usb-uhci kmod-usb2 kmod-usb-ohci kmod-usb-acm kmod-usb-net-huawei-cdc-ncm comgt chat comgt-directip comgt-ncm kmod-usb-serial kmod-usb-serial-cp210x kmod-usb-serial-option kmod-usb-serial-wwan kmod-usb-serial-sierrawireless kmod-rt2800-usb usb-modeswitch kmod-mppe kmod-usb-net kmod-usb-net-cdc-ether kmod-usb-net-rndis kmod-usb-net-qmi-wwan uqmi kmod-usb-net-ipheth libusbmuxd libimobiledevice usbmuxd",
@@ -10,7 +10,7 @@
 	"profiles": {
 		"ar150": {
 			"profile": "gl-ar150",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap",
@@ -18,7 +18,7 @@
 		},
 		"mifi": {
 			"profile": "gl-mifi",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap",
@@ -26,7 +26,7 @@
 		},
 		"ar300m16": {
 			"profile": "gl-ar300m",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap",
@@ -34,7 +34,7 @@
 		},
 		"ar750": {
 			"profile": "gl-ar750",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap",
@@ -42,7 +42,7 @@
 		},
 		"usb150": {
 			"profile": "gl-usb150",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $glinet -mwan3 -gl-modem $cloud",
 			"product": "ap",
@@ -50,7 +50,7 @@
 		},
 		"ar300m": {
 			"profile": "GL-AR300M",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap",
@@ -66,7 +66,7 @@
 		},
 		"mt300a": {
 			"profile": "gl-mt300a",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet kmod-mmc kmod-sdhci kmod-sdhci-mt7620 $cloud",
 			"product": "ap",
@@ -74,7 +74,7 @@
 		},
 		"mt300n": {
 			"profile": "gl-mt300n",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap",
@@ -82,7 +82,7 @@
 		},
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "-kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap",
@@ -90,7 +90,7 @@
 		},
 		"mt300n-v3": {
 			"profile": "gl-mt300n-v3",
-			"version": "3.001",
+			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "$basic $glinet -kmod-mt76 kmod-mt7628 uci2dat kmod-macvlan -gl-ui gl-ui-vixmini -gl-modem -gl-mem-monitor -wpad -wpa-cli -mwan3 -unbound $cloud",
 			"product": "ap",
