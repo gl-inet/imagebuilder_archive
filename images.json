@@ -71,7 +71,7 @@
 			"profile": "vixmini",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
-			"packages": "$basic $glinet -kmod-mt76 kmod-mt7628 uci2dat kmod-macvlan -gl-ui gl-ui-vixmini -gl-modem -gl-mem-monitor -wpad -wpa-cli -mwan3 -unbound"
+			"packages": "$basic $glinet -kmod-mt76 kmod-mt7628 uci2dat kmod-macvlan -gl-ui gl-ui-vixmini -gl-modem -gl-mem-monitor -wpad -wpa-cli -mwan3 -unbound -tar"
 		}
 	}
 }
