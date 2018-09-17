@@ -164,8 +164,15 @@ def create_files(im_path, board, ver, dev_type):
     # glversion
     check_output("echo %s > %s" % (ver, tmpfiles+ "/etc/glversion"), shell=True)
 
+    # glproduct
     if dev_type:
         check_output("echo %s > %s" % (dev_type, tmpfiles+ "/etc/glproduct"), shell=True)
+
+    # version.date
+    # return_code, output = commands.getstatusoutput("date \"+%F %k:%M:%S\"")
+    # check_output("echo %s > %s" % (output, tmpfiles+ "/etc/version.date"), shell=True)
+    compile_time = time.strftime('%Y-%m-%d %k:%M:%S',time.localtime(time.time()))
+    check_output("echo %s > %s" % (compile_time, tmpfiles+ "/etc/version.date"), shell=True)
 
     # distfeeds
     try:
@@ -181,10 +188,9 @@ def create_files(im_path, board, ver, dev_type):
     return tmpfiles
 
 def main(argv):
-    if os.path.exists("files") == False:
-        os.system('mkdir -p files/etc')
-    os.system('date "+%k:%M:%S %F" > files/etc/version.date')
-
+    # if os.path.exists("files") == False:
+    #     os.system('mkdir -p files/etc')
+    # os.system('date "+%k:%M:%S %F" > files/etc/version.date')
     pname = argv[0]
 
     try:

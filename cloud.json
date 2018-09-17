@@ -13,88 +13,77 @@
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"mifi": {
 			"profile": "gl-mifi",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"ar300m16": {
 			"profile": "gl-ar300m",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"ar750": {
 			"profile": "gl-ar750",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"usb150": {
 			"profile": "gl-usb150",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$basic $vpn $glinet -mwan3 -gl-modem $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"ar300m": {
 			"profile": "GL-AR300M",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"ar750s": {
 			"profile": "GL-AR750S",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$basic $vpn $storage $usb $glinet kmod-fast-classifier kmod-shortcut-fe $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"mt300a": {
 			"profile": "gl-mt300a",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet kmod-mmc kmod-sdhci kmod-sdhci-mt7620 $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"mt300n": {
 			"profile": "gl-mt300n",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "-kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		},
 		"mt300n-v3": {
 			"profile": "gl-mt300n-v3",
 			"version": "3.003",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "$basic $glinet -kmod-mt76 kmod-mt7628 uci2dat kmod-macvlan -gl-ui gl-ui-vixmini -gl-modem -gl-mem-monitor -wpad -wpa-cli -mwan3 -unbound $cloud",
-			"product": "ap",
-			"files": "files"
+			"product": "ap"
 		}
 	}
 }
