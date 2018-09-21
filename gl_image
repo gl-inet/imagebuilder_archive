@@ -311,7 +311,7 @@ def main(argv):
                     % (image, bin_dir), shell=True, cwd=im_path)
             # print(c.getProfile(image))
             # print(image)
-            return_code, output = commands.getstatusoutput("find bin/ -name \"*%s*sysupgrade*\"" % (image.lower()))
+            return_code, output = commands.getstatusoutput("find bin/ -name \"*-%s-*sysupgrade*\"" % (image.lower()))
             if filename != "images.json":
                 fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
             else:
