@@ -522,11 +522,11 @@ Target-Profile-Description:
 Build firmware images for GL.iNet GL-AR750
 @@
 
-Target-Profile: DEVICE_gl-x750-4g
-Target-Profile-Name: GL.iNet GL-X750-4G
+Target-Profile: DEVICE_gl-x750
+Target-Profile-Name: GL.iNet GL-X750
 Target-Profile-Packages: kmod-ath10k ath10k-firmware-qca9887 kmod-usb-core kmod-usb2 kmod-usb-storage 
 Target-Profile-Description:
-Build firmware images for GL.iNet GL-X750-4G
+Build firmware images for GL.iNet GL-X750
 @@
 
 Target-Profile: DEVICE_gl-ar750s
