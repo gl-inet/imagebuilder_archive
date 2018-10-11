@@ -10,55 +10,55 @@
 	"profiles": {
 		"ar150": {
 			"profile": "gl-ar150",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$clean"
 		},
 		"mifi": {
 			"profile": "gl-mifi",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$clean"
 		},
 		"ar300m16": {
 			"profile": "gl-ar300m",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$clean"
 		},
 		"ar750": {
 			"profile": "gl-ar750",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$clean"
 		},
         "x750": {
             "profile": "gl-x750",
-            "version": "3.004",
+            "version": "3.0",
             "imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$clean"
         },
 		"usb150": {
 			"profile": "gl-usb150",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "$clean"
 		},
 		"ar300m": {
 			"profile": "GL-AR300M",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$clean"
 		},
 		"ar750s": {
 			"profile": "GL-AR750S",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "$clean"
 		},
 		"mt300a": {
 			"profile": "gl-mt300a",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$clean"
 		},
@@ -70,13 +70,13 @@
 		},
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "$clean"
 		},
 		"vixmini": {
 			"profile": "vixmini",
-			"version": "3.004",
+			"version": "3.0",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "$clean"
 		}
