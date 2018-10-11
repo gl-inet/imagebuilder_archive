@@ -47,7 +47,7 @@
 			"profile": "GL-AR300M",
 			"version": "3.004",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
-			"packages": "$basic $vpn $storage $usb $glinet"
+			"packages": "$basic $vpn $storage $usb $glinet ath10k-firmware-qca9887 kmod-ath10k"
 		},
 		"ar750s": {
 			"profile": "GL-AR750S",

@@ -36,6 +36,13 @@
 			"packages": "$basic $vpn $storage $usb $glinet $cloud",
 			"product": "ap"
 		},
+        "x750": {
+            "profile": "gl-x750",
+            "version": "3.004",
+            "imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
+            "packages": "$basic $vpn $storage $usb $glinet $cloud",
+			"product": "ap"
+        },
 		"usb150": {
 			"profile": "gl-usb150",
 			"version": "3.001",
