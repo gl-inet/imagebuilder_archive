@@ -196,7 +196,7 @@ def main(argv):
     try:
         (opts, args) = getopt.getopt(argv[1:], 
                 "ap:e:f:c:lniho", 
-                [ "all", "profile=", "extra=", "files=", "config=", "list", "clean", "ignore", "help" ,"output"])
+                [ "all", "profile=", "extra=", "files=", "config=", "list", "clean", "ignore", "help" ,"output", "offline"])
     except getopt.GetoptError as e:
 	usage(pname)
 
@@ -205,6 +205,7 @@ def main(argv):
     clean = False
     update = False
     show = False
+    offline = False
     profile = ""
     filename = "images.json"
     files = ""
@@ -231,6 +232,8 @@ def main(argv):
             ignore = True
         if o in ("-n", "--clean"):
             clean = True
+        if o in ("--offline"):
+            offline = True
         if o in ("-h", "--help"):
             usage(pname)
         if o in ("-o", "--output"):
@@ -276,10 +279,18 @@ def main(argv):
         try:
             check_call(['/bin/sh', '-c', '%s; if makeIndex; then makeIndex; fi'
                 % makeIndex], env=env, cwd=im_path)
-            check_call("cp %s/glinet/%s/Packages %s/dl/glinet" % (os.getcwd(), board, im_path), shell=True)
         except:
             print "Failed to update glinet..."
             continue
+
+        # Offline mode
+        if offline:
+            check_call("cp %s/glinet/%s/Packages dl/glinet" % (os.getcwd(), board), shell=True, cwd=im_path)
+            check_call("cp packages/Packages dl/imagebuilder", shell=True, cwd=im_path)
+            check_call("sed -i 's/$(OPKG) update/# $(OPKG) update/g' Makefile", shell=True, cwd=im_path)
+            check_call("sed -i 's/#.*\s*$(OPKG) update/# $(OPKG) update/g' Makefile", shell=True, cwd=im_path)
+        else:
+            check_call("sed -i 's/#\s.*$(OPKG) update/$(OPKG) update/g' Makefile", shell=True, cwd=im_path)
 
         # Create link
         glinet_dir = "%s/glinet" % os.getcwd()
