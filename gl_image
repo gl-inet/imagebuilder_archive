@@ -276,6 +276,7 @@ def main(argv):
         try:
             check_call(['/bin/sh', '-c', '%s; if makeIndex; then makeIndex; fi'
                 % makeIndex], env=env, cwd=im_path)
+            check_call("cp %s/glinet/%s/Packages %s/dl/glinet" % (os.getcwd(), board, im_path), shell=True)
         except:
             print "Failed to update glinet..."
             continue
