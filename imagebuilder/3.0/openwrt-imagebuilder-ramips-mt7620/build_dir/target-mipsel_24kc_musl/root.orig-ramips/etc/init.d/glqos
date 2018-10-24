@@ -1,0 +1,138 @@
+#!/bin/sh  /etc/rc.common
+
+. /lib/functions.sh
+. /lib/functions/network.sh
+
+START=60
+USE_PROCD=1
+
+#delete rule
+delete_rule()
+{
+	iptables -t mangle -D PREROUTING -j QOS_UP
+	iptables -t mangle -F QOS_UP
+	iptables -t mangle -X QOS_UP
+	tc qdisc del dev $WANIFACE root
+	tc qdisc del dev $LANIFACE root
+}
+#add rule 
+add_rule()
+{
+	iptables -t mangle -N QOS_UP
+	iptables -t mangle -A PREROUTING -j QOS_UP
+}
+get_wan_interface()
+{
+	WANIFACE=`ip route get 8.8.8.8 | awk '{print $5}'`
+	[ -n "$WANIFACE" ] && return 0
+	WANIFACE=`uci get network.wan.ifname`
+	[ -n "$WANIFACE" ] && return 0
+	WANIFACE=`uci get network.wwan.ifname`
+	[ -n "$WANIFACE" ] && return 0
+	WANIFACE=`uci get network.tethering.ifname`
+	[ -n "$WANIFACE" ] && return 0
+	WANIFACE=`uci get network.modem.ifname`
+	[ -n "$WANIFACE" ] && return 0
+	WANIFACE=`uci get network.modem1.ifname`
+}
+get_lan_ip()
+{
+	lanip=`ifconfig br-lan | grep Bcast | awk '{print $2}' | cut -f2 -d ":"`
+	if [ "$lanip" = "" -o "$lanip" = "" ];then
+		lanip=`uci get network.lan.ipaddr`
+		if [ "$lanip" = "" -o "$lanip" = "" ];then
+			lanip="192.168.8.1"
+		fi
+	fi
+}
+qos_func()
+{
+	local qos=$1
+	local mac
+	local uload
+	local dload
+	local dmac1
+	local dmac2
+
+	config_get mac $1 "mac"
+	config_get uload $1 "upload"
+	config_get dload $1 "download"
+	#echo "qos=$qos mac=$mac lanip=$lanip uload=$uload dload=$dload" >/dev/console
+	if [ "$mac" != "" -o "$mac" != " " ];then
+		if [ "$addfirst" = "1" -o "$addfirst" = 1 ];then
+			addfirst=0
+			delete_rule
+			add_rule
+			#add download
+			$TCQD root handle 100: cbq bandwidth $DSPEED avpkt 1000
+			$TCCD parent 100:0 classid 100:1 cbq bandwidth $DSPEED rate $DSPEED allot 1514 weight $DSPEED prio 4 cell 8 maxburst 8 avpkt 1000 bounded
+			#add upload
+			$TCQU root handle 200: cbq bandwidth $USPEED avpkt 1000
+			$TCCU parent 200:0 classid 200:1 cbq bandwidth $USPEED rate $USPEED allot 1514 weight $USPEED prio 4 cell 8 maxburst 8 avpkt 1000 bounded
+			#add lanip rule
+			$TCFD parent 100:0 protocol ip prio 1 u32 match ip src $lanip flowid 100:1
+			$TCFU parent 200:0 protocol ip prio 1 u32 match ip src $lanip flowid 200:1
+		fi
+		i=`expr $i + 1`
+		mark=$i
+		#download set
+		if [ "$dload" != "" -o "$dload" != " " ];then
+			dmac1="0x"`echo $qos | cut -c1-4`
+			dmac2="0x"`echo $qos | cut -c5-12`
+			#echo "dmac1=$dmac1 dmac2=$dmac2 i=$i mark=$mark"
+			$TCCD parent 100:1 classid 100:$mark cbq bandwidth $DSPEED rate ${dload}kbps allot 1514 weight 100Kbit prio 5 cell 8 maxburst 8 avpkt 1000 bounded
+			$TCQD parent 100:$mark sfq quantum 1514b perturb 10
+			$TCFD parent 100:0 protocol ip prio 5 u32 match u16 0x0800 0xffff at -2 match u32 $dmac2 0xffffffff at -12 match u16 $dmac1 0xffff at -14 flowid 100:$mark
+		fi
+		#upload set
+		if [ "$uload" != "" -o "$uload" != " " ];then
+			$TCCU parent 200:1 classid 200:$mark cbq bandwidth $USPEED rate ${uload}kbps allot 1514 weight 100Kbit prio 5 cell 8 maxburst 8 avpkt 1000 bounded
+			$TCQU parent 200:$mark sfq quantum 1514b perturb 10
+			$TCFU parent 200:0 protocol ip prio 5 handle $mark fw classid 200:$mark 
+			$IPT -m mac --mac-source $mac -j MARK --set-mark $mark
+			$IPT -m mac --mac-source $mac -j RETURN
+		fi
+	fi
+}
+service_triggers()
+{
+	procd_add_reload_trigger glqos
+}
+start_service()
+{
+	local DSPEED="1000Mbit"
+	local USPEED="1000Mbit"
+	local LANIFACE="br-lan"
+	local addfirst=1
+	local mark=1
+	local i=1
+	local lanip
+	local WANIFACE
+	
+	#get current wan interface
+	get_wan_interface
+	#get lan ip
+	get_lan_ip
+	#echo "lanip=$lanip WANIFACE=$WANIFACE"
+
+	TCQD="tc qdisc add dev $LANIFACE"
+	TCCD="tc class add dev $LANIFACE"
+	TCFD="tc filter add dev $LANIFACE"
+
+	TCQU="tc qdisc add dev $WANIFACE"
+	TCCU="tc class add dev $WANIFACE"
+	TCFU="tc filter add dev $WANIFACE"
+	IPT="iptables -t mangle -A QOS_UP"
+
+	config_load glqos
+	config_foreach qos_func qos
+}
+stop_service()
+{
+	local LANIFACE="br-lan"
+	local WANIFACE
+	get_wan_interface
+	#echo "LANIFACE=$LANIFACE WANIFACE=$WANIFACE"
+	delete_rule
+}
+

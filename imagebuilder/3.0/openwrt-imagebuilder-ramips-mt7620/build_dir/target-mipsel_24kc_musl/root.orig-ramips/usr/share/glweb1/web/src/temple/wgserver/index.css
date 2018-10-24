@@ -1,0 +1,185 @@
+.ssclientLabel {
+    display: block;
+}
+
+.ss_left {
+    float: left;
+    height: 100%;
+    line-height: 100%;
+    padding: 10px 5px;
+}
+
+.ss_right {
+    float: right;
+}
+
+.ssclientLabel>.select-drop-down {
+    margin-right: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .ssclientLabel {
+        padding: 5px;
+        float: none;
+        text-align: center;
+    }
+}
+
+.clientBtn.button {
+    width: 110px;
+}
+
+.ssclientLabel {
+    display: block;
+}
+
+.ss_left {
+    float: left;
+}
+.marginTOP{
+    margin-top: 10px;
+    resize: none;
+}
+#sourcejson {
+    width: 100%;
+    min-height: 300px;
+    max-height: 550px;
+    color: #000 !important;
+}
+
+.textareaQRCode {
+    width: 100%;
+    max-height: 550px;
+    color: #000 !important;
+    border: .5px solid #a9a9a9;
+    padding: 10px;
+    text-align: center;
+}
+.modal-body {
+    max-height: 550px;
+    overflow-x: hidden;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media screen and (max-width: 768px){
+    .gl-modal, .gl-modal.sm {
+        width: 325px;
+    }
+}
+.textareaQRCode pre {
+    text-align: left;
+    background: #fff;
+    border: none;
+}
+@media screen and (max-width: 769px) {
+    .textareaQRCode canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .textareaQRCode {
+        width: 100%;
+        max-height: 550px;
+        color: #000 !important;
+        border: .5px solid #a9a9a9;
+        padding: 10px;
+        text-align: center;
+    }
+    .modal-body {
+        max-height: 550px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+}
+
+.ss_left,
+.ss_right {
+    height: 100%;
+    line-height: 100%;
+    padding: 10px 5px;
+}
+
+.ss_right {
+    float: right;
+}
+
+.ssclientLabel>.select-drop-down {
+    margin-right: 0;
+}
+
+.clientBtn.button {
+    width: 80px;
+}
+
+.Publickey {
+    word-break: break-all
+}
+
+.wgserver-config table td {
+    color: #000;
+    text-align: center;
+}
+
+.wgserver-config table td {
+    padding: 8px;
+}
+
+#wgserver-manage {
+    text-align: center;
+}
+
+.wgserver-config table tr:first-of-type td {
+    font-weight: bold;
+    padding: 10px 0px;
+    background: #999;
+    color: #fff;
+    border-color: #000;
+}
+
+#ModifyConfigs {
+    margin: 15px 0px;
+}
+
+.table-head {
+    text-align: left;
+    font-weight: bold;
+    padding: 15px 10px;
+    border: 1px solid #000 !important;
+    background: #e9f4f4;
+}
+
+.btn-icon {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .vpn-setting-heading {
+        line-height: 54px;
+        padding: 0 5px;
+    }
+
+    .ssclientLabel {
+        padding: 5px;
+        float: none;
+        text-align: center;
+    }
+
+    .modal-body {
+        overflow-y: auto;
+        max-height: 389px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .modal-body {
+        overflow-y: auto;
+        max-height: 230px;
+    }
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background-color: #00838f;
+  }

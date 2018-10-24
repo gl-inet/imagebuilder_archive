@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GL.iNet Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="google" value="notranslate">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="/src/static/css/lib.min.css?rev=1233947a1489865tae89r9621fb">
+    <link rel="stylesheet" href="/src/static/css/sb-admin.css?rev=123de7a9c98653et5re896321234">
+    <link rel="stylesheet" href="/src/static/css/full-slider.css?rev=1237a799865381r1tq88996321a9">
+    <link rel="stylesheet" href="/src/static/css/adapter.css?rev=12315fb96d0098ret3889632144b">
+    <script src="/src/lib/eval2.js?rev=12395b51b9865393d4et8993r264"></script>
+    <script src="/src/lib/require.js?rev=1235b08986533e741t9re632187b"></script>
+    <script src="/src/config.js?rev=123091fcd7b98653e4889er6310"></script>
+    <script src="/src/welcom.js?rev=123bde2936986535088y9er6311"></script>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <transition name="main-fade" mode="out-in">
+            <div v-if="loading">
+                <gl-loading></gl-loading>
+                <!-- <loading></loading> -->
+                <h1 style="transform: translateY(54vh);text-align:center;font-size:2em;color:aliceblue;">Initializing file system</h1>
+            </div>
+            <indext v-else></indext>
+        </transition>
+    </div>
+</body>
+
+</html>

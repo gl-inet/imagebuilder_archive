@@ -1,0 +1,8 @@
+Package: gl-tertf
+Version: 3.0.15-1
+Depends: libc, gl-util, libjson-c, kmod-ter-traffic
+Source: package/gli/gl-tertf
+Section: base
+Architecture: mipsel_24kc
+Installed-Size: 5445
+Description:  Terminal traffic.

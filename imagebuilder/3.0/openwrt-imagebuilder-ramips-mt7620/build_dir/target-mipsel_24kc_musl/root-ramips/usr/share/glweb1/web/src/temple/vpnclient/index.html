@@ -1,0 +1,333 @@
+<div class="temple">
+    <div class="row first-row-margin" id="VPNPanel">
+        <div class="col-lg-12">
+            <div class="panel with-nav-tabs panel-default">
+                <!-- panel-heading -->
+                <div class="panel-heading">
+                    <h4>
+                        <span class="circle headerCircle" :class="[circleClass]"></span>
+                        <span>{{t($lang.vpnclient.vpnClient)}}</span>
+                    </h4>
+                </div>
+                <!-- panel-body -->
+                <div class="panel-body panel-status">
+                    <div id="tabVPNStatus">
+                        <!-- add A New OpenVpn configuration -->
+                        <div id="defaultStatus" v-if="!showClientPanel" v-cloak>
+                            <br />
+                            <p>{{t($lang.vpnclient.vpnNetwork)}}</p>
+                            <ol>
+                                <li>{{t($lang.vpnclient.addVpnConfig)}}</li>
+                                <li>{{t($lang.vpnclient.setVpnType)}}</li>
+                                <li>{{t($lang.vpnclient.enterVpnInfo)}}</li>
+                                <li>{{t($lang.vpnclient.connectConfig)}}</li>
+                                <li>
+                                    <a href="https://docs.gl-inet.com/en/3/app/openvpn/#openvpn-compatibilities" target="_blank">{{t($lang.vpnclient.findProvider)}}</a>
+                                    <!-- <a href="https://docs.gl-inet.com/" target="_blank">{{t($lang.vpnclient.findProvider)}}</a> -->
+                                </li>
+                            </ol>
+                            <p>{{t($lang.vpnclient.setVpnConfig)}}</p>
+                            <!-- Add a New VPN Configuration -->
+                            <span class="list-group-item  list-btnblock text-center panel-status glGp" style="border-bottom: none">
+                                <gl-btn type="modify" class="rec gl-border" @click="openModal('add')" :disabled="addState">
+                                    <span class="fa fa-plus"></span>
+                                    {{t($lang.vpnclient.addVpn)}}
+                                    <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="addState"></span>
+                                </gl-btn>
+                            </span>
+                        </div>
+                        <!-- OpenVpn content -->
+                        <div v-else>
+                            <ul class="nav nav-tabs nav-ul">
+                                <!-- Home -->
+                                <li class="active">
+                                    <a href="#client-status" data-toggle="tab">
+                                        {{t($lang.vpnclient.status)}}
+                                    </a>
+                                </li>
+                                <!-- Travel -->
+                                <li role="presentation">
+                                    <a href="#client-manage" data-toggle="tab">
+                                        {{t($lang.vpnclient.manage)}}
+                                        <span class="hidden-xs"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            </br>
+                            <div class="tab-content">
+                                <!-- Home -->
+                                <div id="client-status" class="tab-pane fade in active applit-box">
+                                    <!-- 仅限VPN连接 -->
+                                    <!-- <span class="list-group-item">
+                                        <span class="text-left">
+                                            <span>{{t($lang.vpnclient.vpnConnection)}}</span>
+                                            <gl-tooltip :content="$lang.vpnclient.vpnBreak">
+                                                <span class="glyphicon glyphicon-question-sign"></span>
+                                            </gl-tooltip>
+                                        </span>
+                                        <span class=" pull-right btn-checkbox-right ">
+                                            <div class="checkbox" style="margin: 0">
+                                                <label style="font-size: 1.4em ">
+                                                    <input type="checkbox" class="checkbox-dark" v-model="getclientstatus.force" :disabled="disableConfig" checked="checked">
+                                                    <input type="checkbox" class="checkbox-dark" disabled checked>
+                                                    <span class="cr">
+                                                        <i class="cr-icon fa fa-check "></i>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </span>
+                                    </span> -->
+                                    <span class="list-group-item clearfix">
+                                        <span class="text-left vpn-left">{{t($lang.vpnclient.currentVpn)}}</span>
+                                        <div class="pull-right vpn-right" style="width: 180px">
+                                            <gl-select :option="clients" optionName="description" @getval="getCheck"
+                                                @checkId="getId" v-model="currentVpn" :disabled="checkVpn || connectStatus"
+                                                checkLang vpn></gl-select>
+                                        </div>
+                                    </span>
+                                    <a class="list-group-item">
+                                        <span class="text-left">{{t($lang.vpnclient.server)}}</span>
+                                        <span class="text-right pull-right">
+                                            <span class="text-right serverName">{{defaultName}}</span>
+                                            <button type="button" class="btn btn-xs btn-default" @click="show(defaultName, 'change')" :disabled="settingStatus ||checkVpn">
+                                                <span class="fa fa-cog"></span>
+                                            </button>
+                                        </span>
+                                    </a>
+                                    <!-- <span class="list-group-item hide panel-status vpn-status " id="vpnConnectedInfoSpan "></span> -->
+                                    <span class="list-group-item panel-status vpn-status" v-show="getclientstatus.status !='off' && errMsgs.length > 0">
+                                        <div id="5LogsSpan" v-if="status=='connecting'||status=='failed'" v-for="msg in errMsgs"
+                                            style="padding: 5px">
+                                            <span id="connectingMsg0">{{msg}}</span>
+                                        </div>
+                                    </span>
+                                    <span class="list-group-item panel-status vpn-status" v-show="getclientstatus.status == 'connected' && getclientstatus.data">
+                                        <div id="vpnIpAddrSpan" class="clearfix" style="padding: 5px">
+                                            <span class="text-left">{{t($lang.vpnclient.ipAddress)}}</span>
+                                            <span class="pull-right" id="vpnIpAddr"> {{ipAdr}}</span>
+                                        </div>
+                                        <div id="vpnDataSpan" class="clearfix" style="padding: 5px">
+                                            <span class="text-left ">{{t($lang.vpnclient.dataReceived)}} /
+                                                {{t($lang.vpnclient.sent)}}</span>
+                                            <span class="pull-right" id="vpnData">{{dataRC}}</span>
+                                        </div>
+                                    </span>
+                                    <!-- btn -->
+                                    <div style="text-align: center; padding: 10px;">
+                                        <gl-btn :type="btnStatus" @click="setClient" id="ModifyConfigs" :disabled="checkVpn ||　connectStatus">
+                                            {{t(btnName)}}
+                                            <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="checkVpn || connectStatus"></span>
+                                        </gl-btn>
+                                        <gl-btn type="default" @click="setClient('check')" id="ModifyConfigs" v-show="getclientstatus.status != 'off' && checkServer">
+                                            {{t($lang.vpnclient.changeServer)}}
+                                        </gl-btn>
+                                    </div>
+                                </div>
+                                <!-- Travel -->
+                                <div id="client-manage" class="tab-pane fade applit-box">
+                                    <!-- VPN Configurations -->
+                                    <div id="VPNConfigurationsPanel" v-cloak>
+                                        <!-- Head -->
+                                        <span class="list-group-item  vpn-setting-heading gl-padding-five   ">
+                                            <span class="text-left">{{t($lang.vpnclient.vpnConfigurations)}}</span>
+                                            <div class="pull-right" id="displayClientNum" style="padding-right: 8px;">{{clients.length}}</div>
+                                        </span>
+                                        <div class="list-group panel-status " v-for="(client,index) in clients">
+                                            <!-- Vpn list -->
+                                            <span class="list-group-item  vpn-manage-heading vpn-client-header gl-padding-five"
+                                                data-toggle="collapse" :href="'#'+client.collapseItemID">
+                                                <span class="text-left pull-left vpn-online-status ">
+                                                    <span class="circle" :class="[curStatusIndex==index?circleClass:null]"></span>
+                                                    <span class="clientName">{{client.description}}</span>
+                                                </span>
+                                                <button class="btn pull-right btn-xs" @click="checkCollapse(client.collapseItemID)">
+                                                    <span class="fa fa-chevron-down"></span>
+                                                </button>
+                                            </span>
+                                            <!-- change Vpn -->
+                                            <div class="vpn-manage-body collapse" :id="client.collapseItemID">
+                                                <!-- Type -->
+                                                <a class="list-group-item gl-padding-five">
+                                                    <span class="text-left">{{t($lang.vpnclient.type)}}</span>
+                                                    <span class="text-right pull-right typeName">
+                                                        {{t($lang.vpnclient.openVPN)}}</span>
+                                                </a>
+                                                <!-- Count -->
+                                                <a class="list-group-item gl-padding-five">
+                                                    <span class="text-left ">{{t($lang.vpnclient.configCount)}}</span>
+                                                    <span class="text-right pull-right">{{client.serverCount}}</span>
+                                                </a>
+                                                <!-- Server -->
+                                                <a class="list-group-item gl-padding-five">
+                                                    <span class="text-left ">{{t($lang.vpnclient.server)}}</span>
+                                                    <span class="text-right pull-right">
+                                                        <span class="text-right serverName">{{client.newServer}}</span>
+                                                        <button type="button" class="btn btn-xs btn-default" @click="showServerList(index)" :disabled="settingStatus ||checkVpn">
+                                                            <span class="fa fa-cog"></span>
+                                                        </button>
+                                                    </span>
+                                                </a>
+                                                <!-- Description -->
+                                                <a class="list-group-item list-group-narrow clearfix gl-padding-five">
+                                                    <div class="text-left pull-left">{{t($lang.vpnclient.description)}}</div>
+                                                    <div class="list-input-field">
+                                                        <!-- <gl-tooltip :content="client.desTooltipMsg"> -->
+                                                        <gl-input :placeholder="$lang.holdPlace.required" v-model.trim="client.newDescription"
+                                                            :error="client.desTooltipMsg!=null" @postValue="client.desTooltipMsg=null"
+                                                            :disabled="curClientIndex==index&&(status=='connected'||status=='connecting')"></gl-input>
+                                                        <!-- </gl-tooltip> -->
+                                                    </div>
+                                                </a>
+                                                <!-- Username -->
+                                                <a class="list-group-item list-group-narrow clearfix gl-padding-five"
+                                                    v-show="client.newUsername">
+                                                    <div class="text-left pull-left">{{t($lang.vpnclient.userName)}}</div>
+                                                    <div class="list-input-field">
+                                                        <!-- <gl-tooltip :content="client.userTooltipMsg"> -->
+                                                        <gl-input :placeholder="$lang.holdPlace.required" v-model.trim="client.newUsername"
+                                                            :error="client.desTooltipMsg!=null" @postValue="client.userTooltipMsg=null"
+                                                            :disabled="curClientIndex==index&&(status=='connected'||status=='connecting')"></gl-input>
+                                                        <!-- </gl-tooltip> -->
+                                                    </div>
+                                                </a>
+                                                <!-- Password -->
+                                                <a class="list-group-item list-group-narrow clearfix gl-padding-five"
+                                                    v-show="client.newPassword">
+                                                    <div class="text-left pull-left">{{ client.passphrase ?
+                                                        t($lang.vpnclient.passphrase) : t($lang.vpnclient.psw)}}</div>
+                                                    <div class="list-input-field">
+                                                        <!-- <gl-tooltip :content="client.userTooltipMsg"> -->
+                                                        <gl-input type="password" inputShow :placeholder="$lang.holdPlace.required"
+                                                            v-model.trim="client.newPassword" :error="client.desTooltipMsg!=null"
+                                                            @postValue="client.pwdTooltipMsg=null" :disabled="curClientIndex==index&&(status=='connected'||status=='connecting')"></gl-input>
+                                                        <!-- </gl-tooltip> -->
+                                                    </div>
+                                                </a>
+                                                <!-- btn -->
+                                                <span class="list-group-item btn-group text-center">
+                                                    <gl-btn type="modify" @click="removeClient(index)" :disabled="curClientIndex==index&&(status=='connected'||status=='connecting')">{{t($lang.button.remove)}}</gl-btn>
+                                                    <gl-btn type="purple" @click="modifyClient(index)" >{{t($lang.button.apply)}}</gl-btn>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- Add a New VPN Configuration -->
+                                        <span class="list-group-item  list-btnblock text-center panel-status glGp"
+                                            style="border-bottom: none;">
+                                            <gl-btn type="default" class="rec" @click="openModal('add')" :disabled="addState || rmStatus"
+                                                style="border-radius: 3px">
+                                                <span class="fa fa-plus"></span>
+                                                {{t($lang.vpnclient.addVpn)}}
+                                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="addState"></span>
+                                            </gl-btn>
+                                        </span>
+                                        <!-- remove all clients -->
+                                        <span class="list-group-item  list-btnblock text-center panel-status glGp"
+                                            style="border-bottom: none">
+                                            <gl-btn type="modify" class="rec" @click="removeClient('all')" :disabled="rmStatus"
+                                                style="border-radius: 3px">
+                                                <span class="fa fa-trash btn-icon"></span>
+                                                <span>{{t($lang.wgclient.purgeProfiles)}}</span>
+                                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="rmStatus"></span>
+                                            </gl-btn>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- modal=> add vpn -->
+                <gl-modal :title="$lang.vpnclient.addVpn" :modalStatus="showModal">
+                    <!-- modal-body -->
+                    <div class="modal-body">
+                        <div v-show="pageState" class="pageTwo">
+                            <!-- upload -->
+                            <!-- <gl-upload :status="sta" :error="errMsg" @upload="onupload"></gl-upload> -->
+                            <gl-upload :status="sta" @upload="onupload" isVpn :errorMsg="errorMsg"></gl-upload>
+
+                            <!-- count -->
+                            <span class="list-group-item list-group-narrow clearfix" style="padding: 10px 5px;border-top: none">
+                                <span class="text-left" style="float: left;">{{t($lang.vpnclient.configCount)}}</span>
+                                <span class="text-right" style="float: right; font-weight: 900">{{vpnNumHtml}}</span>
+                            </span>
+                            <!-- OpenVpn list -->
+                            <span v-show="!vpnState">
+                                <!-- Description -->
+                                <span class="list-group-item list-group-narrow clearfix" id="OvpnDescriptionSpan">
+                                    <div class="text-left pull-left">
+                                        <span>{{t($lang.vpnclient.description)}}</span>
+                                    </div>
+                                    <div class="list-input-field">
+                                        <gl-input :placeholder="$lang.holdPlace.required" v-model.trim="dspText"></gl-input>
+                                    </div>
+                                </span>
+                                <!-- Username -->
+                                <span class="list-group-item list-group-narrow clearfix" id="OvpnDescriptionSpan"
+                                    v-show="pswInfo && useInfo">
+                                    <div class="text-left pull-left">
+                                        <span>{{t($lang.vpnclient.userName)}}</span>
+                                    </div>
+                                    <div class="list-input-field">
+                                        <gl-input :placeholder="$lang.holdPlace.required" v-model.trim="usText"></gl-input>
+                                    </div>
+                                </span>
+                                <!-- Password -->
+                                <span class="list-group-item list-group-narrow clearfix" id="OvpnDescriptionSpan"
+                                    v-show="pswInfo">
+                                    <div class="text-left pull-left">
+                                        <span>{{t(pswType)}}</span>
+                                    </div>
+                                    <div class="list-input-field">
+                                        <gl-input :placeholder="$lang.holdPlace.required" inputShow type="password"
+                                            v-model.trim="pswText"></gl-input>
+                                    </div>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- modal-footer -->
+                    <div class="modal-footer btn-center">
+                        <gl-btn type="modify" class="btnl flat-btn" @click="closeModal('add')" v-show="pageState">{{t($lang.button.cancel)}}</gl-btn>
+                        <gl-btn type="purple" class="btnr flat-btn" @click="addVpnClient" :disabled="vpnadState">{{t($lang.button.submit)}}</gl-btn>
+                    </div>
+                </gl-modal>
+                <!-- modal=> vpn list -->
+                <gl-modal :title="$lang.vpnclient.vpnList" :modalStatus="showvpnlist">
+                    <div class="modal-body">
+                        <div class="list-group panel-group" id="configModalBody">
+                            <div class="list-item panel panel-default" v-for="(item,index) in curServerList">
+                                <a data-toggle="collapse" data-parent="#configModalBody" :href="generateId('#vpnlist',index)"
+                                    class="list-group-item panel-heading">
+                                    <span class="fa" :class="{'fa-check':item==curserverName}"></span>
+                                    <span class="text-left serverName">{{item}}</span>
+                                    <i class="fa fa-chevron-down pull-right" :class="{hide:item==curserverName}"></i>
+                                </a>
+                                <div class="panel-collapse collapse vpnlistcollapse vpn-list-body" :id="generateId('vpnlist',index)">
+                                    <a class="list-group-item  input-text hide">
+                                        <span class="text-left">{{t($lang.vpnclient.ssIp)}}</span>
+                                        <span class="text-right pull-right serverIP">-</span>
+                                    </a>
+                                    <span class="list-group-item known-network-btn-group clearfix" :class="{hide:item==curserverName}">
+                                        <span class="pull-right btn-group " role="group">
+                                            <button type="button" class="btn gli-btn-light btngroup-light btn-secondary"
+                                                @click="removeList(index)">{{t($lang.button.remove)}}</button>
+                                            <button type="button" class="btn gli-btn-dark  btngroup-dark btn-secondary "
+                                                @click="setlist(index)">{{t($lang.vpnclient.select)}}</button>
+                                        </span>
+                                        <button class=" btn gli-btn-light btn-default btn-secondary pull-right hide"
+                                            type="button">{{t($lang.vpnclient.unSelect)}}</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <gl-btn type="modify" @click="closeModal">{{t($lang.button.cancel)}}</gl-btn>
+                        <gl-btn type="default" @click="closeModal">{{t($lang.button.ok)}}</gl-btn>
+                    </div>
+                </gl-modal>
+            </div>
+        </div>
+    </div>
+</div>

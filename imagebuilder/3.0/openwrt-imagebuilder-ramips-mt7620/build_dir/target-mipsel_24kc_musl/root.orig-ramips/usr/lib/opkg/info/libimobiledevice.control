@@ -1,0 +1,12 @@
+Package: libimobiledevice
+Version: 1.2.1-2
+Depends: libc, libplist, libusbmuxd, libopenssl
+Source: feeds/packages/libs/libimobiledevice
+License: LGPL-2.1+
+LicenseFiles: COPYING.LESSER
+Section: libs
+Maintainer: Lukasz Baj <l.baj@radytek.com>
+Architecture: mipsel_24kc
+Installed-Size: 44074
+Description:  libimobiledevice is a software library that talks the protocols to support
+ iPhone®, iPod Touch®, iPad® and Apple TV® devices.

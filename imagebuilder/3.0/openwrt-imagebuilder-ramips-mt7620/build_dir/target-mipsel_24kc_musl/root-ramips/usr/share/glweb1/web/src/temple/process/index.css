@@ -1,0 +1,27 @@
+.process-modal .gl-modal {
+    width: 860px!important;
+}
+#router-wifi-ssid-txt {
+    top: 57.5%;
+}
+#router-wifi-key-txt {
+    top: 37%;
+}
+.process-modal .modal-body,
+.smprocess-modal .modal-body{
+    overflow-y: visible !important;
+}
+@media (max-width: 768px) {
+    .process-modal .gl-modal {
+        width: 80% !important;
+    }
+    #router-wifi-ssid-txt {
+        top: 53%;
+    }
+    #router-wifi-key-txt {
+        top: 43%;
+    }
+    .process-modal .modal-body {
+        overflow-y: scroll !important; 
+    }
+}

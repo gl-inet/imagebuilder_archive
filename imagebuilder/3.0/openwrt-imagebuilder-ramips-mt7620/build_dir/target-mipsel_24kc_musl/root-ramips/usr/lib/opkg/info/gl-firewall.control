@@ -1,0 +1,8 @@
+Package: gl-firewall
+Version: 3.0.0-1
+Depends: libc, gl-util, libip4tc
+Source: package/gli/gl-firewall
+Section: base
+Architecture: mipsel_24kc
+Installed-Size: 6189
+Description:  Openvpn server endpoint api for gl-inet.

@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span class="circle active"></span>
+                    {{t($lang.revert.revertFirmware)}}
+                </h4>
+            </div>
+
+            <div class="panel-body panel-status">
+                <div class="list-group">
+                    <span class="list-group-item">
+                        <br/>
+                        <div class="text_box">
+                            <span class="fa-exclamation-circle fa"></span>
+                            <span class="text-left ">{{t($lang.revert.upgradeMsg)}}.</span>
+                        </div>
+                        <br/>
+                    </span>
+                    <div class="text-center" style="padding: 10px;">
+                        <gl-btn type="delete" id="revertFirmwareBtn" @click="revertBtnClick">{{t($lang.button.revert)}}</gl-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

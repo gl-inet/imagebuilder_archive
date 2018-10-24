@@ -1,0 +1,41 @@
+#!/bin/sh
+
+case $script_type in
+up)
+	i=1
+	ns=""
+	while true; do
+		# As we know, for non-Windows openvpn clients can accept push DHCP
+		# options by using a client-side up script which parses the 
+		# foreign_option_n environmental variable list
+		eval opt=\$foreign_option_${i}
+		[ -z "${opt}" ] && break
+
+		ns="$ns\n$(echo ${opt} | sed -e 's/dhcp-option DOMAIN/domain/g' -e 's/dhcp-option DNS/nameserver/g')"
+
+		i=$((i + 1))
+	done
+
+	if [ -n "$ns" ]; then
+		echo -e "$ns" > /tmp/resolv.conf.vpn
+	else
+		echo -e "nameserver 209.244.0.3\nnameserver 64.6.64.6" > /tmp/resolv.conf.vpn
+	fi
+
+	uci set dhcp.@dnsmasq[0].resolvfile='/tmp/resolv.conf.vpn'
+	uci commit dhcp
+	# Let it runs on background, in order to avoid any delay to add route table,
+	# which will effort to mwan3
+	/etc/init.d/dnsmasq restart &
+	;;
+down)
+	# Restore dns
+	[ -f "/tmp/resolv.conf.vpn" ] || return 0
+	rm -fr "/tmp/resolv.conf.vpn"
+	uci set dhcp.@dnsmasq[0].resolvfile='/tmp/resolv.conf.auto'
+	uci commit dhcp
+	/etc/init.d/dnsmasq restart &
+	;;
+esac
+
+exit 0

@@ -1,0 +1,180 @@
+#gl-GL-dropdown {
+    max-width: 320px;
+    position: absolute;
+    right: 15px;
+    top: 40px;
+    /* background-color: #fff; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    outline-style: none;
+    margin: 0;
+    padding: 10px 0 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    z-index: 1000;
+}
+#gl-GL-dropdown > li {
+    text-align: left;
+    padding: 10px 30px;
+    white-space: nowrap;
+    font-weight: 400;
+    line-height: 1.6;
+    cursor: pointer;
+    color: #595e7c;
+    font-size: 16px;
+    min-width: 150px;
+}
+#gl-GL-dropdown > li:hover {
+    background: #efefef;
+    color: #409fcb;
+}
+.soft-num {
+    float: right;
+}
+
+.btn-dropdown {
+    /* min-width: 100px; */
+    height: 38px;
+    line-height: 38px;
+    position: relative;
+    border: 1px solid #ccc;
+    display: inline-block;
+    width: 100%;
+}
+.btn-dropdown a:hover {
+  text-decoration: none;
+}
+.GL-dropdown-toggle {
+    position: relative;
+    /* font-family: PingFangSC-Semibold; */
+    list-style-type: none;
+    width: 100%;
+    padding-left: 10px;
+    text-transform: none;
+    font-weight: 300;
+    /* margin-bottom: 7px; */
+    border-radius: 0;
+}
+.btn-dropdown.disabled {
+    background-color: #d5dade;
+    border-color: #b5bdc3;
+    cursor: not-allowed;
+}
+.gl-angle {
+    position: absolute;
+    top: 32%;
+    right: 10px;
+    transform-origin: center center; 
+    transition: all .2s;
+}
+.gl-angle.open {
+    transform: rotate(-179deg);
+}
+.GL-dropdown-toggle：hover {
+    background: #e1e1e1;
+    cursor: pointer;
+}
+.hide {
+    display: none;
+}
+.GL-dropdown-ul {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 1000;
+    min-width: 170px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    border-radius: 3px; 
+}
+.num-class {
+    padding: 2px 10px;
+    background: #9CA1A7;
+    color: #fff;
+    border-radius:10px; 
+}
+.GL-dropdown-ul > li > a {
+    padding: 8px 15px;
+    display: block;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.6;
+    color: #333333;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.GL-dropdown-ul > li > a:hover {
+    background: #D5E5F7;
+    color: #595e7c;
+}
+.GL-dropdown-ul > li {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin: 0
+}
+.GL-dropdown-ul::before {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border: 8px dashed transparent;
+    z-index: 1;
+    border-bottom-style: solid;
+    border-width: 0 8px 8px;
+    border-bottom-color: #ddd;
+    bottom: 0;
+    left: 18px;
+    top: -8px;
+    pointer-events: none;
+}
+.caret {
+    /* display: relative;
+    width: 0;
+    position: relative;
+    top: 10px;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid \9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    float: right; */
+}
+.GL-dropdown-enter-active {
+    transform-origin: center top;
+    animation: selectDropDown .3s;
+}
+.GL-dropdown-leave-active {
+    transform-origin: center top;
+    animation: selectDropUp .3s;
+}
+@keyframes selectDropDown {
+    0% {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+@keyframes selectDropUp {
+    0% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+}

@@ -1,0 +1,15 @@
+device=$1
+[ -z $device ] && exit 0;
+[ ! -c $device ] && exit 0;
+bus=$(find /sys/devices/platform/ -name $(echo $device|cut -d '/' -f 3)|cut -d '/' -f 8|cut -d ':' -f 1)
+mkdir -p /tmp/modem.$bus
+while [ 1 ];
+do
+        busy=""
+        sleep 5
+        [ ! -c $device ] && { rm /tmp/modem.$bus/signal 2>/dev/null;exit 0; }
+        busy=$(fuser $device 2>/dev/null)
+        [ -n "$busy" ] && continue
+        timeout -t 2 uqmi -d $device -s --get-signal-info >/tmp/modem.$bus/signal
+done
+

@@ -1,0 +1,105 @@
+.welcome-guide {
+    background-size: 100%;
+    background: -webkit-radial-gradient(50% 60%, circle, #2d303f, transparent), 
+    -webkit-radial-gradient(50% 80%, circle, #2d303f, transparent), 
+     -webkit-radial-gradient(0 -50%, circle, #287168, transparent), 
+    -webkit-radial-gradient(80% 80%, circle, #067e84, transparent),
+    -webkit-radial-gradient(0% 100%, circle, #109b80, transparent);
+    /* IE10 */
+    background: -ms-radial-gradient(50% 60%, circle, #2d303f, transparent), 
+      -ms-radial-gradient(50% 80%, circle, #2d303f, transparent), 
+      -ms-radial-gradient(0 -50%, circle, #287168, transparent), 
+      -ms-radial-gradient(80% 80%, circle, #067e84, transparent),
+      -ms-radial-gradient(0% 100%, circle, #109b80, transparent);
+    /* opera */
+    background: -o-radial-gradient(50% 60%, circle, #2d303f, transparent), 
+      -o-radial-gradient(50% 80%, circle, #2d303f, transparent), 
+      -o-radial-gradient(0 -50%, circle, #287168, transparent),
+      -o-radial-gradient(80% 80%, circle, #067e84, transparent), 
+      -o-radial-gradient(0% 100%, circle, #109b80, transparent);
+    /* firefox */
+    background: -moz-radial-gradient(50% 60%, circle, #2d303f, transparent), 
+      -moz-radial-gradient(50% 80%, circle, #2d303f, transparent), 
+      -moz-radial-gradient(0 -50%, circle, #287168, transparent), 
+      -moz-radial-gradient(80% 80%, circle, #067e84, transparent),
+      -moz-radial-gradient(0% 100%, circle, #109b80, transparent);
+      /* IE9 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2d303f', endColorstr='#287168',GradientType=0);
+    position:absolute;
+    left:0px;
+    right:0px;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.welcome-head {
+    margin-top: 160px;
+}
+.welcomeBtn.button.default{
+    /* float: left; */
+    /* width: 50%; */
+    margin: 0;
+    border-radius:0;
+    border-left: 1px solid #ccc;
+    padding: 12px 24px;
+    margin-top: 80px;
+}
+.login_background,html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.welcomeRight.button.default {
+    border-right: 1px solid #ccc;
+    border-left: none;
+}
+.wel_com.button.default {
+    width: 140px;
+    font-size: 16px;
+}
+.welcome-lang {
+    text-align: center;
+}
+.welcome-select .input-control {
+    width: 300px;
+}
+#welcome_page {
+    z-index: 10;
+}
+#glmsg {
+    width: 100%;
+    max-width: 100%
+}
+.carousel-indicators {
+    bottom: 10%;
+}
+#adminpw-ar750s-router {
+    margin-top: 160px;
+}
+.lang-change {
+    margin: 0 auto 15px;
+    width: 290px
+}
+@media screen and (max-width: 768px) {
+    .carousel-indicators {
+        bottom: 8% !important;
+    }
+    .welcome-head {
+        margin-top: 25%;
+        font-size: 18px;
+    }
+    .visible-xs-block.phone-btn {
+        display: inline-block!important;
+        min-width: 120px;
+        /* margin-top: 80px; */
+    }
+    .bottom-btn-bar {
+        bottom: 24% !important;
+    }
+    .lang-change {
+        width: 250px;
+    }
+    .submit-moblie {
+        margin-top: 60px;
+    }
+}

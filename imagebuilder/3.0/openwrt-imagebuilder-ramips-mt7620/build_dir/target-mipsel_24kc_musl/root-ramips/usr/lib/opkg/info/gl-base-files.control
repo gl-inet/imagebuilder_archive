@@ -1,0 +1,8 @@
+Package: gl-base-files
+Version: 3.0.61-1
+Depends: libc
+Source: package/gli/gl-base-files
+Section: base
+Architecture: mipsel_24kc
+Installed-Size: 22490
+Description:  This package contains a base configuration and system scripts for GL iNet.

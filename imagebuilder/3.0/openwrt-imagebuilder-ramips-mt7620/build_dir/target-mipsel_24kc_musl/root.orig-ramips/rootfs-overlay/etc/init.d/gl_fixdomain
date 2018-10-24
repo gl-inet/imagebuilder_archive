@@ -1,0 +1,13 @@
+#!/bin/sh /etc/rc.common
+
+START=15
+
+start(){
+	lan_ip=$(uci get network.lan.ipaddr)
+	uci set dhcp.localhost=domain
+	uci set dhcp.localhost.name='console.gl-inet.com'
+	uci set dhcp.localhost.ip="$lan_ip"
+	uci commit dhcp
+}
+
+

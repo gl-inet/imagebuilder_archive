@@ -1,0 +1,176 @@
+/*gl-btn*/
+button.button {
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    font-weight: 500;
+    letter-spacing: 0;
+    will-change: box-shadow, transform;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    background: #23d1a2;
+    font-size: 15px;
+    margin: 0px 5px;
+    line-height: inherit;
+    padding: 8.5px 24px;
+    color: #fff;
+    border-radius: 50px;
+    border: 0.125rem solid transparent;
+}
+button.button.rec{
+    border-radius: 0;
+    width: 100%;
+    margin:0px;
+}
+button.button.gl-border{
+    border-radius: 3px;
+}
+button.flat-btn {
+    min-width: 80px;
+}
+button.button.btnr{
+    padding: 5px 0px;
+    margin: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+button.button.btnl{
+    padding: 5px 0px;
+    margin: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+button.button:focus{
+    outline: none;
+}
+button.button:active {
+    /* border: 0rem solid transparent; */
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+.ripple {
+    position: relative;
+    overflow: hidden
+}
+.ripple:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .5s, opacity 1s
+}
+.ripple:active:after {
+    transform: scale(0, 0);
+    opacity: .2;
+    transition: 0s
+}
+@media (max-width:767px) {
+    .glGp{
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+    .visible-xs-block{
+        display: flex!important;
+        justify-content: center;
+    }
+    button.visible-xs-block{
+        padding: 8.5px 30px;
+    }
+}
+
+button.button.default {
+    color: #fff;
+    background-color: #00838f;
+    box-shadow: inset 0 1px 0 0 #45aab3;
+    background: linear-gradient(to bottom, #018e9b, #00838f)
+}
+button.button.apply {
+    color: white;
+    background: linear-gradient(to bottom, #3f4eae, #3f4eae);
+    border: 1px solid transparent;
+}
+button.button.purple {
+    background: linear-gradient(to bottom, #6371c7, #5563c1);
+    color: rgba(255, 255, 255, 0.84);
+    box-shadow: inset 0 1px 0 0 #6f7bcb;
+    background-color: #3f4eae;
+    border: 1px solid transparent;
+}
+button.button.modify {
+    color: #595e7c;
+    border: 1px solid #c4cdd5;
+    box-shadow: 0 1px 0 0 rgba(22,29,37,0.05);
+    background: linear-gradient(to bottom, white, #f9fafb);
+}
+button.button.delete {
+    color: white;
+    background: linear-gradient(to bottom, #e6391a, #d53417);
+}
+button.button:disabled{
+    color: white !important;
+    box-shadow: 1px 0 0 0 rgba(22,29,37,0.05);
+    background: linear-gradient(to bottom,#c4cdd5,#d9e1e9);
+    border: 1px solid #c4cdd5;
+}
+button.button.modify:hover {
+    background: linear-gradient(to bottom, #f9fafb, #f4f6f8)
+}
+button.button.default:hover {
+    box-shadow: inset 0 1px 0 0 #00838f;
+    background: linear-gradient(to bottom, #137780,#106971);
+}
+button.button.delete:hover {
+    background: linear-gradient(to bottom, #de3618, #c73016); 
+}
+button.button.delete:active {
+    background: linear-gradient(to bottom, #b02b13, #b02b13);   
+    /* border-color: #992511; */
+}
+button.button.purple:hover {
+   background: linear-gradient(to bottom, #5c6ac4, #4959bd)
+}
+button.button:disabled:hover {
+    box-shadow: 1px 0 0 0 rgba(22,29,37,0.05);
+    background: linear-gradient(to bottom,#c4cdd5,#d9e1e9);
+}
+button.button.blue {
+    background-color: #228AE6;
+    color: rgba(255, 255, 255, 0.84);
+}
+button.button.primary {
+    background-color: #009688;
+    color: rgba(255, 255, 255, 0.84);
+}
+button.button.success {
+    background-color: #4caf50;
+    color: rgba(255, 255, 255, 0.84);
+}
+button.button.info {
+    background-color: #03a9f4;
+    color: rgba(255, 255, 255, 0.84);
+}
+button.button.warning {
+    background-color: #ff5722;
+    color: rgba(255, 255, 255, 0.84);
+}
+button.button.danger {
+    background-color: #f44336;
+    color: rgba(255,255,255, 0.84);
+}
+button.button.message {
+    background-color: #6d8aa3;
+    color: #fff;
+}

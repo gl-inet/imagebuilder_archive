@@ -1,0 +1,175 @@
+#!/bin/sh
+
+. /usr/share/libubox/jshn.sh
+
+# Will exit if autoupdate is disabled
+enabled=$(uci get glconfig.autoupdate.enable)
+[ -z "$enabled" -o "$enabled" = "0" ] && return
+
+# Debug mode
+debug=$(uci get glconfig.autoupdate.debug)
+if [ "$debug" = "1" ]; then
+	sleep $((300))
+	interval=$((60))
+	one_hour=$((60))
+else
+	# We don't upgrade immediately when boot, so sleep 3 hour
+	sleep $((60*60*3))
+	one_day=$((60*60*24))
+	one_hour=$((60*60))
+	interval=$one_day
+fi
+
+# Firmware path prefix
+firmware_path="http://download.gl-inet.com/firmware/"
+
+# Mach router's model
+model=$(awk -F': ' '/machine/ {print tolower($NF)}' /proc/cpuinfo |cut -d- -f2-)
+[ -n "$(grep "DK01" /proc/device-tree/model)" ] && model="b1300"
+
+case "$model" in
+"connect inet v1")
+	model="6416"
+	firmware_path="${firmware_path}${model}/v1/"
+	;;
+"ar150"|\
+"ar300"|\
+"ar750"|\
+"b1300"|\
+"mifi"|\
+"mt300a"|\
+"mt300n"|\
+"mt300n-v2"|\
+"mt750"|\
+"usb150")
+	firmware_path="${firmware_path}${model}/v1/"
+	;;
+"ar750s"|\
+"x1200"|\
+"x750"|\
+"vixmini")
+	firmware_path="${firmware_path}${model}/release/"
+	;;
+"ar300m")
+	nand=$(cat /proc/mounts |grep 'ubi0_1.*overlay')
+	if [ -n "$nand" ]; then
+		firmware_path="${firmware_path}${model}/nand/v1/"
+	else
+		firmware_path="${firmware_path}${model}/v1/"
+	fi
+	;;
+*)
+	exit 0
+	;;
+esac
+
+version=$(cat /etc/glversion)
+
+custom_firmware_path=$(uci get glconfig.autoupdate.firmware_path)
+if [ -n "$custom_firmware_path" ]; then
+	firmware_path="$custom_firmware_path"
+fi
+
+#compares two version
+has_new_version(){
+	current_version=$1 #e.g. 0.99-14-ath9k
+	newest_version=$2 #e.g. 0.99
+	#we only compare 1st and 2nd number, the 3rd are only description, will not compare
+	old_main=$(echo "$current_version"|awk -F- '{print $1}')
+	old_sub=$(echo "$current_version"|awk -F- '{print $2}')
+	new_main=$(echo "$newest_version"|awk -F- '{print $1}')
+	new_sub=$(echo "$newest_version"|awk -F- '{print $2}')
+	var=$(awk 'BEGIN{ print "'$old_main'"<"'$new_main'" }')
+	#main version is newer
+	if [ "$var" -eq 1 ]; then
+		echo yes
+		return
+	#main version is equal, compare sub version
+	elif [ "$old_main" = "$new_main" ]; then
+		var=$(awk 'BEGIN{ print "'$old_sub'"<"'$new_sub'" }')
+		#sub version is newer
+		if [ "$var" -eq 1 ]; then
+			echo yes
+			return
+		fi
+	fi
+
+	echo no
+
+}
+
+while [ true ]
+do
+	#first check if the firmware has been downloaded
+	if [ -f /tmp/auto_firmware.img ]; then
+		#we have the firmware, we need to wait until 4:00
+		preset_time=$(uci get glconfig.autoupdate.time) #e.g. 04:00
+		now_time=$(date +'%T') #e.g. 17:39:29
+
+		#we only compare hours, yes, it is time to update
+		if [ ${preset_time:0:2} = ${now_time:0:2} -o "$debug" = "1" ]; then
+			#let's do a md5 check
+			version_list=$(wget --no-check-certificate -q "${firmware_path}/list.txt" -O -)
+			newest_version=$(echo "$version_list" |awk 'NR==1 {print $1}')
+			md5_check=$(echo "$version_list" |awk 'NR==1 {print $3}')
+
+			#json_load "{'root':$version_list}"
+			#json_select "root"
+			#json_select 1
+			#json_get_var newest_version "version"
+			#json_get_var md5_check "md5"
+			md5=$(md5sum /tmp/auto_firmware.img |awk '{print $1}')
+			if [ "$md5" != "$md5_check" ]; then
+				rm -fr /tmp/auto_firmware.img
+				continue #md5 is not correct, continue to next cycle
+			fi
+
+			#the file is correct, let's update
+			echo -----------------------------------------
+			echo -------will upgrade firmware-------------
+			echo -----------------------------------------
+			sleep 10
+			/usr/bin/flashleds &
+			killall dropbear lighttpd
+			/sbin/sysupgrade -c /tmp/auto_firmware.img
+			return
+		fi
+		#still not time to update
+
+	else
+
+		#check new versions
+		current_version=$(cat /etc/glversion) #e.g. 0.99-14-ath9k
+		version_list=$(wget --no-check-certificate -q "${firmware_path}/list.txt" -O -)
+		#json_load "{'root':$version_list}"
+		#json_select "root"
+		#json_select 1
+		#json_get_var newest_version "version"
+		#json_get_var md5_check "md5"
+		#json_get_var file "file"
+
+		newest_version=$(echo "$version_list" |awk 'NR==1 {print $1}')
+		has_new=$(has_new_version $current_version $newest_version)
+		file=$(echo "$version_list" |awk 'NR==1 {print $2}')
+		md5_check=$(echo "$version_list" |awk 'NR==1 {print $3}')
+
+		if [ "$has_new" = "yes" ]; then
+			echo "found new version, will download now"
+			wget --no-check-certificate -q "${firmware_path}/$file" -O /tmp/auto_firmware.img
+			#after download, do a md5 check
+			md5=$(md5sum /tmp/auto_firmware.img |awk '{print $1}')
+			if [ "$md5" != "$md5_check" ]; then
+				rm -fr /tmp/auto_firmware.img
+			else
+				#set to check per hour wait for 4:00am and continue to next cycle
+				interval=$one_hour
+				continue
+			fi
+		fi
+
+	fi
+
+	echo wait $interval seconds to check again
+	sleep $interval
+
+done

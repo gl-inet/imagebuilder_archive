@@ -1,0 +1,14 @@
+#!/bin/sh
+FILE="${IPKG_INSTROOT}/etc/filesystems"
+ID="ntfs-3g"
+
+if ! [ -f '/etc/filesystems' ]; then
+	echo "Create '$FILE'."
+	touch "$FILE"
+fi
+
+if ! grep -q -e '^ntfs-3g$' "$FILE"; then
+	echo "Add '$ID' to known filesystems."
+	echo "$ID" >> "$FILE"
+fi
+

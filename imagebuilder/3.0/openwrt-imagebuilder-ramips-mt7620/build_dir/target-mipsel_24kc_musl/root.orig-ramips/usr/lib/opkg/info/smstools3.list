@@ -1,0 +1,4 @@
+/usr/bin/sendsms
+/usr/bin/smsd
+/etc/init.d/smstools3
+/etc/smsd.conf

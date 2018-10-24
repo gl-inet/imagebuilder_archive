@@ -1,0 +1,59 @@
+#gl-dropdown {
+    max-width: 320px;
+    position: absolute;
+    right: 15px;
+    top: 40px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    outline-style: none;
+    margin: 0;
+    padding: 10px 0 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    z-index: 1000;
+}
+#gl-dropdown > li {
+    text-align: left;
+    padding: 10px 30px;
+    white-space: nowrap;
+    font-weight: 400;
+    line-height: 1.6;
+    cursor: pointer;
+    color: #595e7c;
+    font-size: 16px;
+    min-width: 150px;
+}
+#gl-dropdown > li:hover {
+    background: #efefef;
+    color: #409fcb;
+}
+.dropdown-enter-active {
+    transform-origin: center top;
+    animation: selectDropDown .3s;
+}
+.dropdown-leave-active {
+    transform-origin: center top;
+    animation: selectDropUp .3s;
+}
+@keyframes selectDropDown {
+    0% {
+      opacity: 0;
+      transform: scaleY(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+  @keyframes selectDropUp {
+    0% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scaleY(0);
+    }
+  }

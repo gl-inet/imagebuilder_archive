@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. /lib/functions.sh
+
+if [ "${ACTION}" = "released" ]; then
+	/usr/bin/button_released &
+elif [ "${ACTION}" = "pressed" ]; then
+	/usr/bin/button_pressed &
+fi

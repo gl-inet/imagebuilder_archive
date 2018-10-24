@@ -1,0 +1,2 @@
+/lib/modules/4.14.63/fuse.ko
+/etc/modules.d/80-fuse

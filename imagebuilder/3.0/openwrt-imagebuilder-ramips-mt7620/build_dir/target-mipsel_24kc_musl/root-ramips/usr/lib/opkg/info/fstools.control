@@ -1,0 +1,10 @@
+Package: fstools
+Version: 2018-04-16-e2436836-1
+Depends: libc, ubox
+Source: package/system/fstools
+License: GPL-2.0
+Section: base
+Maintainer: John Crispin <john@phrozen.org>
+Architecture: mipsel_24kc
+Installed-Size: 17392
+Description:  OpenWrt filesystem tools

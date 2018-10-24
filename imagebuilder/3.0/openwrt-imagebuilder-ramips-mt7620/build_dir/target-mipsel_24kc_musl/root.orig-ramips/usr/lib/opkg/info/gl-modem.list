@@ -1,0 +1,11 @@
+/usr/lib/libglmodem.so
+/usr/share/modem/operator.dat
+/usr/lib/gl/libglmodem.so
+/etc/hotplug.d/usbmisc/01_get_signal.sh
+/etc/gcom/getmodemname.gcom
+/usr/bin/gl_modem
+/etc/hotplug.d/tty/20-cimi
+/usr/share/modem/apn-config.js
+/usr/bin/modem-hotplug
+/usr/bin/modem_get_signal
+/etc/gcom/getmodemimei.gcom

@@ -1,0 +1,8 @@
+Package: gl-qos
+Version: 3.0.6-1
+Depends: libc, gl-util, libjson-c, tc, kmod-sched, kmod-sched-core, kmod-sched-connmark, kmod-ipt-ipmark, kmod-ipt-hashlimit, kmod-ipt-core, iptables, iptables-mod-conntrack-extra, iptables-mod-hashlimit, iptables-mod-ipopt, iptables-mod-u32
+Source: package/gli/gl-qos
+Section: base
+Architecture: mipsel_24kc
+Installed-Size: 33478
+Description:  Qos function for gl-inet.

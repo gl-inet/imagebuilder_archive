@@ -1,0 +1,73 @@
+#!/bin/sh
+blkdev=`dirname $DEVPATH`
+device=`basename $DEVPATH`
+hdorsd=`echo "$device" | grep -E '[sh]d*|mmcblk0*' `
+[ -n "$hdorsd" ] && {
+
+    case "$ACTION" in
+        add)
+            #when boot, the devices may not be ready, strange
+            sleep 5
+            #first time, wait unit the jffs is built
+            if [ -z  "$(mount |grep 'overlayfs:/overlay')" ]
+            then
+                sleep 40
+            fi
+            sync=sync
+            mmcblk0=`echo "$device" |grep 'mmcblk0'`
+            if [ -n "$mmcblk0" ]; then
+                sync=async
+            fi
+            s=`/usr/sbin/blkid /dev/$device|sed -n 's/.* TYPE="\([^"]*\)".*/\1/p'`
+            label=`/usr/sbin/blkid /dev/$device|sed -n 's/.*LABEL="\([^"]*\)".*/\1/p'`
+            [ -z "$label" ] && label=$device
+
+
+            if [ "$s" != 'vfat' -a "$s" != 'ntfs' -a "$s" != 'ext2' -a "$s" != "ext3" -a "$s" != "ext4" -a "$s" != "exfat" ];then
+                  return;
+            fi
+
+            mkdir -p "/mnt/$label"
+
+
+            if [ "$s" = 'vfat' ];then
+                mount -t $s -o utf8,rw,$sync,fmask=0000,dmask=0000 /dev/$device "/mnt/$label"
+            fi
+
+            if [ "$s" = 'ntfs' ];then
+                mount -t ntfs-3g -o utf8 /dev/$device "/mnt/$label"
+            fi
+
+            if [ "$s" = 'ext2' -o "$s" = 'ext3' -o "$s" = 'ext4' ];then
+                mount -t ext4 -o rw,$sync /dev/$device "/mnt/$label"
+                chmod 777 "/mnt/$label"
+                chown root:root "/mnt/$label"
+            fi
+
+            if [ "$s" = "exfat" ]; then
+                mount -t exfat -o utf8,rw,$sync /dev/$device "/mnt/$label"
+            fi
+
+            sleep 5
+
+            download_root=$(uci get glconfig.download.root)
+            if [ -z "$download_root" ]; then
+                uci set glconfig.download.root="/mnt/$label"
+                uci commit glconfig
+            fi
+
+            ;;
+
+        remove)
+            folder="$(grep /dev/$device /etc/mtab |awk '{print $2}')"
+            procs=$(fuser -m "/mnt/$folder")
+            if [ "${#procs}" -lt 10 ]; then
+                echo "$procs" | xargs kill -9
+            fi
+            umount "$folder"
+            rmdir "$folder"
+            ;;
+    esac
+    #restart lighttpd for fastcgi reset
+    /etc/init.d/lighttpd restart
+}

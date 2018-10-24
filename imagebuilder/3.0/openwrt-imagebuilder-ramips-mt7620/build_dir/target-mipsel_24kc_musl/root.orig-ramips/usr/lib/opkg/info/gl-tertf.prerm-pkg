@@ -1,0 +1,7 @@
+#!/bin/sh
+#kversion=`uname -r`
+kversion=$(cat /proc/version |cut -d ' ' -f 3)
+rmmod ter-traffic
+rm /etc/modules.d/98-ter-tertf
+rm /lib/modules/"${kversion}"/ter-traffic.ko
+exit 0

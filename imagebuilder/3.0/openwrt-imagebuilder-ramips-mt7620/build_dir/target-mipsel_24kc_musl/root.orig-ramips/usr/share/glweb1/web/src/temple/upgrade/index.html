@@ -1,0 +1,177 @@
+<div class="row" id="idUpgradePanel">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span class="circle clsHasNewVersion active"></span>
+                    {{t($lang.upgrade.upgrade)}}
+                </h4>
+            </div>
+            <div class="panel-body panel-status">
+                <ul class="nav nav-tabs">
+                    <!-- Online Upgrade -->
+                    <li class="active">
+                        <a href="#tabonlineUpgrade" data-toggle="tab">
+                            <span class="hidden-xs"> {{t($lang.upgrade.onlineUpgrade)}}</span>
+                            <span class="visible-xs-block">{{t('Online')}}</span>
+                        </a>
+                    </li>
+                    <!-- Local Upgrade -->
+                    <li role="presentation">
+                        <a href="#tabUploadFirmware" data-toggle="tab">
+                            <span class="hidden-xs">{{t($lang.upgrade.localUpgrade)}}</span>
+                            <span class="visible-xs-block">{{t('Local')}}</span>
+                        </a>
+                    </li>
+                    <!-- Auto Upgrade -->
+                    <li role="presentation">
+                        <a href="#tabAutoUpgrade" data-toggle="tab">
+                            <span class="hidden-xs">{{t($lang.upgrade.autoUpgrade)}}</span>
+                            <span class="visible-xs-block">{{t('Auto')}}</span>
+                        </a>
+                    </li>
+                </ul>
+                <br/>
+                <div class="tab-content">
+                    <!-- Online -->
+                    <div class="tab-pane fade in active" id="tabonlineUpgrade">
+                        <div class="list-group panel-status">
+                            <span class="list-group-item">
+                                <span class="text-left">{{t($lang.upgrade.currentVersion)}}</span>
+                                <div class="input-text pull-right">
+                                    <span class="pull-right " id="current_version" v-text="currentVersionVal">-</span>
+                                </div>
+                            </span>
+                            <span class="list-group-item">
+                                <span class="text-left">{{t($lang.upgrade.lastUpdate)}}</span>
+                                <div class="input-text pull-right">
+                                    <span class="pull-right " id="last_update" v-text="newVersionVal">-</span>
+                                </div>
+                            </span>
+                        </div>
+                        <br :class="{hide:hideNewUpdate}" />
+                        <!-- 自动升级 -->
+                        <div id="NewUpdatesBody" :class="{hide:hideNewUpdate}">
+                            <div class="list-group">
+                                <span class="list-group-item slider-btn-inlist upgrade-form-heading clearfix">
+                                    <span style="padding: 8px; float: left;">
+                                        {{t($lang.upgrade.avaiableUpdate)}} (
+                                        <span id="new_version" v-text="newVersionVal">-</span>
+                                        )
+                                    </span>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-default pull-right btn-ms" id="downloadFirmwareBtn" data-loading-text="<span class='fa fa-circle-o-notch glyphicon-spin-animate'></span> Downloading..."
+                                            data-complete-text="Finished" :disabled="downloadBtnDisabled || btnstatus" v-text="downloadBtnVal"
+                                            @click="downloadBtnClick">{{t($lang.upgrade.download)}}
+                                        </button>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <br :class="{hide:hideVerifyFirmware}" />
+                        <!-- 固件升级安装 -->
+                        <div id="idverifyFirmwarePanel" :class="{hide:hideVerifyFirmware}">
+                            <div class="list-group">
+                                <span class="list-group-item slider-btn-inlist upgrade-form-heading">
+                                    <div class="text-left" id="verifyHeader">{{t(verifyHeaderMsg)}}</div>
+                                </span>
+                                <span class="list-group-item verify-info">
+                                    <span class="text-left">{{t($lang.upgrade.version)}}</span>
+                                    <span class=" pull-right" id="upgrade_version" v-text="t(upgradeVersionVal)"></span>
+                                </span>
+                                <span class="list-group-item verify-info ">
+                                    <span class="text-left">{{t("MD5")}}</span>
+                                    <span class=" pull-right" id="upgrade_MD5" v-text="upgradeMD5Val">-</span>
+                                </span>
+                                <span class="list-group-item verify-info ">
+                                    <span class="text-left">{{t($lang.upgrade.verificationResult)}}</span>
+                                    <span class=" pull-right" id="verify-result">
+                                        <span id="verify-txt">{{t(resultText)}}</span>
+                                    </span>
+                                </span>
+                                <span class="list-group-item verify-info " id="KeepSettingPanel" :class="{hide:hideInstallBtn}">
+                                    <span class="text-left">{{t($lang.upgrade.keepSettings)}}</span>
+                                    <div class="pull-right" style="margin-top: -2px">
+                                        <gl-tg-btn size="22px" class="btn-toggler" theme="default" :checked="KeepSettingBtn" @onclick="setKeepSetting"></gl-tg-btn>
+                                    </div>
+                                </span>
+                                <div class="text-center" id="installBtnPanel" :class="{hide:hideInstallBtn}">
+                                    <gl-btn type="default" @click="installBtnClick" style="text-transform: capitalize">{{t($lang.upgrade.install)}}</gl-btn>
+                                </div>
+                            </div>
+                        </div>
+                        <br :class="{hide:!checkfirmware.has_new}" />
+                        <!-- 版本升级说明 -->
+                        <span class="list-group-item" v-show="checkfirmware.has_new && checkfirmware.release_note">
+                            <pre>{{checkfirmware.release_note}}</pre>
+                        </span>
+                    </div>
+                    <!-- Local -->
+                    <div class="tab-pane fade" id="tabUploadFirmware">
+                        <!-- <gl-upf :status="sta" name="firmfile" :error="errMsg" @upload="onupload"></gl-upf> -->
+                        <gl-upf :status="sta" name="firmfile" @upload="onupload" :errorMsg="errMsg"></gl-upf>
+                        <div id="idverifyFirmwarePanel" :class="{hide:hideVerifyFirmware}">
+                            <br>
+                            <div class="list-group">
+                                <span class="list-group-item slider-btn-inlist upgrade-form-heading">
+                                    <div class="text-left" id="verifyHeader">{{t(verifyHeaderMsg)}}</div>
+                                </span>
+                                <span class="list-group-item verify-info">
+                                    <span class="text-left">{{t($lang.upgrade.version)}}</span>
+                                    <span class=" pull-right" id="upgrade_version" v-text="t(upgradeVersionVal)"></span>
+                                </span>
+                                <span a class="list-group-item verify-info ">
+                                    <span class="text-left">{{t('MD5')}}</span>
+                                    <span class=" pull-right" id="upgrade_MD5" v-text="upgradeMD5Val">-</span>
+                                </span>
+                                <span class="list-group-item verify-info ">
+                                    <span class="text-left">{{t($lang.upgrade.verificationResult)}}</span>
+                                    <span class=" pull-right" id="verify-result">
+                                        <span id="verify-txt">{{t(resultText)}}</span>
+                                    </span>
+                                </span>
+                                <span class="list-group-item verify-info " id="KeepSettingPanel" :class="{hide:hideInstallBtn}">
+                                    <span class="text-left">{{t($lang.upgrade.keepSettings)}}</span>
+                                    <div class="pull-right" style="margin-top: -2px">
+                                        <gl-tg-btn size="22px" class="btn-toggler" theme="default" :checked="KeepSettingBtn" @onclick="setKeepSetting"></gl-tg-btn>
+                                    </div>
+                                </span>
+                                <div class="text-center" id="installBtnPanel" :class="{hide:hideInstallBtn}">
+                                    <gl-btn type="default" @click="installBtnClick" style="text-transform: capitalize">{{t($lang.upgrade.install)}}</gl-btn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Auto -->
+                    <div class="tab-pane fade" id="tabAutoUpgrade">
+                        <div class="list-group" id="AutoUpgradeBody">
+                            <!-- 路由器时间 -->
+                            <span class="list-group-item slider-btn-inlist clearfix">
+                                <div class="text-left up-left">{{t($lang.timerzone.routerTime)}}</div>
+                                <div class="pull-right gl-text-center up-right">{{systemTime}}</div>
+                            </span>
+                            <span class="list-group-item slider-btn-inlist upgrade-form-heading clearfix">
+                                <div style="display: inline-block;padding-top: 5px;">{{t($lang.upgrade.eaUpgrade)}}</div>
+                                <div class=" pull-right btn-toggler-right btn-switech">
+                                    <gl-tg-btn size="22px" class="btn-toggler" theme="default" v-model="enableBtnOn" @change="auto_update"></gl-tg-btn>
+                                </div>
+                            </span>
+                        </div>
+                        <br/>
+                        <div class="list-group" id="AutoUpgradeTimer">
+                            <span class="list-group-item slider-btn-inlist upgrade-form-heading clearfix">
+                                <div class="text-left pull-left">{{t($lang.upgrade.eaUpgradeTime)}}</div>
+                                <div class="pull-right upgradeTime">
+                                    <gl-select :option="timeList" v-model="autoTime" showNum="3" @input="auto_update('setTime')"></gl-select>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

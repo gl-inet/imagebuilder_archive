@@ -1,0 +1,343 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <h4 style="display:inline-block;">
+                    <span class="circle active"></span>
+                    <span>{{t($lang.firewall.Firewall)}}</span>
+                </h4>
+            </div>
+            <div class="panel-body firewall">
+                <ul class="nav nav-tabs ">
+                    <!-- Port Forwards -->
+                    <li class="active">
+                        <a href="#portForwards" data-toggle="tab">
+                            {{t($lang.firewall.Forwards)}}
+                        </a>
+                    </li>
+                    <!-- Open Ports on Router -->
+                    <li role="presentation">
+                        <a href="#openPort" data-toggle="tab">
+                            {{t($lang.firewall.onRouter)}}
+                        </a>
+                    </li>
+                    <!-- DMZ -->
+                    <li role="presentation">
+                        <a href="#dmzForwards" data-toggle="tab">
+                            DMZ
+                        </a>
+                    </li>
+                </ul>
+                <br>
+                <div class="tab-content">
+                    <!-- Port Forwards -->
+                    <div class="tab-pane fade in active" id="portForwards">
+                        <div id="scroll">
+                            <div id="idMacCloneAlertMsg" class="alert alert-info" style="padding:5px;">
+                                {{t($lang.firewall.PortForwarding)}}
+                            </div>
+                            <div style="margin: 15px 0" class=" Widthscreen">
+                                <table class="table table-hover class table-bordered text-center ">
+                                    <thead class="headColor ">
+                                        <tr>
+                                            <th class="col-sm-2 text-center">{{t($lang.firewall.Name)}}</th>
+                                            <th class="col-sm-2 text-center">{{t($lang.firewall.InternalIP)}}</th>
+                                            <th class="col-sm-2 text-center">{{t($lang.firewall.External)}}
+                                                <gl-tooltip :content="$lang.firewall.Portrange" direction="top">
+                                                    <span class="fa fa-info-circle"></span>
+                                                </gl-tooltip>
+                                            </th>
+                                            <th class="col-sm-1 text-center">{{t($lang.firewall.Internal)}}</th>
+                                            <th class="col-sm-1 text-center">{{t($lang.firewall.Protocol)}}</th>
+                                            <th class="col-sm-1 text-center">{{t($lang.firewall.Status)}}</th>
+                                            <th class="col-sm-2 text-center" class="text-center" style="min-width: 90px;">{{t($lang.firewall.Action)}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="firestPort">
+                                        <tr class="add_input">
+                                            <td class="col-sm-2 blurfwname">
+                                                <gl-input v-model="fwname" :placeholder="$lang.holdPlace.required"
+                                                    @blurValue="blurfwname" @focusValue="blurfwname"></gl-input>
+                                            </td>
+                                            <td class="col-sm-2 inner_ip">
+                                                <gl-select showNum="3" :option="iplist" v-model="inner_ip" checkLang
+                                                    input searchip @postValue="getInner_ip"></gl-select>
+                                            </td>
+                                            <td class="col-sm-2 outer_port">
+                                                <gl-input v-model="outer_port" :placeholder="$lang.holdPlace.required"
+                                                    @blurValue="blurOuter"></gl-input>
+                                            </td>
+                                            <td class="col-sm-1 inner_port">
+                                                <gl-input v-model="inner_port" :placeholder="$lang.holdPlace.required"
+                                                    @blurValue="blurInerPort"></gl-input>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <gl-select showNum="3" :option="protolist" v-model="proto" checkLang></gl-select>
+                                            </td>
+                                            <td class="col-sm-1">
+                                                <gl-select showNum="3" :option="statuslist" v-model="fwstatus"
+                                                    checkLang></gl-select>
+                                            </td>
+                                            <td class="col-sm-2" class="text-center" style="padding-top:17px">
+                                                <a @click="addListProto" v-show="!addStatus">{{t($lang.firewall.Add)}}</a>
+                                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="addStatus"></span>
+                                            </td>
+                                        </tr>
+                                       
+                                        <tr v-for="(item, index) in list" class="add_input">
+                                            <td>{{item.name}}</td>
+                                            <td>
+                                                <span v-if="index != currentIndex">{{item.inner_ip}}</span>
+                                                <gl-select showNum="3" v-else :option="iplist" v-model="item.inner_ip"
+                                                    checkLang input searchip @postValue="getmoInner_ip" @change="getmoInner_ip"
+                                                    class="fire-animate1"></gl-select>
+                                            </td>
+                                            <td>
+                                                <span v-if="index != currentIndex">{{item.outer_port}}</span>
+                                                <gl-input v-else v-model="item.outer_port" placeholder="1-65535"
+                                                    @blurValue="blurOuter" class="fire-animate2"></gl-input>
+                                            </td>
+                                            <td>
+                                                <span v-if="index != currentIndex">{{item.inner_port}}</span>
+                                                <gl-input v-else v-model="item.inner_port" :placeholder="$lang.holdPlace.required"
+                                                    @blurValue="blurInerPort" class="fire-animate3"></gl-input>
+                                            </td>
+                                            <td>
+                                                <span v-if="index != currentIndex">{{item.proto}}</span>
+                                                <gl-select showNum="3" v-else :option="protolist" v-model="item.proto"
+                                                    checkLang></gl-select>
+                                            </td>
+                                            <td>
+                                                <span v-if="index != currentIndex">{{item.status}}</span>
+                                                <gl-select showNum="3" v-else :option="statuslist" v-model="item.status"
+                                                    checkLang></gl-select>
+                                            </td>
+                                            <td class="text-center">
+                                                <span v-if="index != currentIndex">
+                                                    <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-if="appStatus&& index==btnStatus"></span>
+                                                    <a @click="checkConfig(index, true)" v-else>{{t($lang.button.modify)}}</a>
+                                                    <a @click="removefw(item.name)" style="margin-left: 10px">{{t($lang.firewall.Delete)}}</a>
+                                                </span>
+                                                <span v-else>
+                                                    <a @click="modifyfw(index,item, true)">{{t($lang.button.apply)}}</a>
+                                                    <a @click="cancelChange">{{t($lang.button.cancel)}}</a>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr v-if="list.length ==0">
+                                            <td colspan="7" class="text-center">
+                                                <h4>{{t($lang.firewall.AddData)}}</h4>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                        <span class="list-group-item text-center bdbottom" v-if="list.length != 0">
+                            <gl-btn type="modify" @click='deleteAll("two")'>{{t($lang.firewall.DeleteAll)}}</gl-btn>
+                        </span>
+                    </div>
+                    <!-- Open Ports on Router -->
+                    <div class="tab-pane fade" id="openPort">
+                        <div id="idMacCloneAlertMsg" class="alert alert-info" style="padding:5px;">
+                            {{t($lang.firewall.services)}}
+                        </div>
+                        <div style="margin: 15px 0" class="Widthscreen">
+                            <table class="table table-hover class table-bordered text-center">
+                                <thead class="headColor pre-scrollable ">
+                                    <tr>
+                                        <th class="text-center col-sm-2">{{t($lang.firewall.Name)}}</th>
+                                        <th class="text-center col-sm-2">{{t($lang.attools.port)}}</th>
+                                        <th class="text-center col-sm-2">{{t($lang.firewall.Proto)}}</th>
+                                        <th class="text-center col-sm-2">{{t($lang.firewall.Status)}}</th>
+                                        <th class="text-center col-sm-2" style="min-width: 90px;">{{t($lang.firewall.Action)}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="secondPort">
+                                    <tr class="add_input">
+                                        <td class="col-sm-2 openfwname">
+                                            <gl-input v-model="openfwname" :placeholder="$lang.holdPlace.required"
+                                                @blurValue="bluropenfwname" :disabled="!disabledShow"></gl-input>
+                                        </td>
+
+                                        <td class="col-sm-1 openListPort">
+                                            <gl-input v-model="openListPort" :placeholder="$lang.holdPlace.required"
+                                                @blurValue="bluropenListPort"></gl-input>
+                                        </td>
+                                        <td class="col-sm-1">
+                                            <gl-select showNum="3" :option="protolist" v-model="proto" checkLang></gl-select>
+                                        </td>
+                                        <td class="col-sm-1">
+                                            <gl-select showNum="3" :option="statuslist" v-model="fwstatus" checkLang></gl-select>
+                                        </td>
+                                        <td class="col-sm-2" class="text-center" style="padding-top:17px">
+                                            <a @click="addListRoute">{{t($lang.firewall.Add)}}</a>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="open_list.length ==0">
+                                        <td colspan="5" class="text-center">
+                                            <h4>{{t($lang.firewall.AddData)}}</h4>
+                                        </td>
+                                    </tr>
+                                    <tr v-for="(item, index) in open_list" v-if="open_list.length!=0" class="add_input">
+                                        <td>{{item.name}}</td>
+                                        <td>
+                                            <span v-if="index != currIndex">{{item.port}}</span>
+                                            <gl-input v-else v-model="item.port" :placeholder="$lang.holdPlace.required"
+                                                @blurValue="bluropenListPort" class="fire-animate4"></gl-input>
+                                        </td>
+                                        <td>
+                                            <span v-if="index != currIndex">{{item.proto}}</span>
+                                            <gl-select showNum="3" v-else :option="protolist" v-model="item.proto"
+                                                checkLang></gl-select>
+                                        </td>
+                                        <td>
+                                            <span v-if="index != currIndex">{{item.status}}</span>
+                                            <gl-select showNum="3" v-else :option="statuslist" v-model="item.status"
+                                                checkLang></gl-select>
+                                        </td>
+
+                                        <td>
+                                            <span v-if="index != currIndex">
+                                                <a @click="checkConfig(index)">{{t($lang.button.modify)}}</a>
+                                                <a @click="removefw(item.name,'open')" style="margin-left: 10px">{{t($lang.firewall.Delete)}}</a>
+                                            </span>
+                                            <span v-else>
+                                                <a @click="modifyfw(index,item)">{{t($lang.button.apply)}}</a>
+                                                <a @click="cancelModify">{{t($lang.button.cancel)}}</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <span class="list-group-item text-center bdbottom" v-show="open_list.length != 0">
+                            <gl-btn type="modify" @click='deleteAll("four")'>{{t($lang.firewall.DeleteAll)}}</gl-btn>
+                        </span>
+                    </div>
+                    <!-- dmz -->
+                    <div class="tab-pane fade" id="dmzForwards">
+                            <div id="idMacCloneAlertMsg" class="alert alert-info" style="padding:5px;">
+                                {{t($lang.firewall.allowsDMZ)}}
+                            </div>
+                            <div class="panel-body panel-status">
+                                <div class="dmzbox">
+                                    <ul>
+                                        <li>
+                                            <div class="float-1 mright">{{t($lang.firewall.openDMZ)}}</div>
+                                            <div style="padding-top: 6px" class="marght folat-r">
+                                                <gl-toggle-btn v-model="dmzStatus" theme="default" size="22px" @onclick="dmzBtn=false"></gl-toggle-btn>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="float-1" style="margin-right:25px">{{t($lang.firewall.dmzip)}}</div>
+                                            <div >
+                                                <gl-select showNum="3" :option="iplist" v-model="dmz_ip" input searchip @getval="checkDmz"
+                                                    @postValue="checkDmz"></gl-select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <span class="list-group-item text-center bdbottom" style="border-top:none;">
+                                <gl-btn type="default" @click="openport" :disabled="btnStatus || dmzBtn">Apply
+                                    <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-if="btnStatus"></span>
+                                </gl-btn>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- modal -->
+                <!-- <gl-modal :modalStatus="modal" :title="modalTitle">
+                    <div class="modal-body fw-body">
+                        <span class="list-group-item clearfix visible-xs">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.Protocol)}}</div>
+                            <div class="screen-float-r">
+                                <gl-select :option="protolist" v-model="proto" checkLang></gl-select>
+                            </div>
+                        </span>
+                        <span class="list-group-item clearfix visible-xs">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.Status)}}</div>
+                            <div class="screen-float-r">
+                                <gl-select :option="statuslist" v-model="fwstatus" checkLang></gl-select>
+                            </div>
+                        </span>
+                        <span class="list-group-item clearfix visible-xs" v-show="page =='one' || page =='two'">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.inner_ip)}}</div>
+                            <div class="screen-float-r">
+                                <gl-select :option="iplist" v-model="modeminner_ip" input checkLang searchip @postValue="getModemIp" @change="getModemIp"></gl-select>
+                            </div>
+                            <div style="color: red;margin: 5px 0 0px 0px;" class="text-center visible-xs visible-sm"
+                                v-if="!checkIPs">无效IP</div>
+                            <span class="pull-right visible-lg visible-md" style="padding: 10px;color: red" v-if="!checkIPs">无效IP</span>
+                        </span>
+                        <span class="list-group-item clearfix">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.Name)}}</div>
+                            <div class="screen-float-r">
+                                <gl-input v-model="fwname" :placeholder="$lang.holdPlace.required" @blurValue="blurfwname"
+                                    :disabled="!disabledShow"></gl-input>
+                            </div>
+                            <div style="color: red;margin: 5px 0 0px 0px;" class="text-center visible-xs visible-sm"
+                                v-if="!checkName">无效Name</div>
+                            <span class="pull-right visible-lg visible-md" style="padding: 10px;color: red" v-if="!checkName">无效Name</span>
+                        </span>
+                        <span class="list-group-item clearfix" v-show="page =='one' || page =='two'">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.outer_port)}}</div>
+                            <div class="screen-float-r">
+                                <gl-input v-model="outer_port" :placeholder="$lang.holdPlace.required" @blurValue="blurOuter"></gl-input>
+                            </div>
+                            <div style="color: red;margin: 5px 0 0px 0px;" class="text-center visible-xs visible-sm"
+                                v-if="!checkOuterPort">无效outer_port</div>
+                            <span class="pull-right visible-lg visible-md" style="padding: 10px;color: red" v-if="!checkOuterPort">无效outer_port</span>
+                        </span>
+                        <span class="list-group-item clearfix" v-show="page =='one' || page =='two'">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.inner_port)}}</div>
+                            <div class="screen-float-r">
+                                <gl-input v-model="inner_port" :placeholder="$lang.holdPlace.required" @blurValue="blurInerPort"></gl-input>
+                            </div>
+                            <div style="color: red;margin: 5px 0 0px 0px;" class="text-center visible-xs visible-sm"
+                                v-if="!checkInerPort">无效inner_port</div>
+                            <span class="pull-right visible-lg visible-md" style="padding: 10px;color: red" v-if="!checkInerPort">无效inner_port</span>
+                        </span>
+                        <span class="list-group-item clearfix hidden-xs" v-show="page =='one' || page =='two'">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.inner_ip)}}</div>
+                            <div class="screen-float-r">
+                                <gl-select :option="iplist" v-model="modeminner_ip" input checkLang searchip></gl-select>
+                            </div>
+                            <div style="color: red;margin: 5px 0 0px 0px;" class="text-center visible-xs visible-sm"
+                                v-if="!checkIPs">无效IP</div>
+                            <span class="pull-right visible-lg visible-md" style="padding: 10px;color: red" v-if="!checkIPs">无效IP</span>
+                        </span>
+                        <span class="list-group-item clearfix" v-show="page =='three' || page =='four'">
+                            <div class="screen-float-l pd-10">{{t($lang.attools.port)}}</div>
+                            <div class="screen-float-r">
+                                <gl-input v-model="port" :placeholder="$lang.holdPlace.required" @blurValue="blurport"></gl-input>
+                            </div>
+                            <div style="color: red;margin: 5px 0 0px 0px;" class="text-center visible-xs visible-sm"
+                                v-if="!checkport">无效端口</div>
+                            <span class="pull-right visible-lg visible-md" style="padding: 10px;color: red" v-if="!checkport">无效端口</span>
+                        </span>
+                        <span class="list-group-item clearfix hidden-xs">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.Proto)}}</div>
+                            <div class="screen-float-r">
+                                <gl-select :option="protolist" v-model="proto" checkLang></gl-select>
+                            </div>
+                        </span>
+                        <span class="list-group-item clearfix hidden-xs">
+                            <div class="screen-float-l pd-10">{{t($lang.firewall.Status)}}</div>
+                            <div class="screen-float-r">
+                                <gl-select :option="statuslist" v-model="fwstatus" checkLang></gl-select>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                        <gl-btn type="modify btnl clientBtn" @click="hideModal">{{t($lang.button.cancel)}}</gl-btn>
+                        <gl-btn type="default btnr clientBtn" @click="setFw">{{t($lang.firewall.Save)}}</gl-btn>
+                    </div>
+                </gl-modal> -->
+            </div>
+        </div>
+    </div>
+</div>

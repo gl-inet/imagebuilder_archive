@@ -1,0 +1,9 @@
+Package: fwtool
+Version: 1
+Depends: libc
+Source: package/system/fwtool
+Section: utils
+Maintainer: Felix Fietkau <nbd@nbd.name>
+Architecture: mipsel_24kc
+Installed-Size: 3373
+Description:  Utility for appending and extracting firmware metadata and signatures

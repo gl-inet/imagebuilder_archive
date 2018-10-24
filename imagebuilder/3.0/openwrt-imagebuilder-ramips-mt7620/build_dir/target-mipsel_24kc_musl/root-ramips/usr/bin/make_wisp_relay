@@ -1,0 +1,40 @@
+#!/bin/sh
+
+uci get networwk.wisp_relay
+
+if [ "$?" = "1" ]; then
+
+	uci delete network.lan.ifname
+	uci set network.wisp_relay=interface
+	uci set network.wisp_relay.proto=relay
+	uci set network.wisp_relay.network='lan1 wwan'
+
+	uci set network.lan1=interface
+	uci set network.lan1.proto='dhcp'
+	uci set network.lan1.ifname='eth1'
+
+	uci set firewall.lan1=zone
+	uci set firewall.lan1.name='lan1'
+	uci set firewall.lan1.network='lan1'
+	uci set firewall.lan1.input='ACCEPT'
+	uci set firewall.lan1.output='ACCEPT'
+	uci set firewall.lan1.forward='ACCEPT'
+
+	uci set firewall.forwarding_lan1=forwarding
+	uci set firewall.forwarding_lan1.src='lan1'
+	uci set firewall.forwarding_lan1.dest='wan'
+
+	uci set firewall.forwarding_lan11=forwarding
+	uci set firewall.forwarding_lan11.src='wan'
+	uci set firewall.forwarding_lan11.dest='lan1'
+
+	#uci set firewall.glservice_rule.enabled='1'
+	uci set firewall.@zone[1].input='ACCEPT'
+	uci set firewall.@zone[1].forward='ACCEPT'
+
+	uci commit network
+	uci commit firewall
+
+	/etc/init.d/firewall restart
+	/etc/init.d/network restart
+fi

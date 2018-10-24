@@ -1,0 +1,81 @@
+.gl-loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 8;
+}
+
+.gl-loading > div {
+  position: relative;
+  z-index: 2;
+}
+
+.gl-loading .overlay {
+  position: absolute;
+  background: rgba(55, 55, 55, 0.6);
+  overflow: hidden;
+  top: 0;
+  height: 100%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.gl-loading:before {
+  content: '';
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #00838f;
+  border-right-color: #00838f;
+  animation: style1 1s infinite linear;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: 0 0;
+  position: absolute;
+  z-index: 2;
+}
+
+@keyframes style1 {
+  0% {
+    transform: rotate(0deg) translate(-50%, -50%);
+  }
+  100% {
+    transform: rotate(360deg) translate(-50%, -50%);
+  }
+}
+.style-2 {
+  text-align: center;
+}
+
+.style-2:before {
+  display: none;
+}
+.style-2 .gl-loading-content > span {
+  width: 30px;
+  height: 30px;
+  background-color: #00838f;
+  border-radius: 100%;
+  display: inline-block;
+  animation: bouncedelay 1.4s infinite ease-in-out both;
+}
+.style-2 span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.style-2 span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}

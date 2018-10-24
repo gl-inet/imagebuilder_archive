@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <h4 style="display:inline-block;">
+                    <span class="circle active"></span>
+                    <span>{{t($lang.share.share)}}</span>
+                </h4>
+                <gl-btn type="purple" class="pull-right" :disabled="applyStatus" @click="setShare">{{t($lang.button.apply)}}</gl-btn>
+            </div>
+            <div class="panel-body panel-status ">
+                <!-- <div class="share-msg alert alert-info">
+                    {{t($lang.share.contentShared)}}
+                </div> -->
+                <span class="list-group-item slider-btn-inlist clearfix">
+                    <div class="share-left">
+                        {{t($lang.share.share_Lan)}}
+                        <gl-tooltip direction="top" :content="$lang.toolTip.usbshareTo_LAN">
+                            <span class="fa fa-info-circle"></span>
+                        </gl-tooltip>
+                    </div>
+                    <div class="share-right">
+                        <gl-switch size="22px" checked="true" theme="default" disabled></gl-switch>
+                    </div>
+                </span>
+                <span class="list-group-item slider-btn-inlist clearfix">
+                    <div class="share-left">
+                        {{t($lang.share.share_wan)}}
+                        <gl-tooltip direction="top" :content="$lang.toolTip.usbshareTo_WAN">
+                            <span class="fa fa-info-circle"></span>
+                        </gl-tooltip>
+                    </div>
+                    <div class="share-right">
+                        <gl-switch size="22px" v-model="shareget.share_on_wan" theme="default" @change="checkApply"></gl-switch>
+                    </div>
+                </span>
+                <span class="list-group-item slider-btn-inlist clearfix">
+                    <div class="share-left">
+                        {{t($lang.share.writable)}}
+                        <gl-tooltip :content="$lang.toolTip.filesystem" direction="right">
+                            <span class="fa fa-info-circle"></span>
+                        </gl-tooltip>
+
+                    </div>
+                    <div class="share-right">
+                        <gl-switch size="22px" v-model="shareget.samba_writable" theme="default" @change="checkArgee"></gl-switch>
+                    </div>
+                </span>
+                <!-- <span class="list-group-item alert alert-info"  style="padding-bottom: 0;margin-top: 5px;">
+                    <span>
+                        {{t($lang.share.usbUseInfo)}}
+                    </span>
+                    <div style="padding-top: 5px">
+                        <gl-switch size="22px" theme="default" v-model="agreeStatus" style="display: inline-block" @change="changeagStat"></gl-switch>
+                        <span class="text-danger share-agree">{{t($lang.share.agree)}}</span>
+                    </div>
+                </span> -->
+            </div>
+        </div>
+    </div>
+</div>

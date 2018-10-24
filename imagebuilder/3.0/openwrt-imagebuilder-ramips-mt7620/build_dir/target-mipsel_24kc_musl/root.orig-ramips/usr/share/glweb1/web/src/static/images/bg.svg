@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" width="960" height="560" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    .st0{fill:none;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} .st1{clip-path:url(#SVGID_2_);fill:#2D303F;} .st2{clip-path:url(#SVGID_2_);fill:url(#SVGID_3_);} .st3{clip-path:url(#SVGID_2_);fill:url(#SVGID_4_);}
+  </style>
+  <defs>
+    <path id="SVGID_1_" d="M0 0h960v560H0z"/>
+  </defs>
+  <clipPath id="SVGID_2_">
+    <use xlink:href="#SVGID_1_" overflow="visible"/>
+  </clipPath>
+  <path d="M0 0h960v560H0z" class="st1"/>
+  <radialGradient id="SVGID_3_" cx="960" cy="0" r="376.75" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#287168"/>
+    <stop offset=".11" stop-color="#295F5C"/>
+    <stop offset=".27" stop-color="#2B4A4F"/>
+    <stop offset=".45" stop-color="#2C3B46"/>
+    <stop offset=".66" stop-color="#2D3341"/>
+    <stop offset="1" stop-color="#2D303F"/>
+  </radialGradient>
+  <circle cx="960" r="376.8" class="st2"/>
+  <radialGradient id="SVGID_4_" cx="0" cy="560" r="467.75" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#287168"/>
+    <stop offset=".11" stop-color="#295F5C"/>
+    <stop offset=".27" stop-color="#2B4A4F"/>
+    <stop offset=".45" stop-color="#2C3B46"/>
+    <stop offset=".66" stop-color="#2D3341"/>
+    <stop offset="1" stop-color="#2D303F"/>
+  </radialGradient>
+  <circle cy="560" r="467.8" class="st3"/>
+</svg>

@@ -1,0 +1,161 @@
+#!/bin/sh   /etc/rc.common
+
+. /lib/functions.sh
+START=99
+USE_PROCD=1
+PROC="/usr/bin/wg"
+WFILE="/var/etc/wireguard_server.conf"
+
+servers_func()
+{
+	local name
+
+	config_get name $1 "name" 
+	config_get local_port $1 "local_port" 
+	config_get local_ip $1 "local_ip" 
+	config_get private_key $1 "private_key" 
+	config_get enable $1 "enable" 
+	#echo "name=$name local_port=$local_port local_ip=$local_ip enable=$enable"
+	
+	if [ "$enable" == "1" ];then
+		echo "[Interface]" >"$WFILE"
+		[ -n "$local_port" ] && echo -e "ListenPort = $local_port" >>"$WFILE"
+		[ -n "$private_key" ] && echo -e "PrivateKey = $private_key\n" >>"$WFILE"
+	else
+		#echo "server_func enable=0 exit"
+		exit 1
+	fi 
+}
+peers_func()
+{
+	local name 
+	local publickey
+	local allow_ip
+	local subnet
+
+	config_get name $1 "name"	
+	config_get publickey $1 "client_key"
+	config_get allow_ip $1 "client_ip"	
+	config_get subnet $1 "subnet"	""
+	#echo "name=$name publickey=$publickey allow_ip=$allow_ip allowed=$allowed"
+	echo -e "[Peer]" >>"$WFILE"
+	[ -n "$publickey" ] && echo -e "PublicKey = $publickey" >>"$WFILE"
+	if [ -n "$subnet" ];then
+		[ -n "$allow_ip" ] && echo -e "AllowedIPs = $allow_ip,$subnet" >> "$WFILE"
+		subnet_list="$subnet_list $subnet"
+	else
+		[ -n "$allow_ip" ] && echo -e "AllowedIPs = $allow_ip" >> "$WFILE"
+	fi
+	echo -e "PersistentKeepalive = 25\n" >>"$WFILE"
+}	
+wireguard_add_firewall()
+{
+	#echo "firewall local_port=$local_port"
+	# Listen Port Tcp/UDP
+	uci set firewall.AllowWireguard='rule'
+	uci set firewall.AllowWireguard.name='Allow-Wireguard'
+	uci set firewall.AllowWireguard.target='ACCEPT'
+	uci set firewall.AllowWireguard.src='wan'
+	uci set firewall.AllowWireguard.proto='udp tcp'
+	uci set firewall.AllowWireguard.family='ipv4'
+	uci set firewall.AllowWireguard.dest_port="$local_port"
+	#zone
+	uci set firewall.wireguard='zone'
+	uci set firewall.wireguard.name='wireguard'
+	uci set firewall.wireguard.input='ACCEPT'
+	uci set firewall.wireguard.forward='ACCEPT'
+	uci set firewall.wireguard.output='ACCEPT'
+	uci set firewall.wireguard.masq='1'
+	uci set firewall.wireguard.device='wg0'
+	#forwarding wireguard to wan
+	uci set firewall.wireguard_wan='forwarding'	
+	uci set firewall.wireguard_wan.src='wireguard'	
+	uci set firewall.wireguard_wan.dest='wan'	
+	#forwarding wireguard to lan
+	uci set firewall.wireguard_lan='forwarding'	
+	uci set firewall.wireguard_lan.src='wireguard'	
+	uci set firewall.wireguard_lan.dest='lan'	
+	#forwarding lan to wireguard
+	uci set firewall.lan_wireguard='forwarding'	
+	uci set firewall.lan_wireguard.src='lan'	
+	uci set firewall.lan_wireguard.dest='wireguard'	
+	uci commit firewall
+	/etc/init.d/firewall reload
+}
+wireguard_delete_firewall()
+{
+	
+	uci delete firewall.AllowWireguard
+	uci delete firewall.wireguard
+	uci delete firewall.wireguard_wan
+	uci delete firewall.wireguard_lan
+	uci delete firewall.lan_wireguard
+	uci commit firewall
+	/etc/init.d/firewall reload
+}
+init_config()
+{
+	local enable
+	rm -rf  $WFILE
+	config_load wireguard_server
+	config_foreach servers_func servers
+	#echo "out enable=$enable"
+	if [ "$enable" == "1" ];then
+		ip link del dev wg0 1>/dev/null 2>&1 || true
+		#echo "in enable=$enable"
+		config_foreach peers_func peers
+	fi
+}
+service_triggers()
+{
+	procd_add_reload_trigger wireguard_server
+}
+start_service()
+{
+	local local_ip
+	local local_port
+	local subnet_list
+
+	init_config
+	wireguard_add_firewall
+	#echo "start local_ip=$local_ip"
+	ip link add dev wg0 type wireguard
+	ip addr add "$local_ip"/24 dev wg0
+	ip link set up dev wg0
+	timeout -t 5 wg setconf wg0 $WFILE
+	runflag=`echo $?`
+	if [ "$runflag" != 0 ];then
+		ip link del wg0
+		wireguard_delete_firewall
+		rm -rf $WFILE
+		exit 1
+	fi
+	
+	for s in $subnet_list;do
+		ip route add $s dev wg0
+	done
+	env -i ACTION="ifup" INTERFACE="wg" DEVICE="wg0" /sbin/hotplug-call iface
+}
+proxy_func()
+{
+	config_get enable $1 "enable" 
+}
+stop_service()
+{
+	local enable
+	config_load wireguard
+	config_foreach proxy_func proxy
+	if [ "$enable" == "1" ];then
+		exit 1
+	fi
+	
+	wireguard_delete_firewall
+	ip link del dev wg0 1>/dev/null 2>&1
+	rm $WFILE -rf
+	env -i ACTION="ifdown" INTERFACE="wg" DEVICE="wg0" /sbin/hotplug-call iface
+}
+restart_service()
+{
+	stop_service
+	start_service
+}

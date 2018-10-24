@@ -1,0 +1,36 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2011 OpenWrt.org
+
+SERVICE_USE_PID=1
+
+START=50
+
+start() {
+	#ensure lighttpd uses the right config
+	gl_version=$(cat /etc/glversion)
+	version_right=$(cat /etc/lighttpd/lighttpd.conf |grep "version=${gl_version}")
+	if [ -z "$version_right" ]; then
+		cp /rom/etc/lighttpd/lighttpd.conf /etc/lighttpd/lighttpd.conf -f
+		sync
+	fi
+	
+	md5sum1=$(md5sum /rom/etc/lighttpd/lighttpd.conf | awk -F ' ' '{print $1}')
+	md5sum2=$(md5sum /etc/lighttpd/lighttpd.conf | awk -F ' ' '{print $1}')
+	if [ "$md5sum1" != "$md5sum2" ]; then
+		cp /rom/etc/lighttpd/lighttpd.conf /etc/lighttpd/lighttpd.conf -f
+		sync
+	fi
+
+	access_port=$(uci get glconfig.general.port)
+	[ -n "$access_port" ] && {
+		sed -i "1s/^.*$/\$SERVER[\"socket\"] == \":$access_port\" \{/" /etc/lighttpd/conf.d/10-port.conf
+		sync
+	}
+
+	mkdir -m 0755 -p /var/log/lighttpd
+	service_start /usr/sbin/lighttpd -f /etc/lighttpd/lighttpd.conf
+}
+
+stop() {
+	service_stop /usr/sbin/lighttpd
+}

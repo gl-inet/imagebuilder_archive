@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# Copyright (C) 2017 
+#
+# This is free software, licensed under the GNU General Public License v3.
+# See /LICENSE for more information.
+#
+
+FORCE="$1"
+
+# Define global variable
+VPN_DIR="/etc/openvpn/cert"
+
+CA_KEY="$VPN_DIR/ca.key"
+CA_CRT="$VPN_DIR/ca.crt"
+
+SERVER_KEY="$VPN_DIR/server.key"
+SERVER_CSR="$VPN_DIR/server.csr"
+SERVER_CRT="$VPN_DIR/server.crt"
+
+CLIENT_KEY="$VPN_DIR/client.key"
+CLIENT_CSR="$VPN_DIR/client.csr"
+CLIENT_CRT="$VPN_DIR/client.crt"
+
+DH_KEY="$VPN_DIR/dh1024.pem"
+# TA_KEY="$VPN_DIR/ta.key"
+
+create_certificates() {
+	# CA Authority
+	openssl req -nodes -x509 -days 3650 -newkey rsa:2048 -outform PEM -out \
+		$CA_CRT -keyout $CA_KEY -sha1 -subj '/CN=OpenVPN CA' >/dev/null 2>&1
+
+	# Server certificate
+	openssl req -nodes -days 3650 -newkey rsa:2048 -outform PEM -out \
+		$SERVER_CSR -keyout $SERVER_KEY -sha1 -subj '/CN=OpenVpn server' >/dev/null 2>&1
+	# Sign request
+	openssl x509 -days 3650 -req -in $SERVER_CSR -CA $CA_CRT -CAkey $CA_KEY \
+		-CAcreateserial -clrext -out $SERVER_CRT -sha1 >/dev/null 2>&1
+
+	# Client certificate
+	openssl req -nodes -days 3650 -newkey rsa:2048 -outform PEM -out \
+		$CLIENT_CSR -keyout $CLIENT_KEY -sha1 -subj '/CN=OpenVpn client' >/dev/null 2>&1
+	# Sign request
+	openssl x509 -days 3650 -req -in $CLIENT_CSR -CA $CA_CRT -CAkey $CA_KEY \
+		-CAcreateserial -clrext -out $CLIENT_CRT -sha1 >/dev/null 2>&1
+
+	# Create Diffie-Hellman Key
+	#openssl dhparam -out $DH_KEY 1024 >/dev/null 2>&1
+
+	# Create TLS Key
+	# openvpn --genkey --secret $TA_KEY
+	return 0
+}
+
+! command -v openssl >/dev/null && exit 1
+
+[ ! -d "$VPN_DIR" ] && mkdir -p "$VPN_DIR"
+
+[ -e "$CA_KEY" ] && [ -e "$CA_CRT" ] && \
+	[ -e "$SERVER_KEY" ] && [ -e "$SERVER_CRT" ] && \
+	[ -e "$CLIENT_KEY" ] && [ -e "$CLIENT_CRT" ] && \
+	[ "$FORCE"x != "force"x ] && exit 0
+
+create_certificates

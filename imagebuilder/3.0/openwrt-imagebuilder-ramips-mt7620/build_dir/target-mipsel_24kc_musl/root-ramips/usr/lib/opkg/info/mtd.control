@@ -1,0 +1,10 @@
+Package: mtd
+Version: 23
+Depends: libc, libubox
+Source: package/system/mtd
+License: GPL-2.0+
+Section: utils
+Architecture: mipsel_24kc
+Installed-Size: 12269
+Description:  This package contains an utility useful to upgrade from other firmware or 
+ older OpenWrt releases.

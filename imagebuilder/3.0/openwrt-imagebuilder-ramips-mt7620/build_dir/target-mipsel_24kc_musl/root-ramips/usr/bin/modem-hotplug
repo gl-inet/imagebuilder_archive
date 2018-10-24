@@ -1,0 +1,80 @@
+DEVPATH=/sys$1
+DEV=/dev/$2
+ACTION=$3
+BUS=$(echo $DEVPATH|cut -d '/' -f 8|cut -d ':' -f 1)
+
+check_config()
+{
+        config=$(uci get glconfig.modem.bus  2>/dev/null)
+		[ -z $config ] && return
+        for i in $config
+        do
+                [ $i = $BUS ] && return
+        done
+        exit 0
+}
+
+add_modem()
+{
+local cimi=""
+local imei=""
+local name=""
+mkdir -p /tmp/modem.$BUS
+cimi=$(gcom -d $DEV -s /etc/gcom/getimsi.gcom|tr -cd "[0-9]")
+       if [ -n "$cimi" ];then
+             echo $cimi >/tmp/modem.$BUS/cimi
+       fi
+       if [ ! -f /tmp/modem.$BUS/modem-name ];then
+                name=$(gcom -d $DEV -s /etc/gcom/getmodemname.gcom|grep Rev|cut -d ' ' -f 2)
+                if [ -n "$name" ];then
+                        echo $name >/tmp/modem.$BUS/modem-name
+                fi
+       fi
+       if [ ! -f /tmp/modem.$BUS/modem-imei  ];then
+                imei=$(gcom -d $DEV -s /etc/gcom/getmodemimei.gcom|tr -cd "[0-9]")
+                if [ -n "$imei" ];then
+                        echo $imei >/tmp/modem.$BUS/modem-imei
+                        sed -i  '/^\s*$/d' /tmp/modem.$BUS/modem-imei
+                fi
+       fi
+
+}
+
+probe_cimi()
+{
+local cimi=""
+local bus=$1
+[ -z "$bus" ] && return
+local path=$(find /sys/devices/ -name "$bus")
+[ -z "$path" ] && return
+for i in $(find $path -name "ttyUSB*"|grep -v \/tty\/|cut -d '/' -f 10)
+do
+	i=/dev/$i
+	if [ -c $i ];then
+		cimi=$(gcom -d $i -s /etc/gcom/getimsi.gcom|tr -cd "[0-9]")
+		if [ -n "$cimi" ];then
+			echo $cimi >/tmp/modem.$bus/cimi
+			break
+		fi
+		continue
+	fi	
+done
+}
+
+remove_modem()
+{
+rm -rf /tmp/modem.$BUS
+}
+
+if [ "$ACTION" = "add" ];then
+	check_config
+	add_modem
+fi
+if [ "$ACTION" = "remove" ];then
+	check_config
+	remove_modem
+fi
+if [ "$1" = "probe" ];then
+	probe_cimi $2
+fi
+

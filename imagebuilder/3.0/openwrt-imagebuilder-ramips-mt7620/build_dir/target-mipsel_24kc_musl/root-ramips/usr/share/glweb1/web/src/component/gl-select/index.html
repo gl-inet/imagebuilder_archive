@@ -1,0 +1,33 @@
+<div class="select-drop-down" :class="{'open':show}" ref="select">
+    <div class="select-control">
+        <div class="input-control" :class="{'focus':show,'placeholder':showPlaceholder,'disabled':disabled,'select-xs': long}">
+            <span v-show="defaultText == stainfo && stainfo && wifiIcon" class="clsScanWifiIcon fa fa-check text-success"></span>
+            {{checkLang ? defaultText : t(defaultText)}}
+        </div>
+        <gl-input type="text" class="select-input" v-model="defaultText" v-show="input" :check="check" @postValue="getValue" @blurValue='blurValue'></gl-input>
+        <span class="fa-angle-down fa"></span>
+    </div>
+    <transition name="slide-toggle">
+        <div class="drop-down" v-show="show">
+            <div class="drop-down-border" :style="showLiNum">
+                <ul>
+                    <li v-if="optionName" v-for="(item, index) in optionArray" @click="_itemClick(item,$event,index)" ref="li" :class="{'disabled':item.mac == stainfo && stainfo && wifiIcon || item.type != 'normal' && wifiIcon,'active': defaultIndex != -1 ? defaultIndex == index :item[optionName] == defaultText}">
+                        <span class="clsScanWifiIcon fa fa-check text-success" :class="{'iconSuccess':wifiIcon}" v-show="stainfo && item.mac == stainfo  && wifiIcon"></span>
+                        <span :class="{'selectText': wifiIcon}"> {{ checkLang ? item[optionName] : t(item[optionName])}}</span>
+                        <span style="float: right;padding-right: 10px;">
+                            <!-- DFS -->
+                            <span v-show="wifiIcon && item.type != 'normal'" class="badge badge-pill badge-secondary" style="background: #cccccc">DFS</span>
+                            <!-- 5G DFS协议不显示5G-->
+                            <span v-show="wifiIcon && item.channel >= 36 && item.type == 'normal'" class="badge badge-pill badge-secondary" style="background: #cccccc">5G</span>
+                            <!-- 是否加密 -->
+                            <span v-show="wifiIcon" :class="{'gli-icon-lock':item.encrypt!='none'}"></span>
+                            <!-- 信号强度 -->
+                            <span v-show="wifiIcon" class="glwifi" :class="['gli-icon-wifi-'+getClass(item.signal)]"></span>
+                        </span>
+                    </li>
+                    <li v-else @click="_itemClick(item,$event)" ref="li" :class="{'disabled':item.disabled,'active':item==defaultText}">{{checkLang ? item : t(item)}}</li>
+                </ul>
+            </div>
+        </div>
+    </transition>
+</div>

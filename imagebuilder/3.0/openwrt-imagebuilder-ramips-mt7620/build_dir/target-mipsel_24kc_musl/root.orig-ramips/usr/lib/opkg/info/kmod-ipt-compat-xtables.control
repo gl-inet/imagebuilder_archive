@@ -1,0 +1,10 @@
+Package: kmod-ipt-compat-xtables
+Version: 4.14.63+2.14-4
+Depends: kernel (=4.14.63-1-040e1eb571d42424f99665555568bea6), kmod-ipt-core, kmod-ip6tables
+Source: feeds/packages/net/xtables-addons
+License: GPL-2.0
+Section: kernel
+Maintainer: Jo-Philipp Wich <jo@mein.io>
+Architecture: mipsel_24kc
+Installed-Size: 784
+Description:  API compatibilty layer netfilter module

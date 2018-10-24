@@ -1,0 +1,3 @@
+/etc/init.d/gl_tertf
+/etc/modules.d/98-ter-tertf
+/usr/bin/gl_tertf

@@ -1,0 +1,9 @@
+Package: ca-bundle
+Version: 20180409
+Depends: libc
+Source: feeds/base/package/system/ca-certificates
+Section: base
+Maintainer: Christian Schoenebeck <christian.schoenebeck@gmail.com>
+Architecture: all
+Installed-Size: 119607
+Description:  System CA certificates as a bundle

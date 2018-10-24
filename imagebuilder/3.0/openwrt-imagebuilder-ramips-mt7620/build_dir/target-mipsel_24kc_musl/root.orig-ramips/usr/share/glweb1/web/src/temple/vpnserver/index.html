@@ -1,0 +1,139 @@
+<div class="row first-row-margin">
+    <div class="col-lg-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span class="circle" :class="circleClass" id="headerCircle"></span>
+                    {{t($lang.vpnserver.vpnServer)}}
+                </h4>
+            </div>
+            <div class="panel-body ">
+                <div class="list-group">
+                    <div v-if="!generate" class="panel-status">
+                        <div id="defaultStatus" v-cloak>
+                            <br/>
+                            <p>{{t($lang.vpnserver.vpnSource)}}</p>
+                            <ol>
+                                <li>{{t($lang.vpnserver.addCertificate)}}</li>
+                                <li>{{t($lang.vpnserver.modifyConfig)}}.</li>
+                                <li>{{t($lang.vpnserver.exportConfigFile)}}.</li>
+                                <li>{{t($lang.vpnserver.start)}}</li>
+                            </ol>
+                            <p>{{t($lang.vpnserver.generatCertificate)}}</p>
+                        </div>
+                        <span class="list-group-item slider-btn-inlist text-center glGp" style="border-bottom: none;">
+                            <gl-btn type="modify" class="rec gl-border" :disabled="btnapy" @click="generateing">
+                                <span class="fa fa-plus"></span>
+                                <span>{{t($lang.vpnserver.buildVpn_ss)}}</span>
+                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="btnapy"></span>
+                            </gl-btn>
+                        </span>
+                    </div>
+                    <div v-else>
+                        <span class="list-group-item input-text SSencryptionType list-group-narrow clearfix" style="padding-bottom: 0;">
+                            <span style="margin-top: 8px;float: left;">
+                                {{t($lang.vpnserver.lan_access)}}
+                                <gl-tooltip :content="$lang.toolTip.turn_on" direction="top">
+                                    <span class="fa fa-exclamation-circle"></span>
+                                </gl-tooltip>
+                            </span>
+                            <span class="pull-right" style="margin-top: 5px;">
+                                <gl-tg-btn size="22px" theme="default" v-model="ovpnconfig.access" @onclick="blockclient(ovpnconfig)" style="display: inline-block;"></gl-tg-btn>
+                            </span>
+                        </span>
+                        <div v-if="ovpnstatus.status !=='started'">
+                            <span class="list-group-item list-group-narrow clearfix">
+                                <div class="text-left pull-left ">
+                                    <span>
+                                        {{t($lang.vpnserver.address)}}
+                                    </span>
+                                </div>
+                                <div class="list-input-field">
+                                    <gl-input v-model="ovpnconfig.subnet" :disabled="btname=='Modify'" :placeholder="$lang.holdPlace.required"></gl-input>
+                                </div>
+                            </span>
+                            <span class="list-group-item list-group-narrow clearfix">
+                                <div class="text-left pull-left ">
+                                    <span>{{t($lang.vpnserver.netmask)}}</span>
+                                </div>
+                                <div class="list-input-field">
+                                    <!-- <gl-tooltip :content="$lang.vpnserver.enterSubnetConfigures" direction="left" :toolShow="btnstatus"> -->
+                                    <gl-input v-model="ovpnconfig.mask" :disabled="btname=='Modify'" :placeholder="$lang.holdPlace.required"></gl-input>
+                                    <!-- </gl-tooltip> -->
+                                </div>
+                            </span>
+                            <span class="list-group-item list-group-narrow clearfix">
+                                <div class="text-left pull-left ">
+                                    <span>{{t($lang.vpnserver.port)}}</span>
+                                </div>
+                                <div class="list-input-field">
+                                    <!-- <gl-tooltip :content="$lang.vpnserver.enterSubnetConfigures" direction="left" :toolShow="btnstatus"> -->
+                                    <gl-input v-model="ovpnconfig.port" :disabled="btname=='Modify'" :placeholder="$lang.holdPlace.required"></gl-input>
+                                    <!-- </gl-tooltip> -->
+                                </div>
+                            </span>
+                            <span class="list-group-item input-text SSencryptionType list-group-narrow clearfix">
+                                <div class="text-left pull-left ">
+                                    <span>{{t($lang.vpnserver.encryption)}}</span>
+                                </div>
+                                <div class="list-input-field">
+                                    <gl-select :option="encryptArray" :disabled="btname=='Modify'" v-model="ovpnconfig.auth"></gl-select>
+                                </div>
+                            </span>
+                            <span class="list-group-item input-text SSencryptionType list-group-narrow clearfix">
+                                <div class="text-left pull-left ">
+                                    <span>{{t($lang.vpnserver.proto)}}</span>
+                                </div>
+                                <div class="list-input-field">
+                                    <gl-select :option="ProtoArray" :disabled="btname=='Modify'" v-model="ovpnconfig.proto" style="text-transform: uppercase"></gl-select>
+                                </div>
+                            </span>
+                        </div>
+
+                        <div v-else class="panel-clients" style="border-bottom: none">
+                            <div class="list-group client-list ">
+                                <span class="list-group-item client-list-heading">
+                                    <div>
+                                        <ul class="client-list-row ">
+                                            <li class="col-md-6 col-xs-6 ssclient-ip">{{t($lang.vpnserver.ip)}}</li>
+                                            <li class="col-md-6 col-xs-6 ssclient-data text-left hidden-xxs ">{{t($lang.vpnserver.sentReceived)}}</li>
+                                        </ul>
+                                    </div>
+                                </span>
+                                <div class="">
+                                    <span class="list-group-item client-item" style="border-bottom: none">
+                                        <ul class="client-list-row ">
+                                            <li class="col-md-6 col-xs-6 ssclient-ip">{{ovpnstatus.ipaddr}}</li>
+                                            <li class="col-md-6 col-xs-6 ssclient-data text-left hidden-xxs ">{{getFlow(parseInt(ovpnstatus.tx_bytes))}}/{{getFlow(parseInt(ovpnstatus.rx_bytes))}}</li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="list-group-item slider-btn-inlist text-center glGp" style="border-bottom: none;border-top: none">
+                            <gl-btn type="modify" v-show="btname =='Apply' && !checkServer && !btnapy" @click="checkBtn">{{t($lang.button.cancel)}}</gl-btn>
+                            <!-- modify and apply -->
+                            <gl-btn v-show="generate && modifyStat && modifyBtn && !checkServer" :type="btname=='Modify'? 'modify': 'purple'" :disabled="ovpnstatus.status=='started' || btnapy"
+                                @click="applyConfig">
+                                <span>{{t(btname)}}</span>
+                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="btnmfy"></span>
+                            </gl-btn>
+                            <!-- 开启关闭 -->
+                            <gl-btn v-show="generate && btname !=='Apply'" :type="typename" @click="startOvpn" :disabled="checkServer">
+                                <span>{{t(btnName)}}</span>
+                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="checkServer"></span>
+                            </gl-btn>
+                            <!-- 导出配置 -->
+                            <a @click="exportfile" class="vpn-export hidden-xs">{{t($lang.vpnserver.exportConfig)}}</a>
+                        </span>
+                        <span class="list-group-item visible-xs" style="text-align: right;">
+                            <a @click="exportfile">{{t($lang.vpnserver.exportConfig)}}</a>
+                        </span>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

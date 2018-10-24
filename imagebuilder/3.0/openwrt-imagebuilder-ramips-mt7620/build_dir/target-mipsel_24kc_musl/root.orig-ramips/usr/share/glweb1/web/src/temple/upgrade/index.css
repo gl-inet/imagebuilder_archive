@@ -1,0 +1,56 @@
+.upgrade-form-heading {
+    /* height: 54px; */
+    padding: 5px 15px;
+}
+.upgrade-form-heading>.btn-right>.btn-default {
+    border-radius: 25px;
+}
+span.upgrade-form-heading>a.gli-btn-light {
+    padding: 5px 12px 3px 12px;
+    margin: -4px -10px 0 15px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+span.upgrade-form-heading>input {
+    border: none;
+}
+#AutoUpgradeTimer .select-drop-down {
+    margin-right: 0;
+}
+#upgrade-ul > li {
+    width: 50%;
+    text-align: center;
+}
+#installBtnPanel {
+    padding-top: 10px;
+}
+.btn-switech {
+    margin: 0px 0px -10px 0!important;
+}
+.up-left {
+    float: left;
+    padding: 10px;
+}
+.up-right {
+    padding: 10px;
+}
+@media screen and (max-width: 768px) {
+    .upgradeTime {
+        float: none!important;
+        text-align: center;
+    }
+    /* .nav>li>a {
+        padding: 10px 5px;
+    } */
+    .verify-info{
+        padding: 10px 5px;
+    }
+    .up-left,
+    .up-right {
+        float: none!important;
+        text-align: center;
+    }
+}
+.box:hover{
+    background-color: #bdced1;
+    }

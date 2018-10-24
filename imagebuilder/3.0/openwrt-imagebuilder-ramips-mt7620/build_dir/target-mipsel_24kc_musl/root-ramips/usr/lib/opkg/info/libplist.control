@@ -1,0 +1,11 @@
+Package: libplist
+Version: 2.0.0-3
+Depends: libc, libxml2
+Source: feeds/packages/libs/libplist
+License: LGPL-2.1+
+LicenseFiles: COPYING.LESSER
+Section: libs
+Maintainer: Lukasz Baj <l.baj@radytek.com>
+Architecture: mipsel_24kc
+Installed-Size: 22780
+Description:  A library to handle Apple Property List format whereas it's binary or XML

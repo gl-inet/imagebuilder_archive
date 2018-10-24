@@ -1,0 +1,7 @@
+/usr/lib/gl/libovpnsrvapi.so
+/etc/config/vpn_service
+/usr/bin/gen_ovpn
+/etc/init.d/vpn-service
+/usr/lib/libovpnsrvapi.so
+/usr/bin/cert_manager
+/etc/openvpn/cert/dh1024.pem

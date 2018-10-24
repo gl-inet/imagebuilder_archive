@@ -1,0 +1,7 @@
+#!/bin/sh
+
+[ $SEEN -gt 0 ] || exit 0
+
+#This is the hidden button of AR300M
+echo "$BUTTON ${ACTION}" > /dev/console
+ /usr/bin/switchaction &

@@ -1,0 +1,34 @@
+/* base */
+[v-cloak] {
+    display: none;
+}
+
+body {
+    font-family: 'Roboto', Arial, Myriad pro, Microsoft YaHei, Heiti TC, Droid Sans;
+    font-size: 13px;
+    height: 100%;
+    overflow-x: hidden !important;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+body>button {
+    transition: all 0.3s ease 0s;
+}
+
+p {
+    color: #555 !important;
+}
+
+option {
+    padding: 5px 3px!important;
+    min-height: 1.8em;
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset;
+}

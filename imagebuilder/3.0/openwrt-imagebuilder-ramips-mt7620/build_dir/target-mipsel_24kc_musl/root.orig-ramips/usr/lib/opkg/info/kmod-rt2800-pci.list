@@ -1,0 +1,2 @@
+/etc/modules.d/rt2800-pci
+/lib/modules/4.14.63/rt2800pci.ko

@@ -1,0 +1,59 @@
+<div class="row" style="margin-top: 25px;">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li>
+                <a @click="$router.push('internet')" style="text-transform: uppercase">{{t($lang.knownWifi.internet)}}</a>
+            </li>
+            <li class="gl-active">{{t($lang.attools.atCommand)}}</li>
+            <!-- <li><a @click="$router.push('setWifi')">{{t($lang.knownWifi.scan)}}</a></li> -->
+        </ol>
+        <ul class="nav nav-pills" style="margin-bottom: 10px;" v-show="modems && modems.length > 1">
+            <li role="presentation" v-for="(item,index) in modems" :class="{'active': modemIndex == index}" @click="checkModem(index)">
+                <a target="_blank">{{t('Modem') + (index + 1)}}</a>
+            </li>
+        </ul>
+        <div class="panel with-nav-tabs panel-default" v-for="(item, index) in list" v-if="modemIndex == index || list.length == 1">
+            <div class="panel-heading">
+                <h4>
+                    <span class="circle active"></span>
+                    {{t($lang.attools.atCommand)}}
+                </h4>
+            </div>
+            <div class="panel-body panel-status hotspot-list">
+                <span class="list-group-item clearfix">
+                    <div class="text-left pull-left" style="padding: 10px 0;">
+                        {{t($lang.attools.shortcut)}}
+                    </div>
+                    <div class="list-input-field">
+                        <gl-select :option="atlist" optionName="msg" @change="getMsg"></gl-select>
+                    </div>
+                </span>
+                <span class="list-group-item clearfix">
+                    <div class="text-left pull-left" style="padding: 10px 0;">
+                        {{t($lang.attools.atCommand)}}
+                    </div>
+                    <div class="list-input-field">
+                        <gl-input v-model="atmsg" type="text" :placeholder="$lang.holdPlace.required"></gl-input>
+                    </div>
+                </span>
+                <span class="list-group-item clearfix">
+                    <div class="text-left pull-left" style="padding: 10px 0;">
+                        {{t($lang.attools.port)}}
+                    </div>
+                    <div class="list-input-field">
+                        <gl-select :option="item.ports" v-model="item.control_port"></gl-select>
+                    </div>
+                </span>
+                <span id="connectingMsgSpan" class="list-group-item vpn-status" v-show="atItem">
+                    {{atItem}}
+                </span>
+                <div style="padding: 10px;text-align: center">
+                    <gl-btn type="default" @click="sendtools(item)" :disabled="isSend">
+                        {{t($lang.button.send)}}
+                        <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="isSend"></span>
+                    </gl-btn>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

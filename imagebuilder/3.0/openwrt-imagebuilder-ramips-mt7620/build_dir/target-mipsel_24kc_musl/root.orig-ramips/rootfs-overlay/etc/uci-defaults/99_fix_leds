@@ -1,0 +1,117 @@
+#!/bin/sh
+
+. /usr/share/libubox/jshn.sh
+
+CFG="/etc/board.json"
+
+generate_led() {
+	local key="$1"
+	local cfg="led_$key"
+
+	json_select led
+	json_select "$key"
+	json_get_vars name sysfs type trigger default
+
+	uci -q batch <<-EOF
+		delete system.$cfg
+		set system.$cfg='led'
+		set system.$cfg.name='$name'
+		set system.$cfg.sysfs='$sysfs'
+		set system.$cfg.trigger='$trigger'
+		set system.$cfg.default='$default'
+	EOF
+
+	case "$type" in
+		gpio)
+			local gpio inverted
+			json_get_vars gpio inverted
+			uci -q batch <<-EOF
+				set system.$cfg.trigger='gpio'
+				set system.$cfg.gpio='$gpio'
+				set system.$cfg.inverted='$inverted'
+			EOF
+		;;
+
+		netdev)
+			local device mode
+			json_get_vars device mode
+			uci -q batch <<-EOF
+				set system.$cfg.trigger='netdev'
+				set system.$cfg.mode='$mode'
+				set system.$cfg.dev='$device'
+			EOF
+		;;
+
+		usb)
+			local device
+			json_get_vars device
+			uci -q batch <<-EOF
+				set system.$cfg.trigger='usbdev'
+				set system.$cfg.interval='50'
+				set system.$cfg.dev='$device'
+			EOF
+		;;
+
+		usbport)
+			local ports port
+			json_get_values ports ports
+			uci set system.$cfg.trigger='usbport'
+			for port in $ports; do
+				uci add_list system.$cfg.port=$port
+			done
+		;;
+
+		rssi)
+			local iface minq maxq offset factor
+			json_get_vars iface minq maxq offset factor
+			uci -q batch <<-EOF
+				set system.$cfg.trigger='rssi'
+				set system.$cfg.iface='rssid_$iface'
+				set system.$cfg.minq='$minq'
+				set system.$cfg.maxq='$maxq'
+				set system.$cfg.offset='$offset'
+				set system.$cfg.factor='$factor'
+			EOF
+		;;
+
+		switch)
+			local port_mask speed_mask
+			json_get_vars port_mask speed_mask
+			uci -q batch <<-EOF
+				set system.$cfg.port_mask='$port_mask'
+				set system.$cfg.speed_mask='$speed_mask'
+			EOF
+		;;
+
+		portstate)
+			local port_state
+			json_get_vars port_state
+			uci -q batch <<-EOF
+				set system.$cfg.port_state='$port_state'
+			EOF
+		;;
+
+		timer|oneshot)
+			local delayon delayoff
+			json_get_vars delayon delayoff
+			uci -q batch <<-EOF
+				set system.$cfg.trigger='$type'
+				set system.$cfg.delayon='$delayon'
+				set system.$cfg.delayoff='$delayoff'
+			EOF
+		;;
+	esac
+
+	json_select ..
+	json_select ..
+}
+
+json_init                                 
+json_load "$(cat ${CFG})"
+
+# Fix leds
+json_get_keys keys led
+for key in $keys; do generate_led $key; done
+uci commit system
+
+exit 0

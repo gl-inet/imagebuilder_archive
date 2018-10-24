@@ -1,0 +1,72 @@
+#!/bin/sh /etc/rc.common
+
+#This script start/stop opening the service port in Wan
+
+START=18
+glvideorule=
+glservicerule=
+
+service_port=$(uci get glconfig.general.port)
+wan_access_enabled=$(uci get glconfig.ddns.enabled)
+video_port=$(uci get mjpg-streamer.core.port)
+
+
+start(){
+	config_load 'firewall'
+	config_foreach test 'rule'
+
+	if [ "$wan_access_enabled" = "1" ] || [ -z "$glservicerule" -a -n "$service_port" ]; then
+		new_service_rule
+	fi
+	if [ "$wan_access_enabled" != "1" ]; then
+		uci set firewall.glservice_rule.enabled='0'
+	fi
+
+#	new_bt_rule
+	uci commit firewall
+}
+
+new_service_rule(){
+	uci set firewall.glservice_rule='rule'
+	uci set firewall.glservice_rule.name='glservice'
+	uci set firewall.glservice_rule.dest_port="$service_port"
+	uci set firewall.glservice_rule.proto='tcp udp'
+	uci set firewall.glservice_rule.src='wan'
+	uci set firewall.glservice_rule.target='ACCEPT'
+}
+
+new_bt_rule(){
+	uci set firewall.btservice_rule='rule'
+	uci set firewall.btservice_rule.name='btservice'
+	uci set firewall.btservice_rule.dest_port="6911"
+	uci set firewall.btservice_rule.proto='tcp udp'
+	uci set firewall.btservice_rule.src='wan'
+	uci set firewall.btservice_rule.target='ACCEPT'
+}
+test(){
+	local s="$1"
+	config_get name "$s" 'name'
+	if [ "$name" = 'glvideo' ]; then
+		#found video rule
+		glvideorule=1
+		if [ -n "$video_port" ]; then
+			uci set firewall."$1".dest_port="$video_port"
+			uci set firewall."$1".proto='tcp udp'
+			uci set firewall."$1".src='wan'
+			uci set firewall."$1".target='ACCEPT'
+		fi
+	else
+		if [ "$name" = 'glservice' ]; then
+			#found glservice rule
+			glservicerule=1
+			if [ -n "$service_port" ]; then
+				uci set firewall."$1".dest_port="$service_port"
+				uci set firewall."$1".proto='tcp udp'
+				uci set firewall."$1".src='wan'
+				uci set firewall."$1".target='ACCEPT'
+			fi
+		fi
+
+	fi
+}
+

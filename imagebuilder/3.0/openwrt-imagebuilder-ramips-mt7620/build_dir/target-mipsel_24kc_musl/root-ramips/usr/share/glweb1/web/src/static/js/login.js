@@ -1,0 +1,1 @@
+window.open('idx_vue.html');

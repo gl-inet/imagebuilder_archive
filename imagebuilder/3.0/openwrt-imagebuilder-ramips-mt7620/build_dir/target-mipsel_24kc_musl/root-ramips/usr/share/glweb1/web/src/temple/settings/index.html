@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <h4 style="display:inline-block;">
+                    <span class="circle active"></span>
+                    <span>{{t($lang.setting.btnSetting)}}</span>
+                </h4>
+                <gl-btn type="purple" class="pull-right" @click="checkType" :disabled="btnStatus">{{t($lang.button.apply)}}</gl-btn>
+            </div>
+            <div class="panel-body panel-status">
+                <span class="setting-box clearfix list-group">
+                    <!-- 设置拨码开关模式 -->
+                    <span class="clearfix list-group-item ">
+                        <div class="setting-left">
+                            <gl-label :labelValue="$lang.label.switchBtn"></gl-label>
+                        </div>
+                        <div class="setting-right">
+                            <gl-select :option="chooseState" v-model="param" style="width: 240px" @change="checkBtn"></gl-select>
+                        </div>
+                    </span>
+                    <div class="tt-img">
+                        <img src="/src/static/images/button-switch-01.png" class="setting-Img">
+
+                        <div v-show="parstatus=='vpn'">
+                            <div style="width:47%; display:inline-block;vertical-align:top;">
+                                <div id="title_left" style=" font-weight:bold">{{t($lang.setting.vpn_on)}}</div>
+                                <div id="content_left" class="content_switch">{{t($lang.setting.turnon_vpn)}}.
+                                    <!-- ，{{t($lang.setting.applyCustom_dns)}} -->
+                                </div>
+                            </div>
+                            <div style="width:47%; display:inline-block;vertical-align:top">
+                                <div id="title_right" style="font-weight:bold">{{t($lang.setting.vpn_off)}}</div>
+                                <div id="content_right" class="content_switch">{{t($lang.setting.turnoff_vpn)}}.
+                                    <!-- ，{{t($lang.setting.unapplyCustom_dns)}} -->
+                                </div>
+                            </div>
+                        </div>
+                        <div v-show="parstatus=='wg'">
+                            <div style="width:47%; display:inline-block;vertical-align:top;">
+                                <div id="title_left" style=" font-weight:bold">{{t($lang.setting.wire_on)}}</div>
+                                <div id="content_left" class="content_switch">{{t($lang.setting.turnon_wg)}}.
+                                    <!-- ，{{t($lang.setting.applyCustom_dns)}} -->
+                                </div>
+                            </div>
+                            <div style="width:47%; display:inline-block;vertical-align:top">
+                                <div id="title_right" style="font-weight:bold">{{t($lang.setting.wire_off)}}</div>
+                                <div id="content_right" class="content_switch">{{t($lang.setting.turnoff_wg)}}.
+                                    <!-- ，{{t($lang.setting.unapplyCustom_dns)}} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:none">
+                        <label class="div-help-title">{{t($lang.setting.diy)}}</label>
+                        <ul class="list-entry">
+                            <li>
+                                <a href="http://www.gl-inet.com/docs/smartrouter/?diy_serial.html">{{t($lang.setting.useSerialUART)}}</a>
+                            </li>
+                            <li>
+                                <a href="http://www.gl-inet.com/docs/smartrouter/?diy_arduino.html">{{t($lang.setting.workArduino)}}</a>
+                            </li>
+                            <li>
+                                <a href="http://www.gl-inet.com/docs/smartrouter/?diy_compile.html">{{t($lang.setting.useOwnFirmware)}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+/usr/lib/gl/libwgserverapi.so
+/etc/init.d/wireguard_server
+/etc/config/wireguard_server
+/usr/bin/wgserver_unittest
+/usr/lib/libwgserverapi.so

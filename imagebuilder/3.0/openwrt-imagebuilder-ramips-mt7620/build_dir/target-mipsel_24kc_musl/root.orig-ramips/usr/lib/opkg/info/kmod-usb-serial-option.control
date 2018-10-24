@@ -1,0 +1,9 @@
+Package: kmod-usb-serial-option
+Version: 4.14.63-1
+Depends: kernel (=4.14.63-1-040e1eb571d42424f99665555568bea6), kmod-usb-serial-wwan, kmod-usb-serial
+Source: package/kernel/linux
+License: GPL-2.0
+Section: kernel
+Architecture: mipsel_24kc
+Installed-Size: 5287
+Description:  Kernel support for Option HSDPA modems

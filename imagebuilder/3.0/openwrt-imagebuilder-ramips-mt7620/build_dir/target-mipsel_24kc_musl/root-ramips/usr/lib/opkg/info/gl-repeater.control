@@ -1,0 +1,8 @@
+Package: gl-repeater
+Version: 3.0.10-1
+Depends: libc, libubus, gl-util, gl-wifi-core
+Source: package/gli/gl-repeater
+Section: base
+Architecture: mipsel_24kc
+Installed-Size: 5227
+Description:  GL Health

@@ -1,0 +1,80 @@
+<div class="temple" style="position:absolute;top:0px;bottom:0px;left:0px;right:0px;">
+    <div id="glmsg"></div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="wrapper" style="background: transparent;
+    border: 0px;">
+        <div class="navbar-header" id="glmess">
+            <a class="navbar-brand " href="#">
+                <div id="gli-logo"></div>
+            </a>
+            <span class="navbar-brand"></span>
+        </div>
+    </nav>
+    <header id="myloginpage" class="carousel slide login_background">
+        <!-- 兼容startsWith -->
+        <!-- <div class="typeOfRouter" :id="routerInfo&&routerInfo.success&&routerInfo.model.startsWith('usb')?'adminpw-usb-router':'adminpw-mini-router'" v-cloak></div>         -->
+        <div class="typeOfRouter" :id="appIcon" v-cloak></div>
+        <div class="item" id="router_pwd">
+            <div class="row adminpw-row ">
+                <div class="loginBox">
+                    <h3 class="font_default text-center">
+                        {{t($lang.login.adminPsw)}}
+                    </h3>
+                    <p class=" text-center active clsDeviceSSID">
+                        GL-{{t(productName)}}
+                    </p>
+                    <div class="form-group form-group-lg " id="LoginPannel">
+                        <div class="password-input-style col-md-12" id="LoginPassword" v-cloak>
+                            <div class="input-append input-group" id="inputBox">
+                                <!-- 登录input -->
+                                <gl-input type="password" v-model="password" @keyup.enter.native="login" :placeholder="$lang.login.enterPsw"
+                                    inputShow class="loginInput" v-focus></gl-input>
+                            </div>
+                            <br />
+                            <div class="text-center">
+                                <div id="LoginAdminpw" class="col-md-12">
+                                    <gl-btn type="default" class="btn" @click="login">{{t($lang.button.login)}}</gl-btn>
+                                </div>
+                                <div id="ForgetAdminpw" class="col-md-12">
+                                    <h5 class="font_default text-center ">
+                                        <a href="#" v-on:click="modalClose" class="btn-forgetAdminpw"
+                                            style="cursor:pointer" id="idFgtPwdBtn">
+                                            {{t($lang.login.forgetPsw)}} ?</a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- <div v-cloak class="alert alert-danger alert-dismissible fade in AlertAdminpw" v-if="isPwdWrong"
+                            id="idWrngPwdPanel" role="alert">
+                            <button type="button" v-on:click="isPwdWrong=false" class="close" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4>
+                                <span class="fa-info-circle fa"></span>
+                                {{t($lang.login.incorrectPsw)}}!</h4>
+                        </div> -->
+                        <!-- forget the password -->
+                        <gl-modal :modalStatus="msgModal" size="sm" v-if="isForgetPwd=true">
+                            <div class="modal-body software-body" style="overflow: visible">
+                                <h4>
+                                    <span class="glyphicon glyphicon-question-sign"></span>{{t($lang.login.forgetPsw)}}
+                                    ?</h4>
+                                <p>{{t($lang.login.resetRouter)}}:
+                                    <a href="https://docs.gl-inet.com">https://docs.gl-inet.com</a>
+                                </p>
+                            </div>
+                            <div class="modal-footer" style="text-align: center">
+                                <gl-btn class="clientBtn" type="default" @click="closeModal" style="padding: 5.5px 24px">{{t($lang.button.close)}}</gl-btn>
+                            </div>
+                        </gl-modal>
+
+
+                        <div class="text-center font_default hide" id="idLodingPanel">
+                            <!-- <h4><span class="glyphicon glyphicon-repeat glyphicon-spin-animate"></span>{{t($lang.login.loading)}}</h4> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

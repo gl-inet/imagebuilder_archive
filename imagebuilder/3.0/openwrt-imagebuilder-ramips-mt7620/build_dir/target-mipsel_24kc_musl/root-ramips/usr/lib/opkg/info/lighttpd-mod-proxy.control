@@ -1,0 +1,11 @@
+Package: lighttpd-mod-proxy
+Version: 1.4.48-1
+Depends: libc, lighttpd
+Source: feeds/gli_pub/lighttpd
+License: BSD-3c
+LicenseFiles: COPYING
+Section: net
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Architecture: mipsel_24kc
+Installed-Size: 8158
+Description:  Proxy module

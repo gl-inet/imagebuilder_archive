@@ -1,0 +1,6 @@
+#inputDNS1Check .gl-input,
+#inputDNS2Check .gl-input,
+#inputDNS1Check .gl-input > input,
+#inputDNS2Check .gl-input > input{
+    width: 100%;
+}

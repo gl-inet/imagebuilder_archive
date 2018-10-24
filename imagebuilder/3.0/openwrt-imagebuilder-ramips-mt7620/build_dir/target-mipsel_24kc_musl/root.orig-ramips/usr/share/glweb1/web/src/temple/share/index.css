@@ -1,0 +1,19 @@
+.share-msg {
+    text-align: center;
+    font-size: 18px
+}
+.share-left {
+    float: left;
+}
+.share-right {
+    float: right;
+}
+.share-right,
+.share-left {
+    margin-top: 10px
+}
+.share-agree {
+    vertical-align: top;
+    margin-top: 3px;
+    display: inline-block
+}

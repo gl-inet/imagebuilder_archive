@@ -1,0 +1,161 @@
+#!/bin/sh
+# 
+# Created on: Tue 07 Aug 2018 04:54:20 PM CST
+#     Author: lancer
+#      Email: luoyejiang0701@qq.com
+#
+
+model=$(awk -F': ' '/machine/ {print tolower($NF)}' /proc/cpuinfo |cut -d- -f2-)
+
+fix_ovpn() {
+    local num=$(ls /etc/openvpn/*.ovpn 2>/dev/null | wc -l)
+    [ "$num" = "0" ] && return
+
+    local server_path=$(uci get glconfig.openvpn.ovpn 2>/dev/null)
+    local server_name=""
+    [ -n "$server_path" ] && {
+    	server_name=$(ls $server_path | xargs -n 1 basename)
+    }
+
+    local max_num=$(ls /etc/openvpn/ | wc -l)
+    for i in `seq 1 $max_num`
+    do
+        local ovpnclients=$(ls /etc/config/ovpnclients)
+        [ -z "$ovpnclients" ] && touch /etc/config/ovpnclients
+        
+        local exist=$(ls /etc/openvpn/ovpn$i/ 2>/dev/null)
+        [ -z "$exist" ] && {
+            mkdir -p /etc/openvpn/ovpn$i
+            mv /etc/openvpn/*.ovpn /etc/openvpn/ovpn$i/
+            uci set ovpnclients.ovpn$i=client
+            uci set ovpnclients.ovpn$i.description="ovpn$i"
+            uci set ovpnclients.ovpn$i.path="/etc/openvpn/ovpn$i"
+            uci set ovpnclients.ovpn$i.defaultserver="$server_name"
+            uci set glconfig.openvpn.ovpn="/etc/openvpn/ovpn$i/$server_name"
+            uci commit ovpnclients
+            uci commit glconfig
+            return
+        }
+    done
+}
+
+fix_firewall() {
+	local check_gl_firewall=$(cat /etc/firewall.user | grep "gl-firewall")
+	[ -z "$check_gl_firewall" ] && echo "gl-firewall &" >> /etc/firewall.user
+
+	forwarding_vpn1=$(uci get firewall.forwarding_vpn1 2>/dev/null)
+	[ -n "$forwarding_vpn1" ] && {
+		dest=$(uci get firewall.@forwarding[0].dest)
+		[ "$dest" != "wan" ] && {
+			uci delete firewall.@forwarding[0]
+			uci add firewall forwarding
+			uci set firewall.@forwarding[0]=forwarding
+			uci set firewall.@forwarding[0].src='lan'
+			uci set firewall.@forwarding[0].dest='wan'
+			uci set firewall.@forwarding[0].enabled='0'
+			uci set firewall.forwarding_vpn1=forwarding
+			uci set firewall.forwarding_vpn1.dest='ovpn'
+			uci set firewall.forwarding_vpn1.src='lan'
+			uci commit firewall
+		}
+	}
+}
+
+fix_opkg() {
+	local option_check_sig=$(cat /etc/opkg.conf | grep "option check_signature 1")
+	[ -n "$option_check_sig" ] && sed -i '/check_signature/d' /etc/opkg.conf
+}
+
+fix_hwmode() {
+	local hwmode=$(uci get wireless.radio0.hwmode)
+	[ "$hwmode" = "11ng" ] && {
+		uci set wireless.radio0.hwmode='11g'
+		uci commit wireless
+	}
+		
+	hwmode=$(uci get wireless.radio1.hwmode)
+	[ "$hwmode" = "11ng" ] && {
+		uci set wireless.radio1.hwmode='11g'
+		uci commit wireless
+	}
+}
+
+fix_dns() {
+	local wan_proto=$(uci get network.wan.proto)
+	local wan_dns=$(uci get network.wan.dns)
+	if [ -n "$wan_dns" ] && [ "$wan_proto" = "dhcp" ]; then
+		uci delete network.wan.dns
+		uci set network.wan.peerdns='1'
+	fi
+	uci delete network.modem.dns
+	uci delete network.modem.peerdns
+	uci delete network.tethering.dns
+	uci delete network.tethering.peerdns
+	uci delete network.wwan.dns
+	uci delete network.wwan.peerdns
+	uci commit network
+	/etc/init.d/network reload
+
+	local manual_dns=$(uci get glconfig.general.manual_dns)
+	local dns_server=$(uci get dhcp.@dnsmasq[0].server)
+	if [ -n "$dns_server" ] && [ -z "$manual_dns" ] && [ "$dns_server" != "127.0.0.1#53535" ]; then
+		uci set glconfig.general.manual_dns='1'
+		uci delete glconfig.general.custom_dns
+		uci commit glconfig
+	fi
+}
+
+fix_wireless() {
+	local band=""
+	
+	case "$model" in
+	        "mt300a"|\
+	        "mt300n"|\
+	        "mt300n-v2"|\
+	        "ar150"|\
+	        "mifi"|\
+	        "usb150"|\
+	        "ar300m")
+	                band=$(uci get wireless.radio0.band 2>/dev/null)
+	                [ -z "$band" ] && uci set wireless.radio0.band='2G'; uci commit wireless
+	        		;;
+	        "ar750"|\
+	        "x1200")
+	                ;;
+	        *)
+	esac
+}
+
+fix_mac_clone() {
+	local macclone=$(uci get glconfig.general.macclone 2>/dev/null)
+	local wan_mac=$(uci get network.wan.macaddr 2>/dev/null)
+	local wwan_mac=$(uci get wireless.sta.macaddr 2>/dev/null)
+	[ -n "$wan_mac" ] || [ -n "$wwan_mac" ] && [ -z "$macclone" ] && {
+	    uci set glconfig.general.macclone='1'
+	    uci commit glconfig
+	}
+}
+
+fix_txpower() {
+	case "$model" in
+	        "ar750")
+	        		txpower=$(uci get wireless.radio1.txpower 2>/dev/null)
+	        		[ -z "$txpower" ] && uci set wireless.radio1.txpower='20'; uci commit wireless
+	                ;;
+	        *)
+	esac
+}
+
+fix_remove_unuse() {
+	sed -i 'drop_caches;sysnc/d' /etc/crontabs/root
+}
+
+fix_ovpn
+fix_firewall
+fix_opkg
+fix_hwmode
+fix_dns
+fix_wireless
+fix_mac_clone
+fix_txpower
+fix_remove_unuse

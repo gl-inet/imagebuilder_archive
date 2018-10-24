@@ -1,0 +1,34 @@
+.loginInput > input {
+    width: 100%!important;
+    padding-top: 10px!important;
+    padding-bottom: 10px!important;
+}
+.loginInput {
+    width: 100%;
+}
+.loginBox {
+    width: 24%;
+    margin: 0 auto;
+}
+#inputBox {
+    width: 100%;
+}
+#glmsg {
+    width: 100%;
+    max-width: 100%
+}
+@media  (min-width: 1024px) and  (max-width: 1200px){
+    .loginBox {
+        width: 40%;
+    }
+}
+@media screen and (max-width: 1024px ) {
+    .loginBox {
+        width: 60%;
+    }
+}
+@media screen and (max-width: 767px) {
+    .loginBox {
+        width: 80%;
+    }
+}

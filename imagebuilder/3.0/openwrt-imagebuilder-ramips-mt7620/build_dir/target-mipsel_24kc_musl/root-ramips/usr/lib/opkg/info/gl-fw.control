@@ -1,0 +1,8 @@
+Package: gl-fw
+Version: 3.0.1-1
+Depends: libc, iptables, ip-full, gl-util, libuci
+Source: package/gli/gl-fw
+Section: glinet
+Architecture: mipsel_24kc
+Installed-Size: 8464
+Description:  This service allows open port and port forwarding.

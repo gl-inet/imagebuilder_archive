@@ -1,0 +1,10 @@
+Package: swconfig
+Version: 11
+Depends: libc, libuci, libnl-tiny
+Source: feeds/base/package/network/config/swconfig
+License: GPL-2.0
+Section: base
+Maintainer: Felix Fietkau <nbd@nbd.name>
+Architecture: mipsel_24kc
+Installed-Size: 8748
+Description:  Switch configuration utility

@@ -1,0 +1,10 @@
+.gl-label {
+    font-weight: normal;
+    margin-bottom: 0;
+    vertical-align: top;
+}
+.labelIcon {
+    font-style: normal;
+    display: inline-block;
+    /* vertical-align: top; */
+}

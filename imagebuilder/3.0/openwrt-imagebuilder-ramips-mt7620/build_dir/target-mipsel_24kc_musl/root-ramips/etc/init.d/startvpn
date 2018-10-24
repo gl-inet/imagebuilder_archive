@@ -1,0 +1,127 @@
+#!/bin/sh /etc/rc.common
+
+START=90
+
+lan2wan_forwarding() {
+	local src
+	local dest
+	local action="$1"
+	local sections=$(uci show firewall | sed -n 's/\(.*\)=forwarding/\1/p')
+
+	[ -n "$sections" ] || return 1
+
+	for section in $sections; do
+		src=$(uci get $section.src)
+		dest=$(uci get $section.dest)
+	
+		[ -n "$src" -a "$src" = "lan" -a -n "$dest" -a "$dest" = "wan" ] || continue
+
+		echo "well"
+		if [ "$action" = "enable" ]; then
+			uci set $section.enabled="1"
+		elif [ "$action" = "disable" ]; then
+			uci set $section.enabled="0"
+		else
+			echo "Please add options: enable|disable"
+		fi
+	done
+}
+
+set_ovpn_config() {
+	local action="$1"
+
+	if [ "$action" = "add" ]; then
+		uci set firewall.vpn_zone=zone
+		uci set firewall.vpn_zone.name='ovpn'
+		uci set firewall.vpn_zone.input='ACCEPT' 
+		uci set firewall.vpn_zone.forward='REJECT'
+		uci set firewall.vpn_zone.output='ACCEPT'  
+		uci set firewall.vpn_zone.network='ovpn'
+		uci set firewall.vpn_zone.masq='1'             
+		uci set firewall.forwarding_vpn1='forwarding' 
+		uci set firewall.forwarding_vpn1.dest='ovpn'
+		uci set firewall.forwarding_vpn1.src='lan'         
+	elif [ "$action" = "del" ]; then
+		uci delete firewall.vpn_zone
+		uci delete firewall.forwarding_vpn1
+	else
+		echo "Please add options: add|del"
+	fi
+}
+
+ovpn_firewall_start() {
+	set_ovpn_config add
+	lan2wan_forwarding disable
+
+	uci commit firewall
+	/etc/init.d/firewall reload
+	# flush old connecting
+	echo " "  >/proc/net/nf_conntrack
+}
+
+ovpn_firewall_stop() {
+	set_ovpn_config del
+	lan2wan_forwarding enable
+
+	uci commit firewall
+	/etc/init.d/firewall reload
+}
+
+start() {
+	local ip
+	local host
+	local pre_host
+
+	/etc/init.d/openvpn disable
+	enabled=$(uci get glconfig.openvpn.enable)
+	[ -z "$enabled" -o "$enabled" = "0" ] && return;
+
+	ovpn=$(uci get glconfig.openvpn.ovpn)
+	[ -n "$ovpn" ] || return
+
+	host=$(grep "^remote " $ovpn 2>/dev/null | awk '{print $2}')
+	[ -n "$host" ] && {
+		pre_host=$(uci get glconfig.openvpn.host)
+		ip=$(resolveip $host | egrep '[0-9]{1,3}(\.[0-9]{1,3}){3}' | head -n 1)
+		[ -n "$ip" -a "$ip" != "$pre_host" ] && {
+			uci set glconfig.openvpn.host="$ip"
+			uci commit glconfig
+		} 
+	}
+
+	tap=$(cat "$ovpn" |grep 'dev tap')
+	ifname=
+	if [ -n "$tap" ]; then
+		uci set network.ovpn='interface'
+		uci set network.ovpn.ifname='tap0'
+		uci set network.ovpn.proto='none'
+		ifname="tap0"
+	else
+		uci set network.ovpn='interface'
+		uci set network.ovpn.ifname='tun0'
+		uci set network.ovpn.proto='none'
+		ifname="tun0"
+	fi
+
+	uci commit network
+
+	ovpn_firewall_start
+
+	/usr/sbin/openvpn --config "$ovpn" --script-security 2 --route-delay 2 --route-up /usr/bin/ovpn_check_route --remap-usr1 SIGHUP --writepid /var/run/ovpn_client.pid &
+
+	(sleep 1; /etc/init.d/network reload) &
+}
+
+stop() {
+	kill -SIGINT $(pgrep -f "openvpn") >/dev/null 2>&1
+	ovpn_firewall_stop
+
+   	host=$(uci get glconfig.openvpn.host)
+    [ -n "$host" ] && {
+                ip route del $host
+    }
+	
+	uci delete network.ovpn
+	uci commit network
+	(sleep 1; /etc/init.d/network reload) &
+}

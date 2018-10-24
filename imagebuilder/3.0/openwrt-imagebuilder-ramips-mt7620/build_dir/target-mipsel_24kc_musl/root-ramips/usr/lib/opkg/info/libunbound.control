@@ -1,0 +1,11 @@
+Package: libunbound
+Version: 1.8.1-2
+Depends: libc, libopenssl, libpthread
+Source: feeds/gli_pub/unbound
+License: BSD-3-Clause
+LicenseFiles: LICENSE
+Section: libs
+Maintainer: Eric Luehrsen <ericluehrsen@gmail.com>
+Architecture: mipsel_24kc
+Installed-Size: 669100
+Description:  This package contains the Unbound shared library.

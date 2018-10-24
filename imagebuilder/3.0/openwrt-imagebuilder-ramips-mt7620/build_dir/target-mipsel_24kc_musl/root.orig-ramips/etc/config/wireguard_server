@@ -1,0 +1,5 @@
+config servers 
+	option local_ip '10.0.0.1'
+	option local_port '51820'
+	option enable '0'
+

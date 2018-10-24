@@ -1,0 +1,8 @@
+/etc/dnsmasq.conf
+/usr/share/dnsmasq/rfc6761.conf
+/usr/lib/dnsmasq/dhcp-script.sh
+/usr/share/acl.d/dnsmasq_acl.json
+/etc/config/dhcp
+/etc/hotplug.d/ntp/25-dnsmasqsec
+/etc/init.d/dnsmasq
+/usr/sbin/dnsmasq

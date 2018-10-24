@@ -6177,6 +6177,47 @@ Felix Fietkau <nbd@nbd.name>
 @@
 
 
+Source-Makefile: package/gl_qos/Makefile
+
+Package: gl-qos
+Version: 1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +gl-util +libjson-c +tc +kmod-sched +kmod-sched-core +kmod-sched-connmark +kmod-ipt-ipmark +kmod-ipt-hashlimit +kmod-ipt-core +iptables +iptables-mod-conntrack-extra +iptables-mod-hashlimit +iptables-mod-ipopt +iptables-mod-u32
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: gl-inet
+Repository: base
+Title: GL iNet Qos Function
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_NETFILTER_XT_MATCH_U32=m CONFIG_NET_SCH_CBQ=m CONFIG_NET_CLS=m CONFIG_NET_CLS_FLOW=m CONFIG_NET_SCH_INGRESS=m CONFIG_NET_CLS_U32=m CONFIG_NET_SCH_SFQ=m CONFIG_NET_SCH_PRIO=m 
+Description: Qos function for gl-inet.
+
+@@
+
+
+Source-Makefile: package/gl_util/Makefile
+
+Package: gl-util
+Version: 3.0.17-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpthread +libuci +libjson-c +libiwinfo
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: gl-inet
+Repository: base
+Title: GL iNet common libary
+Maintainer: 
+Source: 
+Type: ipkg
+Description: GL iNet common libary
+
+@@
+
+
 Source-Makefile: package/kernel/acx-mac80211/Makefile
 
 Package: kmod-acx-mac80211
@@ -23673,6 +23714,27 @@ Description: Driver for RTC RV5C386A (used in WL-700gE and WL-HDD)
 @@
 
 
+Source-Makefile: package/kernel/rtc-sd2068/Makefile
+
+Package: kmod-rtc-sd2068
+Submenu: Other modules
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_ar71xx
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Driver for RTC SD2068
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_RTC_CLASS=y
+Description: Driver for RTC SD2068
+
+@@
+
+
 Source-Makefile: package/kernel/spi-gpio-custom/Makefile
 
 Package: kmod-spi-gpio-custom
@@ -23689,6 +23751,26 @@ Maintainer:
 Source: 
 Type: ipkg
 Description:  Kernel module for register a custom spi-gpio platform device.
+
+@@
+
+
+Source-Makefile: package/kernel/ter-traffic/Makefile
+
+Package: kmod-ter-traffic
+Submenu: Other modules
+Version: <LINUX_VERSION>+3.0.1-1
+Depends: 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Driver for Traffic Statistics (used by all router)
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Driver for Traffic Statistics (used by all router)
 
 @@
 
@@ -30117,7 +30199,7 @@ Jo-Philipp Wich <jo@mein.io>
 Source-Makefile: package/network/utils/iwinfo/Makefile
 
 Package: libiwinfo
-Version: 2018-07-24-94b1366de313c4d1c0c1ea8f0b859bc44d0b231a-1
+Version: 2018-07-24-94b1366de313c4d1c0c1ea8f0b859bc44d0b231a-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +PACKAGE_kmod-cfg80211:libnl-tiny +libuci +libubus
 Conflicts: 
 Menu-Depends: 
@@ -30136,7 +30218,7 @@ Jo-Philipp Wich <jo@mein.io>
 
 Package: libiwinfo-lua
 Submenu: Lua
-Version: 2018-07-24-94b1366de313c4d1c0c1ea8f0b859bc44d0b231a-1
+Version: 2018-07-24-94b1366de313c4d1c0c1ea8f0b859bc44d0b231a-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libiwinfo +liblua
 Conflicts: 
 Menu-Depends: 
@@ -30154,7 +30236,7 @@ Jo-Philipp Wich <jo@mein.io>
 @@
 
 Package: iwinfo
-Version: 2018-07-24-94b1366de313c4d1c0c1ea8f0b859bc44d0b231a-1
+Version: 2018-07-24-94b1366de313c4d1c0c1ea8f0b859bc44d0b231a-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libiwinfo
 Conflicts: 
 Menu-Depends: 
@@ -33695,6 +33777,225 @@ Nicolas Thill <nico@openwrt.org>
 @@
 
 
+Source-Makefile: package/feeds/gli_pub/cups/Makefile
+
+Package: cups
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcups +libcupsmime +libcupscgi +libcupsppdc +libusb-1.0
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Repository: gli_pub
+Title: Common UNIX Printing System (daemon)
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System (daemon)
+http://www.cups.org/
+
+@@
+
+Package: libcups
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +zlib +libpthread +libpng +libjpeg
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Repository: gli_pub
+Title: Common UNIX Printing System - Core library
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - Core library
+http://www.cups.org/
+
+@@
+
+Package: libcupscgi
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcups
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Repository: gli_pub
+Title: Common UNIX Printing System - CGI library
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - CGI library
+http://www.cups.org/
+
+@@
+
+Package: libcupsimage
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcups
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Repository: gli_pub
+Title: Common UNIX Printing System - Image library
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - Image library
+http://www.cups.org/
+
+@@
+
+Package: libcupsmime
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcups
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Repository: gli_pub
+Title: Common UNIX Printing System - MIME library
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - MIME library
+http://www.cups.org/
+
+@@
+
+Package: libcupsppdc
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcups +libstdcpp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Repository: gli_pub
+Title: Common UNIX Printing System - PPDC library
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - PPDC library
+http://www.cups.org/
+
+@@
+
+Package: cups-bsd
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcups
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Repository: gli_pub
+Title: Common UNIX Printing System - BSD commands (old)
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - BSD commands (old)
+http://www.cups.org/
+
+@@
+
+Package: cups-client
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcups +libcupsimage +libcupsmime
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Repository: gli_pub
+Title: Common UNIX Printing System - Client commands
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - Client commands
+http://www.cups.org/
+
+@@
+
+Package: cups-filters
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcupsimage
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Repository: gli_pub
+Title: Common UNIX Printing System - Filter
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - Filter
+http://www.cups.org/
+
+@@
+
+Package: cups-ppdc
+Submenu: Printing
+Version: 2.1.4-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libcupsppdc
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Repository: gli_pub
+Title: Common UNIX Printing System - PPDC utils
+Maintainer: 
+Source: cups-2.1.4-source.tar.gz
+Type: ipkg
+Description: 	Common UNIX Printing System - PPDC utils
+http://www.cups.org/
+
+@@
+
+
+Source-Makefile: package/feeds/gli_pub/cups-bjnp/Makefile
+Build-Depends: cups
+
+Package: cups-bjnp
+Submenu: Printing
+Version: 2.0-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread cups
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Repository: gli_pub
+Title: BJNP protocol backend for CUPS
+Maintainer: 
+Source: cups-bjnp-2.0.tar.gz
+Type: ipkg
+Description: CUPS backend for the canon printers using the proprietary USB over
+IP BJNP protocol. This backend allows Cups to print over the network
+to a Canon printer. It currently supports Cups 1.2 and Cups 1.3 and
+is designed by reverse engineering.
+http://sourceforge.net/projects/cups-bjnp/
+
+@@
+
+
 Source-Makefile: package/feeds/gli_pub/dns-forwarder/Makefile
 
 Package: dns-forwarder
@@ -34622,7 +34923,7 @@ Source-Makefile: package/feeds/gli_pub/unbound/Makefile
 
 Package: unbound
 Submenu: IP Addresses and Names
-Version: 1.7.3-2
+Version: 1.8.1-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libopenssl +libunbound
 Conflicts: 
 Menu-Depends: 
@@ -34633,7 +34934,7 @@ Repository: gli_pub
 Title: Validating Recursive DNS Server (daemon)
 Maintainer: Eric Luehrsen <ericluehrsen@gmail.com>
 Require-User: unbound=553:unbound=553
-Source: unbound-1.7.3.tar.gz
+Source: unbound-1.8.1.tar.gz
 License: BSD-3-Clause
 LicenseFiles: LICENSE
 Type: ipkg
@@ -34644,7 +34945,7 @@ Eric Luehrsen <ericluehrsen@gmail.com>
 
 Package: unbound-anchor
 Submenu: IP Addresses and Names
-Version: 1.7.3-2
+Version: 1.8.1-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libopenssl +unbound +libexpat
 Conflicts: 
 Menu-Depends: 
@@ -34654,7 +34955,7 @@ Category: Network
 Repository: gli_pub
 Title: Validating Recursive DNS Server (DSKEY utility)
 Maintainer: Eric Luehrsen <ericluehrsen@gmail.com>
-Source: unbound-1.7.3.tar.gz
+Source: unbound-1.8.1.tar.gz
 License: BSD-3-Clause
 LicenseFiles: LICENSE
 Type: ipkg
@@ -34665,7 +34966,7 @@ Eric Luehrsen <ericluehrsen@gmail.com>
 
 Package: unbound-control
 Submenu: IP Addresses and Names
-Version: 1.7.3-2
+Version: 1.8.1-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libopenssl +unbound
 Conflicts: 
 Menu-Depends: 
@@ -34675,7 +34976,7 @@ Category: Network
 Repository: gli_pub
 Title: Validating Recursive DNS Server (control utility)
 Maintainer: Eric Luehrsen <ericluehrsen@gmail.com>
-Source: unbound-1.7.3.tar.gz
+Source: unbound-1.8.1.tar.gz
 License: BSD-3-Clause
 LicenseFiles: LICENSE
 Type: ipkg
@@ -34686,7 +34987,7 @@ Eric Luehrsen <ericluehrsen@gmail.com>
 
 Package: unbound-control-setup
 Submenu: IP Addresses and Names
-Version: 1.7.3-2
+Version: 1.8.1-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libopenssl +unbound-control +openssl-util
 Conflicts: 
 Menu-Depends: 
@@ -34696,7 +34997,7 @@ Category: Network
 Repository: gli_pub
 Title: Validating Recursive DNS Server (control setup)
 Maintainer: Eric Luehrsen <ericluehrsen@gmail.com>
-Source: unbound-1.7.3.tar.gz
+Source: unbound-1.8.1.tar.gz
 License: BSD-3-Clause
 LicenseFiles: LICENSE
 Type: ipkg
@@ -34707,7 +35008,7 @@ Eric Luehrsen <ericluehrsen@gmail.com>
 
 Package: unbound-host
 Submenu: IP Addresses and Names
-Version: 1.7.3-2
+Version: 1.8.1-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libopenssl +libunbound
 Conflicts: 
 Menu-Depends: 
@@ -34717,7 +35018,7 @@ Category: Network
 Repository: gli_pub
 Title: Validating Recursive DNS Server (lookup utility)
 Maintainer: Eric Luehrsen <ericluehrsen@gmail.com>
-Source: unbound-1.7.3.tar.gz
+Source: unbound-1.8.1.tar.gz
 License: BSD-3-Clause
 LicenseFiles: LICENSE
 Type: ipkg
@@ -34727,7 +35028,7 @@ Eric Luehrsen <ericluehrsen@gmail.com>
 @@
 
 Package: libunbound
-Version: 1.7.3-2
+Version: 1.8.1-2
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libopenssl +libpthread
 Conflicts: 
 Menu-Depends: 
@@ -34737,7 +35038,7 @@ Category: Libraries
 Repository: gli_pub
 Title: Validating Recursive DNS Server (library)
 Maintainer: Eric Luehrsen <ericluehrsen@gmail.com>
-Source: unbound-1.7.3.tar.gz
+Source: unbound-1.8.1.tar.gz
 License: BSD-3-Clause
 LicenseFiles: LICENSE
 Type: ipkg

@@ -1,0 +1,90 @@
+.gl-input {
+    display: inline-block;
+    position: relative;
+    border-radius: 0; 
+    width: 100%;
+    min-width: 180px;
+}
+.gl-input > input:hover {
+    border-color: #595e7c;
+}
+.gl-input > input {
+    outline: none;
+    border: none;
+    padding: 0 36px 0 12px;
+    width: 100%;
+    border: 1px solid #ccc;
+    -webkit-appearance: none; 
+    border-radius: 0; 
+    position: relative;
+    text-overflow: ellipsis;
+    border-radius:3px; 
+    height: 38px;
+    /* line-height: 38px; */
+}
+.gl-input > span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    padding: 10px 8px;
+    text-align: center;
+    line-height: 100%;
+    cursor: pointer;
+    color: #ccc;
+    z-index: 9;
+    border: 1px solid #ccc;
+    transition: all 0.5s; 
+    border-radius: 0 3px 3px 0; 
+    
+}
+.gl-input > span:hover {
+    box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);
+    /* transform: scale(1.05); */
+}
+/* .gl-input > span > i:hover {
+    color: #595e7c;
+} */
+.gl-input > input[disabled] {
+    background-color: #d5dade;
+    border-color: #b5bdc3;
+    cursor: not-allowed;
+    opacity: 1;
+    /* background-color: #ddd;
+    border-color: #ccc; */
+}
+.gl-input::before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: #ec644b;
+    z-index: 10;
+    transition: width .5s;
+}
+.gl-input .error {
+    background: #f2dede;
+}
+.gl-input.weak::before {
+    width: 25%;
+    background: #ec644b; 
+}
+.gl-input.medium::before {
+    width: 50%;
+    background: #e87e04;
+}
+.gl-input.strong::before {
+    width: 75%;
+    background: #efbf17;
+}
+.gl-input.superstrong::before {
+    width: 100%;
+    background: #3c763d;
+}
+@media (max-width: 768px) {
+    .gl-input > input[disabled] {
+        color: #000!important;
+    }
+}

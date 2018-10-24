@@ -1,0 +1,54 @@
+.ssclientLabel {
+    display: block;
+    width: 180px;
+}
+.ss_left {
+    float: left;
+    height: 100%;
+    /* line-height: 100%; */
+    padding: 10px 5px;
+}
+.ss_right {
+    float: right;
+}
+.ssclientLabel > .select-drop-down {
+    margin-right: 0;
+}
+.clientBtn.button{
+    width: 80px;
+}
+.Publickey {
+    word-break: break-all
+}
+.ss-left {
+    float: left;
+    padding: 10px;
+}
+@media screen and  (max-width: 768px) {
+    .ssclientLabel {
+        padding: 5px;
+        float: none;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .modal-body {
+        overflow-y: auto;
+        max-height: 389px;
+    }
+    .ss-left {
+        float: none!important;
+        display: block;
+        text-align: center;
+    }
+    .ss-right {
+        float: none!important;
+        margin: 0 auto;
+        width: 180px;
+    }
+}
+@media screen and  (max-width: 320px) {
+    .modal-body {
+        overflow-y: auto;
+        max-height: 230px;
+    }
+}

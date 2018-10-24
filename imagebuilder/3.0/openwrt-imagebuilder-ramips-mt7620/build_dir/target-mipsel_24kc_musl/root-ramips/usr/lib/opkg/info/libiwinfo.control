@@ -1,0 +1,11 @@
+Package: libiwinfo
+Version: 2018-07-24-94b1366d-2
+Depends: libc, libnl-tiny, libuci, libubus
+Source: package/network/utils/iwinfo
+License: GPL-2.0
+Section: libs
+Maintainer: Jo-Philipp Wich <jo@mein.io>
+Architecture: mipsel_24kc
+Installed-Size: 23563
+Description:  Wireless information library with consistent interface for proprietary Broadcom,
+ nl80211 and wext driver interfaces.

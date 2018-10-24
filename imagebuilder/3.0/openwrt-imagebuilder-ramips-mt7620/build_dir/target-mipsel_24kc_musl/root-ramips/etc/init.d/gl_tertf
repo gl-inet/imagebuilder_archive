@@ -1,0 +1,22 @@
+#!/bin/sh  /etc/rc.common
+
+. /lib/functions.sh
+. /lib/functions/network.sh
+
+START=99
+USE_PROCD=1
+
+start_service()
+{
+	local lanip
+	lanip=`uci get network.lan.ipaddr`
+	echo -n "$lanip" >/tmp/tertfip
+	kernel=`uname -r`
+	insmod /lib/modules/${kernel}/ter-traffic.ko
+}
+stop_service()
+{
+	rmmod ter-traffic
+	rm /tmp/tertfip -rf
+	rm /etc/tertfinfo -rf
+}

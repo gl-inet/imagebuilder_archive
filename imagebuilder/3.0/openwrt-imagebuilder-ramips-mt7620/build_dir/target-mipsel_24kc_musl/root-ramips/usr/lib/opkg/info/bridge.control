@@ -1,0 +1,11 @@
+Package: bridge
+Version: 1.5-5
+Depends: libc
+Source: feeds/packages/net/bridge-utils
+License: GPL-2.0+
+LicenseFiles: COPYING
+Section: net
+Architecture: mipsel_24kc
+Installed-Size: 8132
+Description:  Manage ethernet bridging: a way to connect networks together to
+ form a larger network.

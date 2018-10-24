@@ -1,0 +1,380 @@
+<div class="" id="idClientsPanel">
+    <!-- No WLAN -->
+    <div class="row" id="NoClientsPanel" :class="{hide:!(!wlan5g&&!wlan24g&&!wire)}">
+        <div class="col-lg-12">
+            <div class="panel panel-default panel-client">
+                <div class="panel-heading">
+                    <h4>
+                        <span class="circle active"></span>{{t($lang.clients.noWlanct)}}.
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Get WLAN -->
+    <div class="row" id="HasClientPanel" :class="{hide:(!wlan5g&&!wlan24g&&!wire)}">
+        <div class="col-lg-12">
+            <div class="panel panel-default panel-client">
+                <div class="panel-heading">
+                    <h4 style="text-transform: uppercase">
+                        <span class="circle active"></span>
+                        {{t($lang.clients.clients)}}
+                    </h4>
+                    <a type="button" class="btn btn-default gli-btn-dark pull-right disabled hide" href="#">
+                        {{t($lang.clients.applyAll)}}
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content Widthscreen">
+                        <table class="table">
+                            <thead>
+                                <tr class="error" style="background-color:#e9f4f4;font-size: 13px;font-weight: bold">
+                                    <th class=" hidden-sm wifi-rank hidden-xs text-center" style="padding-left: 15px;">#</th>
+                                    <th class="col-lg-2 col-md-2 col-sm-3 col-xs-4 wifi-name tex-limited text-center">
+                                        {{t($lang.clients.name)}}</th>
+                                    <th class="col-lg-2 col-md-2 col-sm-3 col-xs-4 wifi-mac  text-center hidden-xs hidden-sm">{{t($lang.clients.ip_mac)}}</th>
+                                    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-1 wifi-mac  hidden-xs" style="padding-left: 15px">{{t($lang.clients.CurrentRate)}}</th>
+                                    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-1 wifi-mac  hidden-xs hidden-sm text-center">{{t($lang.clients.Traffic)}}</th>
+                                    <th class="col-lg-1 col-md-1 col-sm-3 col-xs-3 wifi-mac  text-center">{{t($lang.clients.block)}}</th>
+                                    <th class="col-lg-3 col-md-3 col-sm-3 col-xs-4 client-list-block" style="text-align:center;line-height: 40px;">QoS</th>
+                                </tr>
+                            </thead>
+                            <tbody class="clsWifiClientsList text-center">
+                                <tr v-if="wire.length!=0">
+                                    <td colspan="7" class="nav_tips">{{t($lang.clients.WiredDevice)}}</td>
+                                </tr>
+                                <!--LAN 有线-->
+                                <tr class="clsLanClientsItem" v-for="(item, index) in wire">
+                                    <td class=" hidden-sm wifi-client-rank hidden-xs" style="padding-left: 15px;line-height: 45px;">{{index+1}}</td>
+                                    <td class="col-lg-2 col-md-2 col-sm-3 col-xs-4 wifi-client-name tex-limited">
+                                        <span style="font-size: 15px;font-weight: 600;color:#000" class="hidden-xs hidden-sm">{{item.name}}</span>
+                                        <span style="font-size: 15px;font-weight: 600;color:#000" class="hidden-lg hidden-md">{{truncation(item.name)}}</span>
+                                        <!-- <span v-show="item.type == '1'" class="badge badge-pill badge-secondary mid_unset">5G</span> -->
+                                        <br>
+                                        <span class="hidden-lg hidden-md">{{item.ip}}</span>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 hidden-xs hidden-sm">
+                                        <span class="betsyLoad">
+                                            <span>{{item.ip}}</span>
+                                            <span>{{item.mac}}</span>
+                                        </span>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 col-sm-3 hidden-xs">
+                                        <div class="betsyLoadList" style="padding-left: 10px">
+                                            <div class="iconList">
+                                                <span class="fa fa-arrow-up margin_bottom"></span>
+                                                <span class="fa fa-arrow-down"></span>
+                                            </div>
+                                            <div class="qosList">
+                                                <span>&nbsp;{{bytesToSize(item.cuload)}}</span>
+                                                <span>&nbsp;{{bytesToSize(item.cdload)}}</span>
+                                            </div>
+                                            <div v-if="item.quload != 0 ||item.qdload!=0||item.qdload!=0" class="tipsList">
+                                                <gl-tooltip :content="`<span class='fa fa-arrow-up'>${bytesToSizeNum(item.quload)}</span><br/><span class='fa fa-arrow-down'>${bytesToSizeNum(item.qdload)}</span>`"
+                                                    direction="top">
+                                                    <span class="fa fa-exclamation-circle waiting" style="font-size: 16px"></span>
+                                                </gl-tooltip>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 hidden-xs hidden-sm">
+                                        <div class="betsyLoadList" style="justify-content: center;">
+                                            <div class="iconList">
+                                                <span class="fa fa-arrow-up margin_bottom"></span>
+                                                <span class="fa fa-arrow-down"></span>
+                                            </div>
+                                            <div class="qosList">
+                                                <span>&nbsp;{{bytesToSizeList(item.tuload)}}</span>
+                                                <span>&nbsp;{{bytesToSizeList(item.tdload)}}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-1 col-md-1 col-sm-3 col-xs-3 line_height" style="line-height:0"
+                                        style="line-height:0" style="line-height:0">
+                                        <gl-tg-btn size="22px" class="btn-toggler" v-model="item.blocked" :disabled="item.remote"
+                                            @change="block(item, index, wlan5g)" theme="default"></gl-tg-btn>
+                                    </td>
+                                    <td class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                        <div class="modal_son">
+                                        </div>
+                                        <div v-if="index == redding_status && item.type == clientType" class="text-right">
+                                            <!-- 移动端 -->
+                                            <span style="float:left" class="left_upload hidden-lg hidden-md">
+                                                <span class="fa fa-arrow-up" style="margin-bottom: 10px;">&nbsp;
+                                                    <input type="number" placeholder="KB/s" style="width: 50px" v-model="quload"
+                                                        @input="inputload">
+
+                                                </span>
+                                                <span class="fa fa-arrow-down">&nbsp;
+                                                    <input type="number" placeholder="KB/s" style="width: 50px" v-model="qdload"
+                                                        @input="inputload">
+                                                </span>
+                                            </span>
+                                            <!-- PC端 -->
+                                            <span style="float:left" class="left_upload hidden-xs hidden-sm">
+                                                <span class="fa fa-arrow-up" style="margin-bottom: 10px;">&nbsp;
+                                                    <input type="number" style="width: 50px" v-model="quload" @input="inputload">
+                                                    KB/s
+                                                </span>
+                                                <span class="fa fa-arrow-down">&nbsp;
+                                                    <input type="number" style="width: 50px" v-model="qdload" @input="inputload">
+                                                    KB/s
+                                                </span>
+                                            </span>
+                                            <span class="right_setting">
+                                                <a @click="setQos(item,index)" class="hidden-xs hidden-sm">{{t($lang.button.apply)}}</a>
+                                                <a @click="setQos(item,index)" style="margin-bottom: 13px;" class="hidden-lg hidden-md">{{t($lang.button.apply)}}</a>
+                                                <a @click="cancelClient(item)">{{t($lang.button.cancel)}}</a>
+                                            </span>
+                                        </div>
+                                        <div v-else>
+                                            <span style="width:100%;text-align: center;display: inline-block;padding: 10px;font-size: 14px">
+                                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-if="item.type == clientType && index == btnIndex && btnstatus"></span>
+                                                <a style="margin-left: 5px;" @click="modifyClient(index,item)" v-else>{{t($lang.clients.Set)}}</a>
+                                                <a style="margin-left: 5px;margin-top: 3px" class="hidden-xs hidden-sm"
+                                                    @click="cancelQos(item)" v-if="item.qdload !=0 || item.quload !=0">{{t($lang.button.cancel)}}</a>
+                                                <br>
+                                                <a style="margin-left: 5px;margin-top: 3px" @click="cancelQos(item)"
+                                                    v-if="item.qdload !=0 || item.quload !=0" class="hidden-lg hidden-md">{{t($lang.button.cancel)}}</a>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- 2.4g-->
+                                <tr v-if="wlan24g.length!=0">
+                                    <td colspan="7" class="nav_tips">{{t($lang.clients.GDevice1)}}</td>
+                                </tr>
+                                <tr class="clsLanClientsItem" v-for="(item, index) in wlan24g">
+                                    <td class=" hidden-sm wifi-client-rank hidden-xs" style="padding-left: 15px;line-height: 45px;">{{index+1}}</td>
+                                    <td class="col-lg-2 col-md-2 col-sm-3 col-xs-4 wifi-client-name tex-limited ">
+                                        <span style="font-size: 15px;font-weight: 600;color:#000" class="hidden-xs hidden-sm">{{item.name}}</span>
+                                        <span style="font-size: 15px;font-weight: 600;color:#000" class="hidden-lg hidden-md">{{truncation(item.name)}}</span>
+                                        <!-- <span v-show="item.type == '1'" class="badge badge-pill badge-secondary mid_unset">5G</span> -->
+                                        <br>
+                                        <span class="hidden-lg hidden-md">{{item.ip}}</span>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 hidden-xs hidden-sm">
+                                        <span class="betsyLoad">
+                                            <span>{{item.ip}}</span>
+                                            <span>{{item.mac}}</span>
+                                        </span>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 col-sm-3 hidden-xs">
+                                        <div class="betsyLoadList" style="padding-left: 10px">
+                                            <div class="iconList">
+                                                <span class="fa fa-arrow-up margin_bottom"></span>
+                                                <span class="fa fa-arrow-down"></span>
+                                            </div>
+                                            <div class="qosList">
+                                                <span>&nbsp;{{bytesToSize(item.cuload)}}</span>
+                                                <span>&nbsp;{{bytesToSize(item.cdload)}}</span>
+                                            </div>
+                                            <div v-if="item.quload != 0 ||item.qdload!=0 ||item.qdload!=0" class="tipsList">
+                                                <gl-tooltip  :content="`<span class='fa fa-arrow-up'>${bytesToSizeNum(item.quload)}</span><br/><span class='fa fa-arrow-down'>${bytesToSizeNum(item.qdload)}</span>`"
+                                                    direction="top">
+                                                    <span class="fa fa-exclamation-circle waiting" style="font-size: 16px"></span>
+                                                </gl-tooltip>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 hidden-xs hidden-sm">
+                                        <div class="betsyLoadList" style="justify-content: center;">
+                                            <div class="iconList">
+                                                <span class="fa fa-arrow-up margin_bottom"></span>
+                                                <span class="fa fa-arrow-down"></span>
+                                            </div>
+                                            <div class="qosList">
+                                                <span>&nbsp;{{bytesToSizeList(item.tuload)}}</span>
+                                                <span>&nbsp;{{bytesToSizeList(item.tdload)}}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-1 col-md-1 col-sm-3 col-xs-3 line_height" style="line-height:0"
+                                        style="line-height:0">
+                                        <gl-tg-btn size="22px" class="btn-toggler" v-model="item.blocked" :disabled="item.remote"
+                                            @change="block(item, index, wlan5g)" theme="default"></gl-tg-btn>
+                                    </td>
+                                    <td class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                        <div v-if="index == redding_status && item.type == clientType" class="text-right">
+                                            <!-- 移动端 -->
+                                            <span style="float:left" class="left_upload hidden-lg hidden-md">
+                                                <span class="fa fa-arrow-up" style="margin-bottom: 10px;">&nbsp;
+                                                    <input type="number" placeholder="KB/s" style="width: 50px" v-model="quload"
+                                                        @input="inputload">
+
+                                                </span>
+                                                <span class="fa fa-arrow-down">&nbsp;
+                                                    <input type="number" placeholder="KB/s" style="width: 50px" v-model="qdload"
+                                                        @input="inputload">
+                                                </span>
+                                            </span>
+                                            <!-- PC端 -->
+                                            <span style="float:left" class="left_upload hidden-xs hidden-sm">
+                                                <span class="fa fa-arrow-up" style="margin-bottom: 10px;">&nbsp;
+                                                    <input type="number" style="width: 50px" v-model="quload" @input="inputload">
+                                                    KB/s
+                                                </span>
+                                                <span class="fa fa-arrow-down">&nbsp;
+                                                    <input type="number" style="width: 50px" v-model="qdload" @input="inputload">
+                                                    KB/s
+                                                </span>
+                                            </span>
+                                            <span class="right_setting">
+                                                <a @click="setQos(item,index)" class="hidden-xs hidden-sm">{{t($lang.button.apply)}}</a>
+                                                <a @click="setQos(item,index)" style="margin-bottom: 13px;" class="hidden-lg hidden-md">{{t($lang.button.apply)}}</a>
+                                                <a @click="cancelClient(item)">{{t($lang.button.cancel)}}</a>
+                                            </span>
+                                        </div>
+                                        <div v-else>
+                                            <span style="width:100%;text-align: center;display: inline-block;padding: 10px;font-size: 14px">
+                                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-if="item.type == clientType && index == btnIndex && btnstatus"></span>
+                                                <a style="margin-left: 5px;" @click="modifyClient(index,item)" v-else>{{t($lang.clients.Set)}}</a>
+                                                <a style="margin-left: 5px;margin-top: 3px" class="hidden-xs hidden-sm"
+                                                    @click="cancelQos(item)" v-if="item.qdload !=0 || item.quload !=0">{{t($lang.button.cancel)}}</a>
+                                                <br>
+                                                <a style="margin-left: 5px;margin-top: 3px" @click="cancelQos(item)"
+                                                    v-if="item.qdload !=0 || item.quload !=0" class="hidden-lg hidden-md">{{t($lang.button.cancel)}}</a>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- 5g-->
+                                <tr v-if="wlan5g.length!=0">
+                                    <td colspan="7" class="nav_tips">{{t($lang.clients.GDevice2)}}</td>
+                                </tr>
+                                <tr class="clsLanClientsItem" v-for="(item, index) in wlan5g">
+                                    <td class=" hidden-sm wifi-client-rank hidden-xs" style="padding-left: 15px;line-height: 45px;">{{index+1}}</td>
+                                    <td class="col-lg-2 col-md-2 col-sm-3 col-xs-4 wifi-client-name tex-limited">
+                                        <span style="font-size: 15px;font-weight: 600;color:#000" class="hidden-xs hidden-sm">{{item.name}}</span>
+                                        <span style="font-size: 15px;font-weight: 600;color:#000" class="hidden-lg hidden-md">{{truncation(item.name)}}</span>
+                                        <!-- <span v-show="item.type == '1'" class="badge badge-pill badge-secondary mid_unset">5G</span> -->
+                                        <br>
+                                        <span class="hidden-lg hidden-md">{{item.ip}}</span>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 hidden-xs hidden-sm">
+                                        <span class="betsyLoad">
+                                            <span>{{item.ip}}</span>
+                                            <span>{{item.mac}}</span>
+                                        </span>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 col-sm-3 hidden-xs ">
+                                        <div class="betsyLoadList" style="padding-left: 10px">
+                                            <div class="iconList">
+                                                <span class="fa fa-arrow-up margin_bottom"></span>
+                                                <span class="fa fa-arrow-down"></span>
+                                            </div>
+                                            <div class="qosList">
+                                                <span>&nbsp;{{bytesToSize(item.cuload)}}</span>
+                                                <span>&nbsp;{{bytesToSize(item.cdload)}}</span>
+                                            </div>
+                                            <div v-if="item.quload != 0 ||item.qdload!=0" class="tipsList">
+                                                <gl-tooltip  :content="`<span class='fa fa-arrow-up'>${bytesToSizeNum(item.quload)}</span><br/><span class='fa fa-arrow-down'>${bytesToSizeNum(item.qdload)}</span>`"
+                                                    direction="top">
+                                                    <span class="fa fa-exclamation-circle waiting" style="font-size: 16px"></span>
+                                                </gl-tooltip>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-2 col-md-2 hidden-xs hidden-sm">
+                                        <div class="betsyLoadList" style="justify-content: center;">
+                                            <div class="iconList">
+                                                <span class="fa fa-arrow-up margin_bottom"></span>
+                                                <span class="fa fa-arrow-down"></span>
+                                            </div>
+                                            <div class="qosList">
+                                                <span>&nbsp;{{bytesToSizeList(item.tuload)}}</span>
+                                                <span>&nbsp;{{bytesToSizeList(item.tdload)}}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-lg-1 col-md-1 col-sm-3 col-xs-3 line_height" style="line-height:0">
+                                        <gl-tg-btn size="22px" class="btn-toggler" v-model="item.blocked" :disabled="item.remote"
+                                            @change="block(item, index, wlan5g)" theme="default"></gl-tg-btn>
+                                    </td>
+                                    <td class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                        <div v-if="index == redding_status && item.type == clientType" class="text-right">
+                                            <!-- 移动端 -->
+                                            <span style="float:left" class="left_upload hidden-lg hidden-md">
+                                                <span class="fa fa-arrow-up" style="margin-bottom: 10px;">&nbsp;
+                                                    <input type="number" placeholder="KB/s" style="width: 50px" v-model="quload"
+                                                        @input="inputload">
+
+                                                </span>
+                                                <span class="fa fa-arrow-down">&nbsp;
+                                                    <input type="number" placeholder="KB/s" style="width: 50px" v-model="qdload"
+                                                        @input="inputload">
+                                                </span>
+                                            </span>
+                                            <!-- PC端 -->
+                                            <span style="float:left" class="left_upload hidden-xs hidden-sm">
+                                                <span class="fa fa-arrow-up" style="margin-bottom: 10px;">&nbsp;
+                                                    <input type="number" style="width: 50px" v-model="quload" @input="inputload">
+                                                    KB/s
+                                                </span>
+                                                <span class="fa fa-arrow-down">&nbsp;
+                                                    <input type="number" style="width: 50px" v-model="qdload" @input="inputload">
+                                                    KB/s
+                                                </span>
+                                            </span>
+                                            <span class="right_setting">
+                                                <a @click="setQos(item,index)" class="hidden-xs hidden-sm">{{t($lang.button.apply)}}</a>
+                                                <a @click="setQos(item,index)" style="margin-bottom: 13px;" class="hidden-lg hidden-md">{{t($lang.button.apply)}}</a>
+                                                <a @click="cancelClient(item)">{{t($lang.button.cancel)}}</a>
+                                            </span>
+                                        </div>
+                                        <div v-else>
+                                            <span style="width:100%;text-align: center;display: inline-block;padding: 10px;font-size: 14px">
+                                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-if="item.type == clientType && index == btnIndex && btnstatus"></span>
+                                                <a style="margin-left: 5px;" @click="modifyClient(index,item)" v-else>{{t($lang.clients.Set)}}</a>
+                                                <a style="margin-left: 5px;margin-top: 3px" class="hidden-xs hidden-sm"
+                                                    @click="cancelQos(item)" v-if="item.qdload !=0 || item.quload !=0">{{t($lang.button.cancel)}}</a>
+                                                <br>
+                                                <a style="margin-left: 5px;margin-top: 3px" @click="cancelQos(item)"
+                                                    v-if="item.qdload !=0 || item.quload !=0" class="hidden-lg hidden-md">{{t($lang.button.cancel)}}</a>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <gl-modal :title="t($lang.wgclient.addWgServer)" :modalStatus="showModal">
+                            <!-- body -->
+                            <div class="modal-body">
+                                <div class="tab-content">
+                                    </span>
+                                    <!-- user -->
+                                    <span class="clearfix">
+                                        <span class=" ss_left">
+                                            <gl-label></gl-label>
+                                        </span>
+                                        <span class=" s_right">
+                                            <gl-input></gl-input>
+                                        </span>
+                                    </span>
+                                    <!-- password -->
+                                    <span class="clearfix">
+                                        <span class="ss_left">
+                                        <gl-label></gl-label>
+                                    </span>
+                                    <span class=" s_right">
+                                    <gl-input></gl-input>
+                                    </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- footer -->
+                            <div class="modal-footer">
+                                <gl-btn class="btnl clientBtn" type="modify">{{t($lang.button.cancel)}}</gl-btn>
+                                <gl-btn class="btnr clientBtn" type="purple">
+                                    {{t($lang.button.add)}}
+                                    <!-- <span class="fa fa-circle-o-notch glyphicon-spin-animate" ></span> -->
+                                </gl-btn>
+                                <gl-btn class="btnr clientBtn" type="purple">{{t($lang.button.next)}}</gl-btn>
+                            </div>
+                        </gl-modal>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

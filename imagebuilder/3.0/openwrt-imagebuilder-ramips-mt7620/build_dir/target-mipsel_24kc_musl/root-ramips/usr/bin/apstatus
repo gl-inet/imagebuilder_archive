@@ -1,0 +1,32 @@
+#!/bin/sh
+
+#only works for LSDK
+[ -e /proc/net/wireless ] &&{
+   
+  model=$(cat /etc/glmodel)
+  if [ "$model" = "mt300a" ] || [ "$model" = "mt300n" ] || [ "$model" = "mt750" ]; then
+    type="mtk"
+    ifaces=$(awk -F ':' 'NR>2{print $1}' /proc/net/wireless)
+  else
+    type="ar"
+    ifaces=$(awk -F ':' 'NR>3{print $1}' /proc/net/wireless)
+  fi
+  
+	for iface in $ifaces; do
+		on=$(cat /proc/net/wireless|grep "$iface"| awk '{print $2}')
+		if [ type = "ar" ] && [ "$on" != "0000" ]; then
+			master=$(iwinfo ath0 info|awk '/Mode:/{print $2}')
+			if [ "$master" = "Master" ]; then
+				echo on
+				exit
+			fi
+		else
+		        master=$(iwinfo wlan0 info|awk '/Mode:/{print $2}')
+			if [ "$master" = "Master" ]; then
+				echo on
+				exit
+			fi
+		fi
+	done
+}
+echo off

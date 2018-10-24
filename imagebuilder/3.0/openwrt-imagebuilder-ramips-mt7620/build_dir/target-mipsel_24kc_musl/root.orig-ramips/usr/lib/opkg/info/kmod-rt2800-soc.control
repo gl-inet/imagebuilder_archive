@@ -1,0 +1,9 @@
+Package: kmod-rt2800-soc
+Version: 4.14.63+2017-11-01-9
+Depends: kernel (=4.14.63-1-040e1eb571d42424f99665555568bea6), kmod-rt2800-mmio, kmod-rt2800-lib
+Source: package/kernel/mac80211
+Section: kernel
+Maintainer: Felix Fietkau <nbd@nbd.name>
+Architecture: mipsel_24kc
+Installed-Size: 3772
+Description:  Ralink Drivers for RT2x00 cards (RT28xx/RT3xxx SoC)

@@ -1,0 +1,8 @@
+Package: gl-software
+Version: 3.0.9-1
+Depends: libc, gl-util
+Source: package/gli/gl-software
+Section: base
+Architecture: mipsel_24kc
+Installed-Size: 5359
+Description:  Openvpn server endpoint api for gl-inet.

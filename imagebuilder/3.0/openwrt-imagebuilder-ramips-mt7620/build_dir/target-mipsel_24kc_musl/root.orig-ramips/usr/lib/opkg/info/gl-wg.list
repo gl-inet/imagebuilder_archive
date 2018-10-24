@@ -1,0 +1,5 @@
+/etc/init.d/wireguard
+/usr/lib/libwgapi.so
+/usr/lib/gl/libwgapi.so
+/usr/bin/wg_unittest
+/etc/config/wireguard

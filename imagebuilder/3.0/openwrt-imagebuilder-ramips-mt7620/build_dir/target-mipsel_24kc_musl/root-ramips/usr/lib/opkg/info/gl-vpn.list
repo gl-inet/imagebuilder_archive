@@ -1,0 +1,5 @@
+/usr/lib/gl/libovpnapi.so
+/usr/bin/ovpn_check_route
+/etc/init.d/startvpn
+/usr/lib/libovpnapi.so
+/etc/openvpn/update-resolv-conf

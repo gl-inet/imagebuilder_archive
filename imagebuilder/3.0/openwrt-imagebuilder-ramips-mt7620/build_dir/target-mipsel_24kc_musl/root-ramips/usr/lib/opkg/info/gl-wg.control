@@ -1,0 +1,8 @@
+Package: gl-wg
+Version: 3.0.7-1
+Depends: libc, libjson-c, gl-util, wireguard, resolveip, curl, ca-bundle, ca-certificates
+Source: package/gli/gl-wg
+Section: base
+Architecture: mipsel_24kc
+Installed-Size: 18305
+Description:  wireguard endpoint api for gl-inet.

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	set dhcp.lan.force=1
+	commit dhcp
+EOF
+
+exit 0

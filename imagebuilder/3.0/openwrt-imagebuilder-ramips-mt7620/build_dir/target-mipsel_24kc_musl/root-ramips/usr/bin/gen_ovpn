@@ -1,0 +1,168 @@
+#!/bin/sh
+
+NAME=vpn_service
+
+uci_get_by_name() {
+	local ret=$(uci get $NAME.$1.$2 2>/dev/null)
+	echo ${ret:=$3}
+}
+
+uci_get_by_type() {
+	local ret=$(uci get $NAME.@$1[0].$2 2>/dev/null)
+	echo ${ret:=$3}
+}
+
+# Define global variable
+VPN_DIR="/etc/openvpn/cert"
+OVPN_DIR="/etc/openvpn/ovpn"
+
+CA_CRT="$VPN_DIR/ca.crt"
+SERVER_KEY="$VPN_DIR/server.key"
+SERVER_CRT="$VPN_DIR/server.crt"
+CLIENT_KEY="$VPN_DIR/client.key"
+CLIENT_CRT="$VPN_DIR/client.crt"
+DH_KEY="$VPN_DIR/dh1024.pem"
+
+CLIENT_OVPN="$OVPN_DIR/client.ovpn"
+SERVER_OVPN="$OVPN_DIR/server.ovpn"
+
+create_server_ovpn() {
+	# uci 
+	local auth=$(uci_get_by_name vpn auth)
+	local proto=$(uci_get_by_name vpn proto)
+	local port=$(uci_get_by_name vpn port)
+	local dev=$(uci_get_by_name vpn dev)
+	local dev_type=$(uci_get_by_name vpn dev_type)
+	local cipher=$(uci_get_by_name vpn cipher)
+	local comp=$(uci_get_by_name vpn comp)
+	local subnet=$(uci_get_by_name vpn subnet)
+	local mask=$(uci_get_by_name vpn mask)
+	local dns=$(uci_get_by_name vpn dns)
+	
+	# local private_subnet=$(uci_get_by_name vpn pri_subnet)
+	# local private_mask=$(uci_get_by_name vpn pri_mask)
+
+cat > $SERVER_OVPN << EOF
+client-to-client
+persist-key
+persist-tun
+auth ${auth:="SHA1"} 
+cipher ${cipher:="BF-CBC"}
+comp-lzo ${comp:="adaptive"}
+dev ${dev:="tun-SERVER"}
+dev-type ${dev_type:="tun"}
+group nogroup
+keepalive 10 120
+mode server
+mute 5
+port ${port:="1194"}
+proto ${proto:="udp"}
+push "persist-key"
+push "persist-tun"
+push "redirect-gateway def1"
+route-gateway dhcp
+server $subnet $mask
+topology subnet
+duplicate-cn
+user nobody
+verb 3
+EOF
+	[ ! -z "$dns" ] && echo "push \"dhcp-option DNS $dns\"" >> $SERVER_OVPN
+	# [ ! -z "$private_subnet" -a ! -z "$private_mask" ] && echo "push \"route $private_subnet $private_mask\"" >> $SERVER_OVPN
+
+	# Append the ca file
+	echo "<ca>" >> $SERVER_OVPN
+	cat $CA_CRT >> $SERVER_OVPN
+	echo "</ca>" >> $SERVER_OVPN
+
+	# Append the cert file
+	echo "<cert>" >> $SERVER_OVPN
+	cat $SERVER_CRT >> $SERVER_OVPN
+	echo "</cert>" >> $SERVER_OVPN
+
+	# Append the key file
+	echo "<key>" >> $SERVER_OVPN
+	cat $SERVER_KEY >> $SERVER_OVPN
+	echo "</key>" >> $SERVER_OVPN
+
+	# Append Diffie Hellman file
+	echo "<dh>" >> $SERVER_OVPN
+	cat $DH_KEY >> $SERVER_OVPN
+	echo "</dh>" >> $SERVER_OVPN
+
+	# Setting ovpn to uci
+	uci set vpn_service.global.ovpn="$SERVER_OVPN"
+	uci commit vpn_service
+}
+
+wan_ip() {
+	. /lib/functions/network.sh
+
+	local host
+	network_get_ipaddr host wan
+
+	[ -z "$host" ] && return 0
+	echo "$host"
+}
+
+create_client_ovpn() {
+	local dev=$(uci_get_by_name vpn dev)
+	local proto=$(uci_get_by_name vpn proto)
+	local host=$(wget -t 1 -T 3 --user-agent="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 (.NET CLR 3.5.30729)" -O - http://checkip.dyndns.org 2>/dev/null| grep -m 1 -o  '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}')
+	local port=$(uci_get_by_name vpn port)
+	local auth=$(uci_get_by_name vpn auth)
+	local cipher=$(uci_get_by_name vpn cipher)
+	local comp=$(uci_get_by_name vpn comp)
+	if [ -z "$host" ];then
+		host=$(wget -t 1 -T 3 --user-agent="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 (.NET CLR 3.5.30729)" -O - http://myip.com.tw/ 2>/dev/null| grep -m 1 -o  '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}')
+	fi
+	if [ -z "$host" ];then
+		exit 1
+	fi	
+	host=${host:="127.0.0.1"}
+
+cat > $CLIENT_OVPN << EOF
+client
+dev tun
+proto ${proto:="udp"}
+remote $host ${port:="1194"}
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+auth ${auth:="SHA1"} 
+cipher ${cipher:="BF-CBC"}
+comp-lzo ${comp:="adaptive"}
+nice 0
+mute 5
+verb 3
+EOF
+	# Append the ca file
+	echo "<ca>" >> $CLIENT_OVPN
+	cat $CA_CRT >> $CLIENT_OVPN
+	echo "</ca>" >> $CLIENT_OVPN
+
+	# Append the cert file
+	echo "<cert>" >> $CLIENT_OVPN
+	cat $CLIENT_CRT >> $CLIENT_OVPN
+	echo "</cert>" >> $CLIENT_OVPN
+
+	# Append the key file
+	echo "<key>" >> $CLIENT_OVPN
+	cat $CLIENT_KEY >> $CLIENT_OVPN
+	echo "</key>" >> $CLIENT_OVPN
+
+	# Setting host to uci
+	uci set vpn_service.vpn.host="$host"
+	uci commit vpn_service
+}
+
+[ -e "$CA_KEY" ] && [ -e "$CA_CRT" ] && \
+	[ -e "$SERVER_KEY" ] && [ -e "$SERVER_CRT" ] && \
+	[ -e "$CLIENT_KEY" ] && [ -e "$CLIENT_CRT" ] && \
+	[ "$FORCE"x != "force"x ] && exit 0
+
+# Start generate ovpn file
+[ ! -d "$OVPN_DIR" ] && mkdir -p $OVPN_DIR
+create_server_ovpn
+create_client_ovpn

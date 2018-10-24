@@ -1,0 +1,24 @@
+<div class="btn-dropdown" :class="{'disabled': disabled}">
+    <div @click="toggleMenu" class="GL-dropdown-toggle"  v-if="selectedOption !== undefined">
+        {{t(selectedOption)}}
+        <span class="fa-angle-down fa gl-angle" :class="{'open': showMenu}"></span>
+    </div>
+    <transition name="GL-dropdown">
+        <ul class="GL-dropdown-ul" v-show="showMenu">
+            <li v-for="item in options" v-if="optionName">
+                <a href="#" @click="updateOption(item)" class="clearfix">
+                    <span style="float: left;text-transform: capitalize">{{t(item[optionName])}}</span>
+                    <span class="soft-num">
+                        <!-- <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-if="item.count <= 0"></span> -->
+                        <span class="num-class">{{item.count || "0"}}</span>
+                    </span>
+                </a>
+            </li>
+            <li v-else>
+                <a href="#" @click="updateOption(item)">
+                    {{t(item)}}
+                </a>
+            </li>
+        </ul>
+    </transition>
+</div>

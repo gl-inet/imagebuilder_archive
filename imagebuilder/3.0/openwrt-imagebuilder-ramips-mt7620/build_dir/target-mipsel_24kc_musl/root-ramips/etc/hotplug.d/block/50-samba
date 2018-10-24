@@ -1,0 +1,66 @@
+#!/bin/sh
+
+getSectionNo(){
+	SectionNo=`uci show samba|grep '$1'|sed -e "s/^.*\[\\(.*\)\].*$/\1/"`
+	echo $SectionNo
+}
+read_only=$(uci get glconfig.samba.read_only)
+[ -z "$read_only" ] && read_only=yes
+blkdev=`dirname $DEVPATH`
+device=`basename $DEVPATH`
+hdorsd=`echo "$device" | grep -E '[sh]d*|mmcblk0*' `
+label=`/usr/sbin/blkid /dev/$device|sed -n 's/.*LABEL="\([^"]*\)".*/\1/p'`
+filesys=`/usr/sbin/blkid /dev/$device|sed -n 's/.* TYPE="\([^"]*\)".*/\1/p'`
+
+[ -z "$label" ] && label=$device
+
+[ -n "$hdorsd" ] && {
+	case "$ACTION" in
+	add)
+		[ -z "$filesys" -o "$filesys" = "swap" ] && exit 0 #must have file system and not swap
+		#first loop the shares. If there is any duplicated entry, delte it first.
+		i=$(uci show samba|awk 'NF{p=$0}END{print p}'|sed -e "s/^.*\[\\(.*\)\].*$/\1/")
+		while [ "$i" -ge 0 ]
+		do
+			sharepath=$(uci get samba.@sambashare[$i].path)
+			[ "$sharepath" = "/mnt/$label" ] && {
+				uci delete samba.@sambashare[$i]
+			}
+			i=$(( i-1 ))
+		done
+
+		uci add samba sambashare
+		uci set samba.@sambashare[-1].name="$label"
+		uci set samba.@sambashare[-1].path="/mnt/$label"
+
+		mmcblk0=`echo "$device" |grep 'mmcblk0'`
+		if [ -n "$mmcblk0" ]; then
+			read_only=no
+		fi
+		uci set samba.@sambashare[-1].read_only=$read_only
+		uci set samba.@sambashare[-1].guest_ok=yes
+		uci commit samba
+		/etc/init.d/samba restart
+		;;
+
+	remove)
+		i=$(uci show samba|awk 'NF{p=$0}END{print p}'|sed -e "s/^.*\[\\(.*\)\].*$/\1/")
+		while [ "$i" -ge 0 ]
+		do
+			sharepath=$(uci get samba.@sambashare[$i].path)
+			d=$(uci get samba.@sambashare[$i].name)
+			if [ ! -e "$sharepath" -o "$d" = "$label" ]
+			then
+				uci delete samba.@sambashare[$i]
+			fi
+
+			#in case /mnt/sda1 is used as folder, we should detect by mount point
+
+			i=$((i-1))
+		done
+		uci commit samba
+		/etc/init.d/samba restart
+		;;
+	esac
+}
+

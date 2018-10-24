@@ -1,0 +1,27 @@
+#!/bin/sh
+if [ -n "${IPKG_INSTROOT}" ]; then
+	mv ${IPKG_INSTROOT}/etc/cls_flow.ko ${IPKG_INSTROOT}/lib/modules/*/
+	mv ${IPKG_INSTROOT}/etc/sch_cbq.ko ${IPKG_INSTROOT}/lib/modules/*/
+	mv ${IPKG_INSTROOT}/etc/sch_prio.ko ${IPKG_INSTROOT}/lib/modules/*/
+	mv ${IPKG_INSTROOT}/etc/cls_u32.ko ${IPKG_INSTROOT}/lib/modules/*/
+	mv ${IPKG_INSTROOT}/etc/sch_ingress.ko ${IPKG_INSTROOT}/lib/modules/*/
+	mv ${IPKG_INSTROOT}/etc/sch_sfq.ko ${IPKG_INSTROOT}/lib/modules/*/
+	mv ${IPKG_INSTROOT}/etc/xt_u32.ko ${IPKG_INSTROOT}/lib/modules/*/
+else
+	mv /etc/cls_flow.ko /lib/modules/*/
+	mv /etc/sch_cbq.ko /lib/modules/*/
+	mv /etc/sch_prio.ko /lib/modules/*/
+	mv /etc/cls_u32.ko /lib/modules/*/
+	mv /etc/sch_ingress.ko /lib/modules/*/
+	mv /etc/sch_sfq.ko /lib/modules/*/
+	mv /etc/xt_u32.ko /lib/modules/*/
+	
+	insmod /lib/modules/*/cls_flow.ko
+	insmod /lib/modules/*/sch_cbq.ko
+	insmod /lib/modules/*/sch_prio.ko
+	insmod /lib/modules/*/cls_u32.ko
+	insmod /lib/modules/*/sch_ingress.ko
+	insmod /lib/modules/*/sch_sfq.ko
+	insmod /lib/modules/*/xt_u32.ko
+fi
+exit 0

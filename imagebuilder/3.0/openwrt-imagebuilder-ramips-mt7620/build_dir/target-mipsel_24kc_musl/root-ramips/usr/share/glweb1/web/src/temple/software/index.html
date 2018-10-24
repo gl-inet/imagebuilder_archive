@@ -1,0 +1,128 @@
+<!-- software -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel with-nav-tabs panel-default">
+            <!-- head -->
+            <div class="panel-heading">
+                <h4>
+                    <span id="headerCircle" class="circle active"></span>
+                    {{t($lang.software.software)}}
+                </h4>
+                <gl-btn type="default" id="idApplyBtn" class="pull-right" :disabled="!updateStatus" @click="updateSortWare" style="text-transform: capitalize">{{t($lang.software.update)}}</gl-btn>
+            </div>
+            <!-- body -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <div class="clearfix">
+                        <gl-dropdown :options="packages" :selected="$lang.software.filter" @change="getSoft" class="soft-left" optionName="name"
+                            :disabled="serchDis ||!updateStatus"></gl-dropdown>
+                        <gl-input class="soft-right" :placeholder="$lang.holdPlace.searchSoft" :disabled="serchDis || !updateStatus" v-model="softwareText"
+                            @postValue="findsoftwarebykey">
+                            <span class="fa fa-search search-search"></span>
+                        </gl-input>
+                    </div>
+                    <!-- software key -->
+                    <div id="softwarekey">
+                        <span v-for="item in softwarekey" @click="findsoftwarebyletter(item,$event)" ref="softwarekey">{{item}}</span>
+                    </div>
+
+                    <div class="tabBox">
+                        <gl-loading v-if="!updateStatus"></gl-loading>
+                        <div class="row newBox" v-else>
+                            <div v-if="sortwarelist.length > 0 || !loading">
+                                <!-- head -->
+                                <div class="newSoft clearfix softHead">
+                                    <span class="col-lg-2 col-xs-4" ref="ele">{{t($lang.software.name)}}</span>
+                                    <span class="col-lg-2 col-xs-4">{{t('Version')}}</span>
+                                    <span class="col-lg-6 hidden-xs hidden-md hidden-sm">{{t($lang.software.description)}}</span>
+                                    <span class="col-lg-2 col-xs-4" style="text-align: center">{{t('Action')}}</span>
+                                </div>
+                                <!-- sortware -->
+                                <div class="clearfix newSoft" v-for="(item, index) in sortwarelist">
+                                    <span class="col-lg-2 col-xs-4 softName" :alt="item.name" @click="lookdetail(index)">{{item.name}}</span>
+                                    <span class="col-lg-2 col-xs-4 softversion">{{item.version}}</span>
+                                    <span class="col-lg-6 hidden-xs hidden-md hidden-sm softDes">
+                                        {{item.descreption ? item.descreption : '-'}}
+                                    </span>
+                                    <span class="col-lg-2 col-xs-4" style="text-align: center">
+                                        <gl-btn class="installSoft" @click="item.installed ? removeSoftware(item.name,index) : installsofeware(item.name,index)"
+                                            :type="item.installed ? 'modify' : 'apply'" style="min-width: 75px;margin: 0;text-transform: capitalize">
+                                            <span class="fa" :class="item.installed ? 'fa-times': 'fa-download'"></span>
+                                            {{item.installed ? t($lang.software.uninstall) : t($lang.software.install)}}
+                                        </gl-btn>
+                                    </span>
+                                </div>
+                            </div>
+                            <div v-else style="font-size: 18px;padding: 10px">
+                                <span class="fa fa-exclamation-circle"></span>
+                                {{t($lang.software.nosoftware)}}
+                            </div>
+                            <div style="padding: 10px;" class="visible-xs-block visible-sm-block" v-if="showBtn">
+                                <gl-btn class="softwareBtn" id="getmoresoftware" @click="rendersorft(num)" type="purple">{{t($lang.button.more)}}</gl-btn>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tabBox hidden-sm hidden-xs" v-show="updateStatus && checkedlist.length && sortwarelist.length != 0">
+                        <gl-pagination :page-count="pageNum" :margin-pages="2" :page-range="3" :initial-page="0" :container-class="'pagination'"
+                            @click="renderpage">
+                            <span slot="breakViewContent">
+                                <svg width="16" height="4" viewBox="0 0 16 4">
+                                    <circle fill="#999999" cx="2" cy="2" r="2" />
+                                    <circle fill="#999999" cx="8" cy="2" r="2" />
+                                    <circle fill="#999999" cx="14" cy="2" r="2" />
+                                </svg>
+                            </span>
+                        </gl-pagination>
+                    </div>
+                </div>
+            </div>
+
+            <!-- description -->
+            <gl-modal :title="softName" :modalStatus="showModal" size="sm">
+                <div class="modal-body" style="overflow: visible">
+                    <!-- <p v-show="sorfcurVersion">
+                        <span class="soft-descreption">{{t($lang.software.versionInfo)}}: </span>
+                        {{sorfcurVersion ? sorfcurVersion : t($lang.software.unInstructions)}}
+                    </p> -->
+                    <p>
+                        <span class="soft-descreption">{{t($lang.software.versionInfo)}}: </span>
+                        {{ softvVersion || t($lang.software.unInstructions)}}
+                    </p>
+                    <p>
+                        <span class="soft-descreption">{{t($lang.software.description)}}: </span>
+                        {{softDescreption || t($lang.software.unDescription)}}
+                    </p>
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <gl-btn class="clientBtn" type="default" @click="closeModal" style="padding: 5.5px 24px">{{t($lang.button.close)}}</gl-btn>
+                </div>
+            </gl-modal>
+            <!-- install or uninstall -->
+            <gl-modal :modalStatus="msgModal" size="sm" :title="softName">
+                <div class="modal-body software-body">
+                    <div>
+                        <span class="soft-descreption">{{t($lang.software.status)}}: </span>
+                        {{t(operate)}}&nbsp;{{t(status)}}
+                    </div>
+                    <div v-show="putMsg" style="margin-top: 5px">
+                        <span class="soft-descreption">{{t($lang.software.stdout)}}: </span>
+                        {{t(putMsg)}}
+                    </div>
+                    <div v-show="errMsg" style="margin-top: 5px">
+                        <span class="soft-descreption">{{t($lang.software.stderr)}}: </span>
+                        {{t(errMsg)}}
+                    </div>
+                    <!-- <h4 :class="status == 'successfully' ? 'text-success': 'text-danger'">{{t(status == 'successfully' ? 'Success!' : 'Failed!')}}</h4>
+                    <p>
+                        <span style="color: chocolate"> {{msg}} </span>
+                        <span>{{t(operate)}}&nbsp;{{t(status)}}</span>
+                    </p> -->
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <gl-btn class="clientBtn" type="default" @click="closeModal" style="padding: 5.5px 24px">{{t($lang.button.close)}}</gl-btn>
+                </div>
+            </gl-modal>
+        </div>
+    </div>
+</div>

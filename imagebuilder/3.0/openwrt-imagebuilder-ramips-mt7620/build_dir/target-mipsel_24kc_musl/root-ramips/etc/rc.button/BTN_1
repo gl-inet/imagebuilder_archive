@@ -1,0 +1,6 @@
+#!/bin/sh
+
+[ $SEEN -gt 0 ] || exit 0
+
+echo "$BUTTON ${ACTION}" > /dev/console
+/usr/bin/switchaction &

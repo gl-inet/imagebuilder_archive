@@ -1,0 +1,2 @@
+/etc/lighttpd/conf.d/30-expire.conf
+/usr/lib/lighttpd/mod_expire.so

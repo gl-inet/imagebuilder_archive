@@ -1,0 +1,49 @@
+.wifi-body {
+    padding: 10px 20px;
+    background-color: #d3d7dc;
+}
+.wifi_left {
+    float: left;
+}
+.wifi_right {
+    float: right;
+    display: block;
+}
+.wifi_right .button,
+.wifi_web .button {
+    min-width: 90px;
+}
+.wifi_right{
+    padding-top: 2px
+}
+.wifi_web  {
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .wifilistCollapse>.form-inline {
+        padding: 10px;
+        text-align: center;
+    }
+    .clsSetWifiKeyInputSpan {
+        display: inline-block;
+    }
+    .wifilistCollapse>.form-inline .glGp button.visible-xs-block {
+        padding: 8.5px 30px;
+        margin: 0 1px;
+    }
+    .wifi_left {
+        text-align: center;
+        float: none!important;
+    }
+    .wifi_web {
+        padding-top: 6px;
+        display: block!important;
+        text-align: center;
+    }
+    .wifi_right {
+        display: none;
+    }
+}
+/* #idHotspotPanel >.panel-default>.panel-heading>h4{
+    max-width: 60%;
+} */

@@ -1,0 +1,44 @@
+.setting-msg {
+    display: block;
+    width: 70%;
+    text-align: left;
+    margin-left: 20%;
+    color: #999;
+}
+.setting-left {
+    float: left;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.setting-right {
+    float: right;
+    padding-right: 10px;
+}
+.setting-box {
+    padding: 10px 5px;
+    display: block  ;
+}
+#switch-warning {
+    /* background-color: #e9f4f4; */
+    color: #043cca;
+    margin: 5px 0px;
+}
+.setting-right .input-control {
+    /* width: 210px; */
+}
+.tt-img {
+    text-align:center;
+    padding: 10px 0;
+}
+@media screen and (max-width:768px) {
+    .setting-img,
+    .setting-Img {
+        width: 250px;
+    }
+    .setting-left,
+    .setting-right {
+        float: none;
+        text-align: center;
+        padding: 5px;
+    } 
+}

@@ -1,0 +1,4 @@
+/etc/config/unbound
+/etc/unbound/unbound.conf
+/etc/unbound/unbound_ext.conf
+/etc/unbound/unbound_srv.conf

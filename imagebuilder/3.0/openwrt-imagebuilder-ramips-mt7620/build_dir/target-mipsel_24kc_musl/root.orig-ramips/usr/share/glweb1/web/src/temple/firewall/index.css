@@ -1,0 +1,133 @@
+.fw-body.modal-body {
+    overflow: visible
+}
+.active td,
+.active th {
+    color: #555
+}
+@media (max-width: 768px) {
+    .fw-body.modal-body {
+        overflow: auto
+    }
+}
+.idDNSPanel .panel-heading h4{
+    max-width: none;
+}
+.panel-heading{
+    background: #f4f5f7;
+}
+.headColor{
+    background-color: #e9f4f4;
+    background: #95B0CA;
+}
+.headTrText{
+    text-align: center;
+}
+.add_input .gl-input{
+ min-width: 122px;
+}
+.add_input .gl-input input{
+    height: 30px!important;
+    padding: 0 0 0 12px;
+    outline: none;
+    border: 1px solid #cccccc
+}
+.add_input .select-drop-down{
+    min-width: 106px;
+}
+.add_input>.inner_ip .select-drop-down{
+    min-width: 110px;
+}
+ .add_input>.inner_ip .gl-input{
+    min-width: 110px;
+   }
+.add_input div.input-control{
+    line-height: 30px;
+    height: 30px;
+}
+.required{
+    border: 1px solid #ff0000;
+    border-radius: 3px;
+    outline: none
+}
+.pcshow{
+    display: block;
+}
+.moblieshow{
+    display: none;
+}
+
+.screen-float-l {
+    padding: 10px 0
+}
+.dmzbox{
+    width: 300px;
+    margin: 0 auto;
+}
+.dmzbox ul>li{
+    width: 100%;
+    height: 60px;
+    
+    /* font-size: 18px;
+    
+    color:#595e7c; */
+}
+.mright{
+    margin-right: 40px;
+}
+.bdbottom{
+    border:none;
+    padding-top:0;
+}
+.borderWidth .table-bordered>thead>tr>th{
+    border-bottom-width: 1px
+}
+.firewall table tr td,
+.firewall table tr th {
+    border: 1px solid #dddddd;
+}
+.headColor th {
+    color: #fff
+}
+.headColor .firewall-head {
+    text-align: left;
+    font-weight: bold;
+    padding: 15px !important;
+    /* border: 1px solid skyblue !important; */
+    background: #eeeeee;
+    border-radius:4px 4px 0 0; 
+    margin-top: 15px;
+    color: #000
+}
+.float-1,.float-r{
+    float: left;
+    padding-top: 10px;
+    color: #000
+}
+.dmzbox .select-input.gl-input > input{
+    height: 30px;
+    
+}
+.dmzbox div.input-control{
+    height: 30px;
+    line-height: 30px;
+}
+.dmzbox .gl-input > input{
+    width: 73%;
+}
+.dmzbox .select-drop-down{
+    width: 44%;
+    min-width: 110px;
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+}
+@media (max-width: 1170px) { 
+    #scroll{
+        overflow: visible;
+       
+    }
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background-color: #00838f;
+  }

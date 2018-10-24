@@ -1,0 +1,53 @@
+<div class="row" style="margin-top: 25px;">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li>
+                <a @click="$router.push('internet')" style="text-transform: uppercase">{{t($lang.internet.modem)}}</a>
+            </li>
+            <li>
+                <a @click="$router.go(-1)">{{t($lang.message.msg)}}</a>
+            </li>
+            <li class="gl-active">{{tarmes.from}}</li>
+        </ol>
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span class="circle active"></span>
+                    {{$lang.message.msg}}
+                </h4>
+            </div>
+            <div class="panel-body panel-status">
+                <div class="sendmsg-box clearfix">
+                    <div class="clearfix" style="margin-bottom: 15px;">
+                        <p class="sendmsg-time">{{tartime}}</p>
+                        <p class="senmsg-head">{{tarmes.from}}</p>
+                        <span class="glyphicon glyphicon-user icon-left"></span>
+                        <p class="sendmsg-msg">{{tarmes.body}}</p>
+                    </div>
+                    <div class="clearfix" v-for="(item, index) in list">
+                        <p class="sendmsg-time">{{item.timer}}</p>
+                        <p class="sendmsg-msg" style="float: right; cursor: pointer;">
+                            <button :disabled="loading" @click="sendMsg(index,item.msg)" v-show="!item.hasSend && !loading"
+                                class="send-btn">
+                                <span class="fa fa-exclamation text-danger"></span>
+                            </button>
+                            {{item.msg}}
+                            <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="loading && index == iconIndex"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="clearfix" style="position: relative;">
+                    <div class="msgNum">
+                        <span>{{msgLen}}</span>
+                        /160
+                    </div>
+                    <gl-input v-model="msg" class="msg-text" @keyup.enter.native="sendMsg" type="text" :placeholder="$lang.holdPlace.required"
+                        maxlength="160"></gl-input>
+                    <div class="msg-btn">
+                        <gl-btn type="default" @click="sendMsg" :disabled="loading || msgLen > 160">{{$lang.button.send}}</gl-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div

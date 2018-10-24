@@ -1,0 +1,111 @@
+/* @media screen and (max-width: 768px) {
+    .wifilistCollapse>.form-inline {
+        padding: 10px;
+        text-align: center;
+    }
+    .clsSetWifiKeyInputSpan {
+        display: inline-block;
+    }
+    .wifilistCollapse>.form-inline .glGp button.visible-xs-block {
+        padding: 8.5px 30px;
+        margin: 0 1px;
+    }
+}
+.wifilistCollapse>.form-inline {
+    padding: 10px 20px;
+} */
+#idScanWifiAlertMsg {
+    padding:20px;
+    margin:0;
+    border-radius:0px;
+    border:0px solid transparent;
+    border-top: 1px solid #cee0e0;
+}
+.set-input {
+    min-width: 280px;
+    max-width: 280px;
+}
+.set-input > input {
+    width: 100%;
+}
+.wifi-body {
+    padding: 10px 20px;
+    background-color: #d3d7dc;
+}
+.wifi_left {
+    float: left;
+}
+.wifi_right {
+    float: right;
+    display: block;
+}
+.wifi_right .button,
+.wifi_web .button {
+    min-width: 90px;
+}
+.wifi_right{
+    padding-top: 2px
+}
+.wifi_web  {
+    display: none;
+}
+.setWifi-text {
+    padding-top: 8px;
+    /* padding-left: 5px; */
+}
+
+.iconSuccess {
+    vertical-align: top;
+    padding-top: 9px;
+    float: left;
+    margin-right: 8px
+}
+.setWifiBox {
+    padding-bottom: 0;
+    border-left: none;
+    border-right: none;
+}
+.setwifiSelect,
+.setwifiSelect .select-control,
+.setwifiSelect .input-control {
+    width: 100%;
+}
+@media screen and (max-width: 768px) {
+    .setWifi-right {
+        float: none!important;
+        display: block;
+        text-align: center;
+        margin: 0px auto 5px;
+    }
+    .set-select {
+        /* margin-bottom: 0; */
+    }
+    .setWifi-text {
+        float: none!important;
+        display: block;
+        text-align: center;
+    }
+    .wifilistCollapse>.form-inline {
+        padding: 10px;
+        text-align: center;
+    }
+    .clsSetWifiKeyInputSpan {
+        display: inline-block;
+    }
+    .wifilistCollapse>.form-inline .glGp button.visible-xs-block {
+        padding: 8.5px 30px;
+        margin: 0 1px;
+    }
+    .wifi_left {
+        text-align: center;
+        float: none!important;
+    }
+    .wifi_web {
+        padding-top: 6px;
+        display: block!important;
+        text-align: center;
+    }
+    .wifi_right {
+        display: none;
+    }
+}

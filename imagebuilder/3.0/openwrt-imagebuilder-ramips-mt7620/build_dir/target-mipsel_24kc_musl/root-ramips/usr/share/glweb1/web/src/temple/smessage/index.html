@@ -1,0 +1,100 @@
+<div class="row" style="margin-top: 25px;">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li>
+                <a @click="$router.push('internet')" style="text-transform: uppercase">{{t($lang.internet.modem)}}</a>
+            </li>
+            <li class="gl-active">{{t($lang.message.msg)}}</li>
+        </ol>
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span class="circle active"></span>
+                    {{t($lang.message.msg)}}
+                </h4>
+                <!-- pc -->
+                <span class="pull-right">
+                    <gl-btn @click="showModal" type="default" class="hidden-xs">{{t($lang.button.newmsg)}}</gl-btn>
+                </span>
+            </div>
+            <div class="panel-body">
+                <transition name="main-fade" mode="out-in">
+                    <div v-if="mslist && mslist !== null" class="panel-status">
+                        <span class="list-group-item smg-box clearfix" v-for="(item, index) in mslist" @click="readsms(item)"
+                            style="position: relative;padding-left: 20px;">
+                            <!-- <router-link :to="{name: 'sendmsg', query:{id: moid,item: JSON.stringify(item)}}" class="clearfix smg-router"> -->
+                            <div class="clearfix smg-router">
+                                <span class="circle headerCircle" :class="{'unread': item.status != 'read'}" style="position: absolute;top: 50%;left: 2px;transform: translateY(-50%)"></span>
+                                <span class="smsg-right">
+                                    <div class="smsg-number">
+                                        {{item.from}}
+                                        <span style="float: right;font-weight: normal;" class="smg-time">
+                                            {{getTime(item.time)}}
+                                            <span class="fa fa-chevron-right"></span>
+                                        </span>
+                                    </div>
+                                    <div class="smsg-text">{{item.body}}</div>
+                                </span>
+                            </div>
+                            <!-- </router-link> -->
+                            <span class="glyphicon glyphicon-trash remove-icon" @click="removeMsg(item,index,$event)"></span>
+                        </span>
+                        <span class="list-group-item smg-box clearfix" style="border: none" v-show="mslist.length == 0">
+                            <span class="fa fa-exclamation-circle"></span>
+                            <span>{{t($lang.simmsg.nomsg)}}</span>
+
+                        </span>
+                    </div>
+                    <div style="min-height: 100px;position: relative;" v-else>
+                        <gl-loading></gl-loading>
+                    </div>
+                </transition>
+            </div>
+            <!-- mobile -->
+            <div class="panel-heading">
+                <span>
+                    <a @click="showModal" class="visible-xs">{{t($lang.button.newmsg)}}</a>
+                </span>
+            </div>
+            <gl-modal :modalStatus="modalShow" :title="$lang.modal.newmsg" size="sm">
+                <div style="padding: 5px 10px">
+                    <span style="vertical-align: top;margin-top: 12px;margin-right: 10px; display: inline-block;">Country:</span>
+                    <span style="display: inline-block;width: 70%">
+                        <gl-select :option="country" optionName="name" v-model="city" showNum="10" @change="getcountryNum"></gl-select>
+                    </span>
+                </div>
+                <div class="modal-msg clearfix">
+                    <span style="float: left; padding:10px 10px 10px 0;text-transform: capitalize">{{t($lang.simmsg.recipient)}}:</span>
+                    <gl-select :option="country" optionName="dial_code" showNum="10" v-model="countryCode" style="float: left;min-width: 22%;width: 22%;margin-right: 10px"
+                        @change="getcountrycity"></gl-select>
+                    <input type="number" v-model="pnum" class="msg-input" :placeholder="t($lang.holdPlace.required)"
+                        style="float: left">
+                </div>
+                <div class="modal-body" style="padding: 0;max-height: 350px">
+                    <div class="modal-msgText">
+                        <div class="clearfix" v-for="(item, index) in list">
+                            <h5 class="sendmsg-time">{{item.timer}}</h5>
+                            <p class="msg-p">
+                                {{item.msg}}
+                                <span class="fa fa-circle-o-notch glyphicon-spin-animate" v-show="loading && index == iconIndex"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align: center;border-top: none;padding: 0">
+                    <div class="modal-input clearfix" style="padding-bottom: 10px">
+                        <div class="msgNum">
+                            <span>{{msgLen}}</span>
+                            /160
+                        </div>
+                        <gl-input type="text" class="msg-text" v-model="modalMsg" :placeholder="$lang.holdPlace.required"></gl-input>
+                        <div class="msg-btn">
+                            <gl-btn type="default" @click="sendMsg" :disabled="btnStatus || msgLen > 160">{{t($lang.button.send)}}</gl-btn>
+                        </div>
+                    </div>
+                    <gl-btn @click="closeModal" type="modify" style="margin-bottom: 10px;">{{t($lang.button.cancel)}}</gl-btn>
+                </div>
+            </gl-modal>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,151 @@
+.vue-ios7-switch {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+}
+
+.vue-ios7-switch input {
+    opacity: 0;
+    position: absolute;
+}
+
+.vue-ios7-switch input + span i {
+    position: relative;
+}
+.vue-ios7-switch input + span {
+    position: relative;
+    display: inline-block;
+    width: 1.65em;
+    height: 1em;
+    background: white;
+    box-shadow: inset 0 0 0 0.0625em #e9e9e9;
+    border-radius: 0.5em;
+    transition: all 0.4s cubic-bezier(0.17, 0.67, 0.43, 0.98);
+}
+.vue-ios7-switch:active + span,
+.vue-ios7-switch input + span:active {
+    box-shadow: inset 0 0 0 0.73em #e9e9e9;
+}
+
+.vue-ios7-switch input + span i {
+    position: absolute;
+    display: block;
+    width: 0.875em;
+    height: 0.875em;
+    border-radius: 0.4375em;
+    line-height: 0.875em;
+    top: 0.0625em;
+    left: 0.0625em;
+    background: white;
+    box-shadow: inset 0 0 0 0.03em rgba(0, 0, 0, 0.1), 0 0 0.05em rgba(0, 0, 0, 0.05), 0 0.1em 0.2em rgba(0, 0, 0, 0.2);
+    transition: all 0.1s ease-out;
+}
+.vue-ios7-switch input + span i b{
+    display: none;
+}
+.vue-ios7-switch input + span i{
+    color: #c7cfd7;
+}
+.vue-ios7-switch  span i.disabled{
+    background: #aeb9c6 !important;
+    color: #fff !important;
+}
+
+.vue-ios7-switch input + span i b{
+    display: flex;
+    justify-content: center;
+    height: 0.1em;
+    font-size: 12px;
+}
+
+.vue-ios7-switch:active input + span i,
+.vue-ios7-switch input + span:active:after {
+    width: 1.15em;
+}
+
+.vue-ios7-switch input:checked + span i {
+    left: 0.7125em;
+}
+
+.vue-ios7-switch:active input:checked + span i,
+.vue-ios7-switch input:checked + span:active:after {
+    left: 0.4375em;
+}
+
+.vue-ios7-switch input:focus + span i {
+    box-shadow: inset 0 0 0 0.03em rgba(0, 0, 0, 0.15), 0 0 0.05em rgba(0, 0, 0, 0.08), 0 0.1em 0.2em rgba(0, 0, 0, 0.3);
+    background: #fff;
+}
+
+.vue-ios7-switch input:focus + span {
+    box-shadow: inset 0 0 0 0.0625em #dadada;
+}
+
+.vue-ios7-switch[data-disabled] {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.vue-ios7-switch[data-theme="green"] input:checked + span {
+    box-shadow: inset 0 0 0 0.73em #4cd964;
+}
+
+.vue-ios7-switch[data-theme="green"] input:focus:checked + span {
+    box-shadow: inset 0 0 0 0.73em #2ac845;
+}
+
+.vue-ios7-switch[data-theme="blue"] input:checked + span {
+    box-shadow: inset 0 0 0 0.73em #26a2ff;
+}
+
+.vue-ios7-switch[data-theme="blue"] input:focus:checked + span {
+    box-shadow: inset 0 0 0 0.73em #008af2;
+}
+.vue-ios7-switch[data-theme="default"] input:checked + span {
+    box-shadow: inset 0 0 0 0.73em #00838f;
+}
+  
+.vue-ios7-switch[data-theme="default"] input:focus:checked + span {
+    box-shadow: inset 0 0 0 0.73em #00838f;
+}
+.vue-ios7-switch[data-theme="primary"] input:checked + span {
+    box-shadow: inset 0 0 0 0.73em #4caf50;
+}
+  
+.vue-ios7-switch[data-theme="primary"] input:focus:checked + span {
+    box-shadow: inset 0 0 0 0.73em #4caf50;
+}
+.vue-ios7-switch[data-theme="message"] input:checked + span {
+    box-shadow: inset 0 0 0 0.73em #6d8aa3;
+}
+  
+.vue-ios7-switch[data-theme="message"] input:focus:checked + span {
+    box-shadow: inset 0 0 0 0.73em #6d8aa3;
+}
+.vue-ios7-switch[data-theme="message"] input:disabled + span {
+    background: rgba(0, 0, 0, .3)!important;
+    box-shadow: inset 0 0 0 0.73em rgba(0, 0, 0, .3)!important;
+}
+.vue-ios7-switch[data-theme="primary"] input:disabled + span {
+    background: rgba(0, 0, 0, .3)!important;
+    box-shadow: inset 0 0 0 0.73em rgba(0, 0, 0, .3)!important;
+}
+.vue-ios7-switch[data-theme="default"] input:disabled + span {
+    background: rgba(0, 0, 0, .3)!important;
+    box-shadow: inset 0 0 0 0.73em rgba(0, 0, 0, .3)!important;
+}
+.vue-ios7-switch[data-theme="blue"] input:disabled + span {
+    background: rgba(0, 0, 0, .3)!important;
+    box-shadow: inset 0 0 0 0.73em rgba(0, 0, 0, .3)!important;
+}
+.vue-ios7-switch[data-theme="green"] input:disabled + span {
+    background: rgba(0, 0, 0, .3)!important;
+    box-shadow: inset 0 0 0 0.73em rgba(0, 0, 0, .3)!important;
+}
+.vue-ios7-switch[data-theme="blue"] input:disabled + span {
+    background: rgba(0, 0, 0, .3)!important;
+    box-shadow: inset 0 0 0 0.73em rgba(0, 0, 0, .3)!important;
+}
