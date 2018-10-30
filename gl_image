@@ -17,6 +17,7 @@ def usage(pname):
     print " -a|--all            Build all images from the specified profiles in images.json"
     print " -p|--profile        Build a specified image from the specified profiles"
     print " -e|--extra          Extra packages allows to include and/or exclude packages"
+    print " -b|--branch         Change package branch. Default: master"
     print " -l|--list           List all available profiles"
     print " -i|--ignore         Ignore ipk update from glinet repo"
     print " -n|--clean          Remove images and temporary build files before build"
@@ -109,15 +110,6 @@ def show_images(images = []):
     else:
         print "No any profile found"
 
-def update_glinet():
-    url = "https://github.com/gl-inet/glinet.git"
-    dir_name = "glinet"
-
-    if not os.path.isdir(dir_name):
-        check_call("git clone --depth=1 %s %s" % (url, dir_name), shell=True)
-    else:
-        check_call("git pull", shell=True, cwd=dir_name)
-
 makeIndex = re.sub('[\t\n ]+', ' ', """
         makeIndex() {
             local topdir=$PWD;
@@ -195,12 +187,13 @@ def main(argv):
 
     try:
         (opts, args) = getopt.getopt(argv[1:], 
-                "ap:e:f:c:lniho", 
-                [ "all", "profile=", "extra=", "files=", "config=", "list", "clean", "ignore", "help" ,"output", "offline"])
+                "ap:e:b:f:c:lniho", 
+                [ "all", "profile=", "extra=", "branch=", "files=", "config=", "list", "clean", "ignore", "help" ,"output", "offline"])
     except getopt.GetoptError as e:
 	usage(pname)
 
     extra_ipks = ""
+    branch = "master"
     ignore = False
     clean = False
     update = False
@@ -219,6 +212,8 @@ def main(argv):
             profile = v
         if o in ("-e", "--extra"):
             extra_ipks = v
+        if o in ("-b", "--branch"):
+            branch = v
         if o in ("-f", "--files"):
             files = v
         if o in ("-c", "--config"):
@@ -259,7 +254,13 @@ def main(argv):
             check_call("make clean", shell=True, cwd=im_path)
 
     if not ignore:
-        update_glinet()
+        url = "https://github.com/gl-inet/glinet.git"
+        dir_name = "glinet"
+
+        if not os.path.isdir(dir_name):
+            check_call("git clone --single-branch -b %s --depth=1 %s %s" % (branch, url, dir_name), shell=True)
+        else:
+            check_call("git pull", shell=True, cwd=dir_name)
 
     for image in images:
         # Search imagebuilder path
