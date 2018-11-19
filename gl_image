@@ -338,8 +338,7 @@ def main(argv):
                     fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
                 if output != "":
                     os.system('mv ' + output + ' ' + fw_name)
-                print("--------------------------------------")
-                print(c.getImagebuilderPath(image))
+
                 if c.getImagebuilderPath(image).find('nand') != -1: 
                     check_call("find bin/ -name \"*%s*ubi-factory*\" | xargs cp -t %s/" \
                             % (image, bin_dir), shell=True, cwd=im_path)
