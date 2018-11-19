@@ -319,30 +319,38 @@ def main(argv):
                     EXTRA_IMAGE_NAME=%s" \
                     % (c.getProfile(image), '{} {}'.format(c.getPackages(image), extra_ipks), tmpfiles, image), \
                                 shell=True, cwd=im_path)
-
-            check_call("find bin/ -name \"*%s*sysupgrade*\" | xargs cp -t %s/" \
-                    % (image, bin_dir), shell=True, cwd=im_path)
-            # print(c.getProfile(image))
-            # print(image)
-            return_code, output = commands.getstatusoutput("find bin/ -name \"*-%s-*sysupgrade*\"" % (image.lower()))
-            if filename != "images.json":
-                fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
+            if c.getProfile(image) == "QSDK_Premium":   
+                check_call("make si", shell=True, cwd=im_path)
+                check_call("find single_img_dir/ -name ipq40xx-nor-apps.img | xargs cp -t %s/" \
+                        % (bin_dir), shell=True, cwd=im_path)
+                # return_code, output = commands.getstatusoutput("find bin/ -name ipq40xx-nor-apps.img")
+                # return_code, output = commands.getstatusoutput("basename %s" % output)
+                # print(output)
             else:
-                fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
-            if output != "":
-                os.system('mv ' + output + ' ' + fw_name)
-
-            if c.getImagebuilderPath(image).find('nand') != -1: 
-                check_call("find bin/ -name \"*%s*ubi-factory*\" | xargs cp -t %s/" \
+                check_call("find bin/ -name \"*%s*sysupgrade*\" | xargs cp -t %s/" \
                         % (image, bin_dir), shell=True, cwd=im_path)
-                
-                return_code, output = commands.getstatusoutput("find bin/ -name \"*%s*ubi-factory*\"" % (c.getProfile(image).lower()))
+                # print(c.getProfile(image))
+                # print(image)
+                return_code, output = commands.getstatusoutput("find bin/ -name \"*-%s-*sysupgrade*\"" % (image.lower()))
                 if filename != "images.json":
                     fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
                 else:
                     fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
                 if output != "":
                     os.system('mv ' + output + ' ' + fw_name)
+                print("--------------------------------------")
+                print(c.getImagebuilderPath(image))
+                if c.getImagebuilderPath(image).find('nand') != -1: 
+                    check_call("find bin/ -name \"*%s*ubi-factory*\" | xargs cp -t %s/" \
+                            % (image, bin_dir), shell=True, cwd=im_path)
+                    
+                    return_code, output = commands.getstatusoutput("find bin/ -name \"*%s*ubi-factory*\"" % (c.getProfile(image).lower()))
+                    if filename != "images.json":
+                        fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
+                    else:
+                        fw_name = bin_dir + "/" + c.getProfile(image).lower() + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                    if output != "":
+                        os.system('mv ' + output + ' ' + fw_name)
 
         except:
             print "Failed to build %s..." % c.getProfile(image)

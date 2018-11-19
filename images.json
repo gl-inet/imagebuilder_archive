@@ -7,6 +7,12 @@
 		"glinet": "gl-qos gl-tertf gl-fw gl-base-files gl-files-brower gl-firewall -gl-mem-monitor gl-modem gl-repeater gl-sdk gl-software gl-ui gl-util gl-wan-detect gl-wifi-core gl-monitor"
 	},
 	"profiles": {
+		"x1200": {
+			"profile": "GL-X1200",
+			"version": "3.006",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand_x1200",
+			"packages": "$basic $vpn $storage $usb $glinet"
+		},
 		"ar150": {
 			"profile": "gl-ar150",
 			"version": "3.005",
@@ -72,6 +78,12 @@
 			"version": "3.005",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "-kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet"
+		},
+		"b1300": {
+			"profile": "QSDK_Premium",
+			"version": "3.005",
+			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
+			"packages": "$basic gl-sdk gl-wifi-core gl-util gl-ui gl-wan-detect gl-base-files gl-vpn gl-vpn-server gl-ss gl-ss-server $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"vixmini": {
 			"profile": "vixmini",
