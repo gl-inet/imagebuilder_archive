@@ -34,7 +34,7 @@ $^W = 1;
 BEGIN
 {
   my $pkgdatadir = $ENV{'autom4te_perllibdir'} ||
-	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/autoconf');
+	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/autoconf');
   unshift @INC, $pkgdatadir;
 
   # Override SHELL.  On DJGPP SHELL may not be set to a shell

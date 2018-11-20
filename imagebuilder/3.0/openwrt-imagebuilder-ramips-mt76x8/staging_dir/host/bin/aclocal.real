@@ -29,7 +29,7 @@ $^W = 1;
 
 BEGIN
 {
-  @Aclocal::perl_libdirs = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/automake-1.15' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/automake-1.15')
+  @Aclocal::perl_libdirs = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/automake-1.15' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/automake-1.15')
     unless @Aclocal::perl_libdirs;
   unshift @INC, @Aclocal::perl_libdirs;
 }
@@ -71,8 +71,8 @@ $perl_threads = 0;
 # ACLOCAL_PATH environment variable, and reset with the '--system-acdir'
 # option.
 my @user_includes = ();
-my @automake_includes = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . "/../host/share/aclocal-$APIVERSION" : "/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/aclocal-$APIVERSION");
-my @system_includes = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/aclocal' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/aclocal');
+my @automake_includes = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . "/../host/share/aclocal-$APIVERSION" : "/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/aclocal-$APIVERSION");
+my @system_includes = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/aclocal' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/aclocal');
 
 # Whether we should copy M4 file in $user_includes[0].
 my $install = 0;

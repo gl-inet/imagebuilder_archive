@@ -21,9 +21,9 @@ if test -n "$STAGING_DIR_HOST"; then
 	: ${QUILT_DIR=$STAGING_DIR_HOST/share/quilt} ${QUILT_LIB=$STAGING_DIR_HOST/lib/quilt}
 	: ${QUILT_ETC=$STAGING_DIR_HOST/etc}
 else
-	export TEXTDOMAINDIR=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/locale
-	: ${QUILT_DIR=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/quilt}
-	: ${QUILT_ETC=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/etc}
+	export TEXTDOMAINDIR=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/locale
+	: ${QUILT_DIR=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/quilt}
+	: ${QUILT_ETC=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/etc}
 fi
 
 export QUILT_DIR
@@ -67,7 +67,7 @@ Global options:
 	file.
 
 --version
-	Print the version number and exit immediately.\n" "/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/etc"
+	Print the version number and exit immediately.\n" "/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/etc"
 	exit 1
 }
 

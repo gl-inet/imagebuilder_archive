@@ -27,7 +27,7 @@ $^W = 1;
 BEGIN
 {
   my $pkgdatadir = $ENV{'autom4te_perllibdir'} ||
-	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/autoconf');
+	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/autoconf');
   unshift @INC, $pkgdatadir;
 
   # Override SHELL.  On DJGPP SHELL may not be set to a shell
@@ -48,7 +48,7 @@ use strict;
 
 # Data directory.
 my $pkgdatadir = $ENV{'AC_MACRODIR'} ||
-	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/autoconf');
+	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/autoconf');
 
 # $LANGUAGE{LANGUAGE} -- Automatic options for LANGUAGE.
 my %language;
@@ -91,7 +91,7 @@ my @include;
 my $freeze = 0;
 
 # $M4.
-my $m4 = $ENV{"M4"} || ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/bin/m4' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/m4');
+my $m4 = $ENV{"M4"} || ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/bin/m4' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/m4');
 # Some non-GNU m4's don't reject the --help option, so give them /dev/null.
 fatal "need GNU m4 1.4 or later: $m4"
   if system "$m4 --help </dev/null 2>&1 | grep reload-state >/dev/null";
@@ -276,7 +276,7 @@ sub load_configuration ($)
 
       if ($ENV{'STAGING_DIR'})
       {
-        @words = map { s!^/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/autoconf!$ENV{'STAGING_DIR'}/../host/share/autoconf!; $_ } @words;
+        @words = map { s!^/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/autoconf!$ENV{'STAGING_DIR'}/../host/share/autoconf!; $_ } @words;
       }
 
       if ($type eq 'begin-language:')

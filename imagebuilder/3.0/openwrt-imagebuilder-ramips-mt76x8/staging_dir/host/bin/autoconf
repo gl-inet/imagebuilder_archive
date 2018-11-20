@@ -401,7 +401,7 @@ exit_missing_arg='
 if test -n "$STAGING_DIR"; then
 	: ${AUTOM4TE="$STAGING_DIR/../host/bin/autom4te"}
 else
-	: ${AUTOM4TE='/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/autom4te'}
+	: ${AUTOM4TE='/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/autom4te'}
 fi
 autom4te_options=
 outfile=

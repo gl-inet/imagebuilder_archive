@@ -81,19 +81,19 @@ build=x86_64-pc-linux-gnu
 build_os=linux-gnu
 
 # A sed program that does not truncate output.
-SED="${STAGING_DIR:-/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/target-mips_24kc_musl}/../host/bin/sed"
+SED="${STAGING_DIR:-/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/target-mipsel_24kc_musl}/../host/bin/sed"
 
 # Sed that helps us avoid accidentally triggering echo(1) options like -n.
 Xsed="$SED -e 1s/^X//"
 
 # A grep program that handles long lines.
-GREP="${STAGING_DIR:-/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/target-mips_24kc_musl}/../host/bin/grep"
+GREP="${STAGING_DIR:-/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/target-mipsel_24kc_musl}/../host/bin/grep"
 
 # An ERE matcher.
-EGREP="${STAGING_DIR:-/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/target-mips_24kc_musl}/../host/bin/grep -E"
+EGREP="${STAGING_DIR:-/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/target-mipsel_24kc_musl}/../host/bin/grep -E"
 
 # A literal string matcher.
-FGREP="${STAGING_DIR:-/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/target-mips_24kc_musl}/../host/bin/grep -F"
+FGREP="${STAGING_DIR:-/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/target-mipsel_24kc_musl}/../host/bin/grep -F"
 
 # A BSD- or MS-compatible name lister.
 NM="/usr/bin/nm -B"
@@ -164,7 +164,7 @@ lock_old_archive_extraction=no
 LTCC="gcc"
 
 # LTCC compiler flags.
-LTCFLAGS="-O2 -I${STAGING_DIR:-/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/target-mips_24kc_musl}/../host/include"
+LTCFLAGS="-O2 -I${STAGING_DIR:-/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/target-mipsel_24kc_musl}/../host/include"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p' | sed '/ __gnu_lto/d'"
@@ -594,10 +594,10 @@ if test -n "$STAGING_DIR"; then
 	: ${GREP="$STAGING_DIR/../host/bin/grep"}
 	: ${SED="$STAGING_DIR/../host/bin/sed"}
 else
-	: ${EGREP="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/grep -E"}
-	: ${FGREP="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/grep -F"}
-	: ${GREP="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/grep"}
-	: ${SED="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/sed"}
+	: ${EGREP="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/grep -E"}
+	: ${FGREP="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/grep -F"}
+	: ${GREP="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/grep"}
+	: ${SED="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/sed"}
 fi
 : ${SHELL="${CONFIG_SHELL-/bin/sh}"}
 : ${Xsed="$SED -e 1s/^X//"}

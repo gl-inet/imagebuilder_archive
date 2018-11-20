@@ -757,8 +757,11 @@ ar71xx_board_detect() {
 	*"GL-AR750S")
 		name="gl-ar750s"
 		;;
-	*"GL-X750-4G")
-		name="gl-x750-4g"
+	*"GL-X750")
+		name="gl-x750"
+		;;
+	*"GL-X1200")
+		name="gl-x1200"
 		;;
 	*"GL-CONNECT INET v1")
 		name="gl-inet"

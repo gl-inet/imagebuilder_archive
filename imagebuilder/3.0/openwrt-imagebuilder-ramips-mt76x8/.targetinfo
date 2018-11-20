@@ -522,11 +522,11 @@ Target-Profile-Description:
 Build firmware images for GL.iNet GL-AR750
 @@
 
-Target-Profile: DEVICE_gl-x750-4g
-Target-Profile-Name: GL.iNet GL-X750-4G
+Target-Profile: DEVICE_gl-x750
+Target-Profile-Name: GL.iNet GL-X750
 Target-Profile-Packages: kmod-ath10k ath10k-firmware-qca9887 kmod-usb-core kmod-usb2 kmod-usb-storage 
 Target-Profile-Description:
-Build firmware images for GL.iNet GL-X750-4G
+Build firmware images for GL.iNet GL-X750
 @@
 
 Target-Profile: DEVICE_gl-ar750s
@@ -534,6 +534,13 @@ Target-Profile-Name: GL.iNet GL-AR750S
 Target-Profile-Packages: kmod-ath10k ath10k-firmware-qca9887 kmod-usb-core kmod-usb2 kmod-usb-storage 
 Target-Profile-Description:
 Build firmware images for GL.iNet GL-AR750S
+@@
+
+Target-Profile: DEVICE_gl-x1200
+Target-Profile-Name: GL.iNet GL-X1200
+Target-Profile-Packages: kmod-usb-core kmod-usb2 kmod-usb-storage kmod-ath10k ath10k-firmware-qca9888  
+Target-Profile-Description:
+Build firmware images for GL.iNet GL-X1200
 @@
 
 Target-Profile: DEVICE_gl-domino
@@ -2930,11 +2937,18 @@ Target-Profile-Description:
 Build firmware images for GL-AR750S with nand flash
 @@
 
-Target-Profile: DEVICE_GL-X750-4G
-Target-Profile-Name: GL-X750-4G with nand flash
+Target-Profile: DEVICE_GL-X1200
+Target-Profile-Name: GL-X1200 with nand flash
+Target-Profile-Packages: kmod-ath10k ath10k-firmware-qca9888 kmod-usb-core kmod-usb2 kmod-usb-storage 
+Target-Profile-Description:
+Build firmware images for GL-X1200 with nand flash
+@@
+
+Target-Profile: DEVICE_GL-X750
+Target-Profile-Name: GL-X750 with nand flash
 Target-Profile-Packages: kmod-ath10k ath10k-firmware-qca9887 kmod-usb-core kmod-usb2 kmod-usb-storage 
 Target-Profile-Description:
-Build firmware images for GL-X750-4G with nand flash
+Build firmware images for GL-X750 with nand flash
 @@
 
 Target-Profile: DEVICE_GL-AR300M

@@ -337,10 +337,10 @@ if test -n "$STAGING_DIR"; then
 	: ${GREP="$STAGING_DIR/../host/bin/grep"}
 	: ${SED="$STAGING_DIR/../host/bin/sed"}
 else
-	: ${EGREP="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/grep -E"}
-	: ${FGREP="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/grep -F"}
-	: ${GREP="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/grep"}
-	: ${SED="/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/sed"}
+	: ${EGREP="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/grep -E"}
+	: ${FGREP="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/grep -F"}
+	: ${GREP="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/grep"}
+	: ${SED="/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/sed"}
 fi
 : ${SHELL="${CONFIG_SHELL-/bin/sh}"}
 : ${Xsed="$SED -e 1s/^X//"}
@@ -2482,17 +2482,17 @@ func_check_macros ()
   all_pkgltdl_files="COPYING.LIB Makefile Makefile.in Makefile.inc Makefile.am README acinclude.m4 aclocal.m4 argz_.h argz.c config.h.in config-h.in configure configure.ac configure.in libltdl/lt__alloc.h libltdl/lt__dirent.h libltdl/lt__glibc.h libltdl/lt__private.h libltdl/lt__strl.h libltdl/lt_dlloader.h libltdl/lt_error.h libltdl/lt_system.h libltdl/slist.h loaders/dld_link.c loaders/dlopen.c loaders/dyld.c loaders/load_add_on.c loaders/loadlibrary.c loaders/preopen.c loaders/shl_load.c lt__alloc.c lt__dirent.c lt__strl.c lt_dlloader.c lt_error.c ltdl.c ltdl.h slist.c"
 
   # Locations for important files:
-  prefix=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host
+  prefix=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host
   if test -n "$STAGING_DIR"; then
     datadir="$STAGING_DIR/../host/share"
     pkgdatadir="$STAGING_DIR/../host/share/libtool"
     pkgltdldir="$STAGING_DIR/../host/share/libtool"
     aclocaldir="$STAGING_DIR/../host/share/aclocal"
   else
-    datadir=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share
-    pkgdatadir=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/libtool
-    pkgltdldir=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/libtool
-    aclocaldir=/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/aclocal
+    datadir=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share
+    pkgdatadir=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/libtool
+    pkgltdldir=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/libtool
+    aclocaldir=/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/aclocal
   fi
   auxdir=
   macrodir=

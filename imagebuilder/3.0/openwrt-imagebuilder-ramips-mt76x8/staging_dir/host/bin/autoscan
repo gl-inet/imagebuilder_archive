@@ -28,7 +28,7 @@ $^W = 1;
 BEGIN
 {
   my $pkgdatadir = $ENV{'autom4te_perllibdir'} ||
-	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/autoconf');
+	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/autoconf');
   unshift @INC, $pkgdatadir;
 
   # Override SHELL.  On DJGPP SHELL may not be set to a shell
@@ -94,10 +94,10 @@ my $configure_scan = 'configure.scan';
 my $log;
 
 # Autoconf and lib files.
-my $autom4te = $ENV{'AUTOM4TE'} || ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/bin/autom4te' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/autom4te');
+my $autom4te = $ENV{'AUTOM4TE'} || ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/bin/autom4te' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/autom4te');
 my $autoconf = "$autom4te --language=autoconf";
 my @prepend_include;
-my @include = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/autoconf');
+my @include = ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/autoconf');
 
 # $help
 # -----

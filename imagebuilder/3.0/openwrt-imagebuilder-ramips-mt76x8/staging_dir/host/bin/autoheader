@@ -29,7 +29,7 @@ eval 'case $# in 0) exec /usr/bin/env perl -S "$0";; *) exec /usr/bin/env perl -
 BEGIN
 {
   my $pkgdatadir = $ENV{'autom4te_perllibdir'} ||
-	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/share/autoconf');
+	($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/share/autoconf' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/share/autoconf');
   unshift @INC, "$pkgdatadir";
 
   # Override SHELL.  On DJGPP SHELL may not be set to a shell
@@ -51,7 +51,7 @@ use strict;
 use vars qw ($config_h %verbatim %symbol);
 
 # Lib files.
-my $autom4te = $ENV{'AUTOM4TE'} || ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/bin/autom4te' : '/home/kyson/workspace/devlop/release/openwrt-18.06.git/staging_dir/host/bin/autom4te');
+my $autom4te = $ENV{'AUTOM4TE'} || ($ENV{'STAGING_DIR'} ? $ENV{'STAGING_DIR'} . '/../host/bin/autom4te' : '/home/lancer/workspace/gl-image/openwrt-18.06.git/staging_dir/host/bin/autom4te');
 local $config_h;
 my $config_h_in;
 my @prepend_include;
