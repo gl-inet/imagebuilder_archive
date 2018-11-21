@@ -9,9 +9,9 @@
 	"profiles": {
 		"x1200": {
 			"profile": "GL-X1200",
-			"version": "3.006",
+			"version": "3.008",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand_x1200",
-			"packages": "$basic $vpn $storage $usb $glinet"
+			"packages": "$basic $vpn $storage $usb $glinet gl-gps gl-uart"
 		},
 		"ar150": {
 			"profile": "gl-ar150",
