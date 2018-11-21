@@ -201,6 +201,9 @@ get_status_led() {
 	m2m)
 		status_led="$boardname:blue:wifi"
 		;;
+	gl-mt300n-v2)
+		status_led="$boardname:green:power"
+		;;
 	m4-4M|\
 	m4-8M)
 		status_led="m4:blue:status"

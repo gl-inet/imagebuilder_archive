@@ -1,2 +1,0 @@
-/etc/lighttpd/conf.d/30-cgi.conf
-/usr/lib/lighttpd/mod_cgi.so

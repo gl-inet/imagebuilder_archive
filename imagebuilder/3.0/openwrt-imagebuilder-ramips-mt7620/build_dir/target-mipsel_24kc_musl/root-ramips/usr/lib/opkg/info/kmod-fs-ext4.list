@@ -1,5 +1,0 @@
-/lib/modules/4.14.63/jbd2.ko
-/etc/modules-boot.d/30-fs-ext4
-/etc/modules.d/30-fs-ext4
-/lib/modules/4.14.63/mbcache.ko
-/lib/modules/4.14.63/ext4.ko

@@ -160,7 +160,7 @@ ar71xx_setup_interfaces()
 	dr344|\
 	gl-ar150|\
 	gl-ar300m|\
-	gl-x750-4g|\
+	gl-x750|\
 	gl-domino|\
 	gl-inet|\
 	gl-mifi|\
@@ -183,6 +183,10 @@ ar71xx_setup_interfaces()
 	gl-ar750s)
 		ucidef_add_switch "switch0" \
  			"0@eth0" "2:lan:2" "3:lan:1" "1:wan"
+		;;
+	gl-x1200)
+		ucidef_add_switch "switch0" \
+			"0@eth0" "1:lan" "2:lan" "3:lan" "4:lan" "5:wan"
 		;;
 	rb-750-r2|\
 	rb-750p-pbr2|\

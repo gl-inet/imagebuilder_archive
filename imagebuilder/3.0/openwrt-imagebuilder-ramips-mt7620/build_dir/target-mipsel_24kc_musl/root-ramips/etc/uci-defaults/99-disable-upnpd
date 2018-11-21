@@ -1,4 +1,0 @@
-uci set upnpd.config.enable_upnp=0
-uci set upnpd.config.enable_natpmp=0
-uci commit upnpd
-/etc/init.d/miniupnpd disable

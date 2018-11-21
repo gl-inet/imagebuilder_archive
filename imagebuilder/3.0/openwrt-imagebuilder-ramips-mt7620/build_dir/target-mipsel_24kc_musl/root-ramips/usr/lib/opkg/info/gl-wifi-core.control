@@ -1,8 +1,0 @@
-Package: gl-wifi-core
-Version: 3.0.44-1
-Depends: libc, gl-util
-Source: package/gli/gl-wifi-core
-Section: base
-Architecture: mipsel_24kc
-Installed-Size: 15686
-Description:  GL iNet common libary

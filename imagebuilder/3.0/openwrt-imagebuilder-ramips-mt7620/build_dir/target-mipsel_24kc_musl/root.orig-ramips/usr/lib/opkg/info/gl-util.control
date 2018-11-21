@@ -1,8 +1,0 @@
-Package: gl-util
-Version: 3.0.20-1
-Depends: libc, libpthread, libuci, libjson-c, libiwinfo
-Source: package/gli/gl-util
-Section: base
-Architecture: mipsel_24kc
-Installed-Size: 54723
-Description:  GL iNet common libary

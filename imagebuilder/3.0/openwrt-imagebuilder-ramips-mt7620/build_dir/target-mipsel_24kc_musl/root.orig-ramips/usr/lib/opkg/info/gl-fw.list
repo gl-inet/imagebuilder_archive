@@ -1,8 +1,0 @@
-/etc/config/glfw
-/usr/lib/gl/libglfw.so
-/usr/lib/libglfw.so
-/usr/bin/glfw_unittest
-/etc/hotplug.d/iface/70-glfw
-/etc/uci-defaults/glfw
-/usr/bin/glfw
-/etc/init.d/glfw

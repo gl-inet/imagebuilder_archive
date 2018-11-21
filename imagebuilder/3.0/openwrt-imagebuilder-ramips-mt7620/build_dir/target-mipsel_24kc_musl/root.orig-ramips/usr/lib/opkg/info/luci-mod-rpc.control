@@ -1,9 +1,0 @@
-Package: luci-mod-rpc
-Version: git-18.196.56128-9112198-1
-Depends: libc, luci-lib-json
-Source: feeds/luci/modules/luci-mod-rpc
-License: Apache-2.0
-Section: luci
-Architecture: all
-Installed-Size: 3015
-Description:  LuCI RPC - JSON-RPC API

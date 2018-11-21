@@ -1,9 +1,0 @@
-#!/bin/sh
-
-echo "$BUTTON ${ACTION}" > /dev/console
-
-if [ "$ACTION" = "released" ]; then
-	/usr/bin/switch_mode router
-else
-	/usr/bin/switch_mode ap
-fi

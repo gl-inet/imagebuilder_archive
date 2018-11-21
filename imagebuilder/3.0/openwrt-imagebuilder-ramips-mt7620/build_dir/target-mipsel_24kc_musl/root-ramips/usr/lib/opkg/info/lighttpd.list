@@ -1,7 +1,0 @@
-/usr/lib/lighttpd/mod_indexfile.so
-/etc/lighttpd/lighttpd.conf
-/etc/init.d/lighttpd
-/etc/lighttpd/mime.conf
-/usr/sbin/lighttpd
-/usr/lib/lighttpd/mod_staticfile.so
-/usr/lib/lighttpd/mod_dirlisting.so

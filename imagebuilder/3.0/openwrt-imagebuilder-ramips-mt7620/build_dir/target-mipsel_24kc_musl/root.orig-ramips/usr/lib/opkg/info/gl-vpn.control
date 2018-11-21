@@ -1,8 +1,0 @@
-Package: gl-vpn
-Version: 3.0.24-1
-Depends: libc, gl-util, openvpn-openssl, openssl-util, resolveip
-Source: package/gli/gl-vpn
-Section: base
-Architecture: mipsel_24kc
-Installed-Size: 16197
-Description:  Openvpn server endpoint api for gl-inet.

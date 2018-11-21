@@ -1,7 +1,0 @@
-#!/bin/sh
-
-[ "$ACTION" = "ifup" -o "$ACTION" = "ifupdate" ] || exit 0
-
-logger -t glfw "Reloading firewall due to $ACTION of $INTERFACE ($DEVICE)"
-
-/etc/init.d/glfw restart

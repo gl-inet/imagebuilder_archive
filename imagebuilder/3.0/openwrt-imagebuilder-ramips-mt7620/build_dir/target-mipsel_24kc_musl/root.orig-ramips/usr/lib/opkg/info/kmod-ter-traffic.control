@@ -1,8 +1,0 @@
-Package: kmod-ter-traffic
-Version: 4.14.63+3.0.1-1
-Depends: kernel (=4.14.63-1-040e1eb571d42424f99665555568bea6)
-Source: package/kernel/ter-traffic
-Section: kernel
-Architecture: mipsel_24kc
-Installed-Size: 5130
-Description:  Driver for Traffic Statistics (used by all router)

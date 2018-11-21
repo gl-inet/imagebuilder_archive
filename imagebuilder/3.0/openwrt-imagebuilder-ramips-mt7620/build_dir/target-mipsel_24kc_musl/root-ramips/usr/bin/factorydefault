@@ -1,6 +1,0 @@
-#!/bin/sh
-
-/usr/bin/flashleds &
-
-echo y | firstboot
-reboot

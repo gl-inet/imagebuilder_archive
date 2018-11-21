@@ -1,8 +1,0 @@
-Package: gl-ui
-Version: 3.0.73d-1
-Depends: libc
-Source: package/gli/gl-ui
-Section: base
-Architecture: mipsel_24kc
-Installed-Size: 1760262
-Description:  GL iNet web UI

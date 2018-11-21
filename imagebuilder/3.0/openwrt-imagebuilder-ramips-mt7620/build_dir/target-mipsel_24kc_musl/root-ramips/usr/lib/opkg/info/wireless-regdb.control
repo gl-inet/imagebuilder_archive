@@ -1,9 +1,0 @@
-Package: wireless-regdb
-Version: 2017-10-20-4343d359
-Depends: libc
-Source: feeds/base/package/firmware/wireless-regdb
-Section: firmware
-Maintainer: Felix Fietkau <nbd@nbd.name>
-Architecture: mipsel_24kc
-Installed-Size: 1819
-Description:  Wireless Regulatory Database

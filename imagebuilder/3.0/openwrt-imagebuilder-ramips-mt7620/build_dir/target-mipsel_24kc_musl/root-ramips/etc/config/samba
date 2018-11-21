@@ -1,6 +1,0 @@
-config samba
-        option workgroup 'WORKGROUP'
-        option description 'GL-MT750'
-        option homes '1'
-        option name 'GL-MT750'
-

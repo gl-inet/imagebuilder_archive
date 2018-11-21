@@ -1,4 +1,0 @@
-config proxy
-	option main_server 'nil'
-	option enable '0'
-

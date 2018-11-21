@@ -1,5 +1,0 @@
-/etc/config/openvpn
-/etc/init.d/openvpn
-/usr/sbin/openvpn
-/usr/share/openvpn/openvpn.options
-/lib/upgrade/keep.d/openvpn

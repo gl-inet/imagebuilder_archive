@@ -1,9 +1,0 @@
-Package: libip4tc
-Version: 1.6.2-1
-Depends: libc, libxtables
-Source: package/network/utils/iptables
-License: GPL-2.0
-Section: libs
-Architecture: mipsel_24kc
-Installed-Size: 17812
-Description:  IPv4 firewall - shared libiptc library

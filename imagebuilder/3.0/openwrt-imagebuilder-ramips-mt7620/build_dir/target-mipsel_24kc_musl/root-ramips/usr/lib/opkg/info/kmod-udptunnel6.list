@@ -1,2 +1,0 @@
-/etc/modules.d/32-udptunnel6
-/lib/modules/4.14.63/ip6_udp_tunnel.ko

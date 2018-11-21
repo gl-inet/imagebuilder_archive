@@ -1,8 +1,0 @@
-Package: gl-sdk
-Version: 3.0.117d-1
-Depends: libc, libpthread, libuci, libubus, libubox, libjson-c, libiwinfo, gl-util, fcgi, wget, relayd, bridge, swconfig, gl-wan-detect, gl-wifi-core
-Source: package/gli/gl-sdk
-Section: base
-Architecture: mipsel_24kc
-Installed-Size: 181665
-Description:  GL SDK3.0

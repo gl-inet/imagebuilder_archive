@@ -1,8 +1,0 @@
-#!/bin/sh
-if [ -n "${IPKG_INSTROOT}" ]; then
-	mv ${IPKG_INSTROOT}/etc/ter-traffic.ko ${IPKG_INSTROOT}/lib/modules/*/
-else
-	mv /etc/ter-traffic.ko /lib/modules/*/
-	insmod /lib/modules/*/ter-traffic.ko	
-fi
-exit 0

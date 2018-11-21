@@ -1,8 +1,0 @@
-Package: gl-modem
-Version: 3.0.17-1
-Depends: libc, libpthread, libuci, libubus, libblobmsg-json, libubox, smstools3, gl-util
-Source: package/gli/gl-modem
-Section: base
-Architecture: mipsel_24kc
-Installed-Size: 78076
-Description:  GL iNet modem manager
