@@ -6177,11 +6177,51 @@ Felix Fietkau <nbd@nbd.name>
 @@
 
 
-Source-Makefile: package/gli/gl_qos/Makefile
+Source-Makefile: package/gli/gl-gps/Makefile
+
+Package: gl-gps
+Version: 3.0.0-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: gl-inet
+Repository: base
+Title: GL iNet QCA9563 and gps
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Get GPS data.
+
+@@
+
+
+Source-Makefile: package/gli/gl-gps/gpio_to_uart_gps/Makefile
+
+Package: kmod-soft_uart_gps
+Submenu: Other modules
+Version: <LINUX_VERSION>+3.0.0-1
+Depends: @GPIO_SUPPORT
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Support Module for gpio-uart
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Support Module for gpio-uart
+
+@@
+
+
+Source-Makefile: package/gli/gl-qos/Makefile
 
 Package: gl-qos
 Version: 3.0.10-1
-Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +kmod-sched +kmod-sched-core +kmod-sched-connmark +kmod-ipt-ipmark +kmod-ipt-hashlimit +kmod-ipt-core +iptables +iptables-mod-conntrack-extra +iptables-mod-hashlimit +iptables-mod-ipopt +iptables-mod-u32
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +gl-util +libjson-c +tc +kmod-sched +kmod-sched-core +kmod-sched-connmark +kmod-ipt-ipmark +kmod-ipt-hashlimit +kmod-ipt-core +iptables +iptables-mod-conntrack-extra +iptables-mod-hashlimit +iptables-mod-ipopt +iptables-mod-u32
 Conflicts: 
 Menu-Depends: 
 Provides: 
@@ -6194,6 +6234,150 @@ Source:
 Type: ipkg
 Kernel-Config: CONFIG_NETFILTER_XT_MATCH_U32=m CONFIG_NET_SCH_CBQ=m CONFIG_NET_CLS=m CONFIG_NET_CLS_FLOW=m CONFIG_NET_SCH_INGRESS=m CONFIG_NET_CLS_U32=m CONFIG_NET_SCH_SFQ=m CONFIG_NET_SCH_PRIO=m 
 Description: Qos function for gl-inet.
+
+@@
+
+
+Source-Makefile: package/gli/gl-tertf/Makefile
+
+Package: gl-tertf
+Version: 3.0.26-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +gl-util +libjson-c +kmod-ter-traffic
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: gl-inet
+Repository: base
+Title: GL iNet Get Terminal traffic
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Terminal traffic.
+
+@@
+
+
+Source-Makefile: package/gli/gl-tertf/ter-traffic/Makefile
+
+Package: kmod-ter-traffic
+Submenu: Other modules
+Version: <LINUX_VERSION>+3.0.4-1
+Depends: 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Driver for Traffic Statistics (used by all router)
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Driver for Traffic Statistics (used by all router)
+
+@@
+
+
+Source-Makefile: package/gli/gl-uart/Makefile
+
+Package: gl-uart
+Version: 3.0.0-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: gl-inet
+Repository: base
+Title: GL iNet QCA9563 and MCU 
+Maintainer: 
+Source: 
+Type: ipkg
+Description: VPN daemon for gl-inet.
+
+@@
+
+
+Source-Makefile: package/gli/gl-uart/gpio_to_uart_mcu/Makefile
+
+Package: kmod-soft_uart_mcu
+Submenu: Other modules
+Version: <LINUX_VERSION>+3.0.0-1
+Depends: @GPIO_SUPPORT
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Support Module for gpio-uart_mcu
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Support Module for gpio-uart_mcu
+
+@@
+
+
+Source-Makefile: package/gli/gl-util/Makefile
+
+Package: gl-util
+Version: 3.0.31-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpthread +libuci +libjson-c +libiwinfo
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: gl-inet
+Repository: base
+Title: GL iNet common libary
+Maintainer: 
+Source: 
+Type: ipkg
+Description: GL iNet common libary
+
+@@
+
+
+Source-Makefile: package/gli/mt7628/Makefile
+
+Package: kmod-mt7628
+Menu: 1
+Submenu: Wireless Drivers
+Version: <LINUX_VERSION>+4.0.2-3
+Depends: @TARGET_ramips_mt76x8 +wireless-tools +uci2dat
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: MediaTek MT7628/MT7688 wireless driver
+Maintainer: 
+Source: 
+Type: ipkg
+Description: MediaTek MT7628/MT7688 wireless driver
+
+@@
+Config:
+	source "/home/lancer/workspace/gl-image/gli/mt7628/config.in"
+@@
+
+
+Source-Makefile: package/gli/uci2dat/Makefile
+
+Package: uci2dat
+Version: 4
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_ramips_mt76x8 +libuci
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: gl-inet
+Repository: base
+Title: Translate uci config into ralink wifi dat format
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   Translate uci config into ralink wifi dat format
 
 @@
 
@@ -23540,30 +23724,6 @@ Felix Fietkau <nbd@nbd.name>
 @@
 
 
-Source-Makefile: package/kernel/mt7628/Makefile
-
-Package: kmod-mt7628
-Menu: 1
-Submenu: Wireless Drivers
-Version: <LINUX_VERSION>+4.0.2-3
-Depends: @TARGET_ramips_mt76x8 +wireless-tools +uci2dat
-Conflicts: 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: MediaTek MT7628/MT7688 wireless driver
-Maintainer: 
-Source: 
-Type: ipkg
-Description: MediaTek MT7628/MT7688 wireless driver
-
-@@
-Config:
-	source "package/kernel/mt7628/config.in"
-@@
-
-
 Source-Makefile: package/kernel/mwlwifi/Makefile
 
 Package: kmod-mwlwifi
@@ -23759,26 +23919,6 @@ Description:  Kernel module for register a custom spi-gpio platform device.
 @@
 
 
-Source-Makefile: package/kernel/ter-traffic/Makefile
-
-Package: kmod-ter-traffic
-Submenu: Other modules
-Version: <LINUX_VERSION>+3.0.3-1
-Depends: 
-Conflicts: 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Driver for Traffic Statistics (used by all router)
-Maintainer: 
-Source: 
-Type: ipkg
-Description: Driver for Traffic Statistics (used by all router)
-
-@@
-
-
 Source-Makefile: package/kernel/trelay/Makefile
 
 Package: kmod-trelay
@@ -23799,26 +23939,6 @@ without any MAC address checks. This makes it possible to bridge client mode
 or ad-hoc mode wifi devices to ethernet VLANs, assuming the remote end uses
 the same source MAC address as the device that packets are supposed to exit
 from.
-
-@@
-
-
-Source-Makefile: package/kernel/uci2dat/Makefile
-
-Package: uci2dat
-Version: 4
-Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_ramips_mt76x8 +libuci
-Conflicts: 
-Menu-Depends: 
-Provides: 
-Section: base
-Category: gl-inet
-Repository: base
-Title: Translate uci config into ralink wifi dat format
-Maintainer: 
-Source: 
-Type: ipkg
-Description:   Translate uci config into ralink wifi dat format
 
 @@
 
