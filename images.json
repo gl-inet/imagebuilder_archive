@@ -45,9 +45,9 @@
         },
 		"usb150": {
 			"profile": "gl-usb150",
-			"version": "3.005",
+			"version": "3.008",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
-			"packages": "$basic $vpn $glinet -mwan3 -gl-modem"
+			"packages": "$basic $vpn $glinet mwan3 -gl-modem"
 		},
 		"ar300m": {
 			"profile": "GL-AR300M",
@@ -75,9 +75,9 @@
 		},
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
-			"version": "3.005",
+			"version": "3.008",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
-			"packages": "-kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet"
+			"packages": "-kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet -wpa-cli"
 		},
 		"b1300": {
 			"profile": "QSDK_Premium",
