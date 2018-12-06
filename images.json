@@ -37,12 +37,12 @@
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
-        "x750": {
-            "profile": "gl-x750",
-            "version": "3.005",
-            "imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
-            "packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
-        },
+       		 "x750": {
+           		 "profile": "gl-x750",
+           		 "version": "3.005",
+           		 "imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic_x750",
+           		 "packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
+       			 },
 		"usb150": {
 			"profile": "gl-usb150",
 			"version": "3.009",
