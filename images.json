@@ -1,7 +1,7 @@
 {
 	"packages": {
-		"basic": "-wpad-mini iwinfo kmod-nls-cp437 kmod-nls-iso8859-1 kmod-nls-utf8 kmod-nf-nathelper-extra luci luci-mod-rpc ethtool fcgi lighttpd lighttpd-mod-access lighttpd-mod-cgi lighttpd-mod-expire lighttpd-mod-fastcgi lighttpd-mod-proxy unzip wpa-cli wpad bridge wget ip-full unbound mwan3",
-		"vpn": "openvpn-openssl wireguard gl-wg gl-wg-server gl-vpn gl-vpn-server",
+		"basic": "-wpad-mini iwinfo kmod-nls-cp437 kmod-nls-iso8859-1 kmod-nls-utf8 kmod-nf-nathelper-extra luci luci-mod-rpc ethtool fcgi lighttpd lighttpd-mod-access lighttpd-mod-cgi lighttpd-mod-expire lighttpd-mod-fastcgi lighttpd-mod-proxy unzip wpa-cli wpad bridge wget ip-full -unbound stubby mwan3",
+		"vpn": "openvpn-openssl wireguard gl-wg gl-wg-server gl-vpn gl-vpn-server -gl-ss -gl-ss-server",
 		"storage": "blkid kmod-fs-ext4 kmod-fs-ntfs kmod-fs-vfat kmod-fs-exfat ntfs-3g samba36-server",
 		"usb": "kmod-usb-storage kmod-usb-uhci kmod-usb2 kmod-usb-ohci kmod-usb-acm kmod-usb-net-huawei-cdc-ncm comgt chat comgt-directip comgt-ncm kmod-usb-serial kmod-usb-serial-cp210x kmod-usb-serial-option kmod-usb-serial-wwan kmod-usb-serial-sierrawireless kmod-rt2800-usb usb-modeswitch kmod-mppe kmod-usb-net kmod-usb-net-cdc-ether kmod-usb-net-rndis kmod-usb-net-qmi-wwan uqmi kmod-usb-net-ipheth libusbmuxd libimobiledevice usbmuxd",
 		"glinet": "gl-qos gl-tertf gl-fw gl-base-files gl-files-brower gl-firewall -gl-mem-monitor gl-modem gl-repeater gl-sdk gl-software gl-ui gl-util gl-wan-detect gl-wifi-core gl-monitor"
@@ -21,7 +21,7 @@
 		},
 		"mifi": {
 			"profile": "gl-mifi",
-			"version": "3.009",
+			"version": "3.010",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
@@ -77,7 +77,7 @@
 			"profile": "gl-mt300n-v2",
 			"version": "3.010",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
-			"packages": "gl-base-files-mt -kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb $glinet -wpa-cli"
+			"packages": "gl-base-files-mt -kmod-mt76 kmod-mt7628 $basic -gl-sdk gl-sdk-mt76x8 $vpn $storage $usb $glinet -wpa-cli"
 		},
 		"b1300": {
 			"profile": "QSDK_Premium",
