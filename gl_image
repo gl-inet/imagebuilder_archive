@@ -323,9 +323,12 @@ def main(argv):
                 check_call("make si", shell=True, cwd=im_path)
                 check_call("find single_img_dir/ -name ipq40xx-nor-apps.img | xargs cp -t %s/" \
                         % (bin_dir), shell=True, cwd=im_path)
-                # return_code, output = commands.getstatusoutput("find bin/ -name ipq40xx-nor-apps.img")
+                
+                return_code, output = commands.getstatusoutput("find bin/ -name ipq40xx-nor-apps.img")
+                if output != "":
+                    fw_name = bin_dir + "/" + "gl-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                    os.system('mv ' + output + ' ' + fw_name)
                 # return_code, output = commands.getstatusoutput("basename %s" % output)
-                # print(output)
             else:
                 check_call("find bin/ -name \"*%s*sysupgrade*\" | xargs cp -t %s/" \
                         % (image, bin_dir), shell=True, cwd=im_path)
