@@ -191,5 +191,7 @@ endif
 		$(if $(PACKAGES),USER_PACKAGES="$(PACKAGES)") \
 		$(if $(BIN_DIR),BIN_DIR="$(BIN_DIR)"))
 
+	$(MAKE) si
+
 .SILENT: help info image
 

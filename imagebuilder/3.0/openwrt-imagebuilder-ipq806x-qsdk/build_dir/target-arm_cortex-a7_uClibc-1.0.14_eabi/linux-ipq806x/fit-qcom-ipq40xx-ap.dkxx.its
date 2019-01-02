@@ -7,7 +7,7 @@
 	images {
 		kernel@1 {
 			description = "ARM OpenWrt Linux-4.4.60";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/Image.gz");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/Image.gz");
 			type = "kernel";
 			arch = "arm";
 			os = "linux";
@@ -25,7 +25,7 @@
 
 		fdt@ap.dk04.1-c1 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c1.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c1.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -39,7 +39,7 @@
 
 		fdt@ap.dk05.1-c1 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk05.1-c1.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk05.1-c1.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -53,7 +53,7 @@
 
 		fdt@ap.dk04.1-c2 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c2.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c2.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -67,7 +67,7 @@
 
 		fdt@ap.dk06.1-c1 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk06.1-c1.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk06.1-c1.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -81,7 +81,7 @@
 
 		fdt@ap.dk01.1-c1 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk01.1-c1.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk01.1-c1.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -95,7 +95,7 @@
 
 		fdt@ap.dk04.1-c5 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c5.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c5.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -109,7 +109,7 @@
 
 		fdt@ap.dk07.1-c2 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk07.1-c2.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk07.1-c2.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -123,7 +123,7 @@
 
 		fdt@ap.dk01.1-c3 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk01.1-c3.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk01.1-c3.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -137,7 +137,7 @@
 
 		fdt@ap.dk07.1-c1 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk07.1-c1.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk07.1-c1.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -151,7 +151,7 @@
 
 		fdt@ap.dk04.1-c4 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c4.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c4.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -165,7 +165,7 @@
 
 		fdt@ap.dk01.1-c2 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk01.1-c2.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk01.1-c2.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -179,7 +179,7 @@
 
 		fdt@ap.dk04.1-c3 {
 			description = "ARM OpenWrt qcom-ipq40xx-ap.dkxx device tree blob";
-			data = /incbin/("/home/lancer/workspace/gl-image/qsdk53/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c3.dtb");
+			data = /incbin/("/home/lancer/workspace/imagebuilder/imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/linux-4.4.60/arch/arm/boot/dts//qcom-ipq4019-ap.dk04.1-c3.dtb");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
