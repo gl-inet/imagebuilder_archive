@@ -84,7 +84,7 @@
 			"profile": "QSDK_Premium",
 			"version": "3.010",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
-			"packages": "-stubby gl-base-files-ipq $basic gl-sdk gl-wifi-core gl-util gl-ui gl-wan-detect gl-base-files gl-vpn gl-vpn-server gl-ss gl-ss-server $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
+			"packages": "-stubby gl-base-files-ipq $basic $glinet -gl-tertf -gl-qos gl-qos-internal $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"s1300": {
 			"profile": "QSDK_Premium",
