@@ -100,9 +100,10 @@ do_flash_mtd() {
 do_flash_emmc() {
 	local bin=$1
 	local emmcblock=$2
+	local size=`wc -c ${bin}.bin | awk '{print $1}'`
 
-	dd if=/dev/zero of=${emmcblock}
-	dd if=/tmp/${bin}.bin of=${emmcblock}
+	dd if=/dev/zero of=${emmcblock} bs=8M
+	dd if=/tmp/${bin}.bin of=${emmcblock} bs=${size}
 }
 
 do_flash_partition() {
@@ -240,7 +241,7 @@ flash_section() {
 erase_emmc_config() {
 	local emmcblock="$(find_mmc_part "rootfs_data")"
 	if [ -e "$emmcblock" ]; then
-		dd if=/dev/zero of=${emmcblock}
+		dd if=/dev/zero of=${emmcblock} bs=256M
 		mkfs.ext4 "$emmcblock"
 	fi
 }
