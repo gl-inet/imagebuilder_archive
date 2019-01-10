@@ -90,7 +90,7 @@
 			"profile": "QSDK_Premium",
 			"version": "3.012",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
-			"packages": "gl-base-files-ipq $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
+			"packages": "gl-base-files-ipq gl-ble-api gl-ble-daemon $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"vixmini": {
 			"profile": "vixmini",
