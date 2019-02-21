@@ -16,7 +16,7 @@
 		},
 		"ar150": {
 			"profile": "gl-ar150",
-			"version": "3.013",
+			"version": "3.014",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
@@ -88,15 +88,15 @@
 		},
 		"b1300": {
 			"profile": "QSDK_Premium",
-			"version": "3.013",
+			"version": "3.014",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
-			"packages": "gl-base-files-ipq $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
+			"packages": "gl-wifison gl-base-files-ipq $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"s1300": {
 			"profile": "QSDK_Premium",
-			"version": "3.013",
+			"version": "3.014",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
-			"packages": "gl-base-files-ipq gl-ble-api gl-ble-daemon $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
+			"packages": "gl-wifison gl-base-files-ipq gl-ble-api gl-ble-daemon $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"vixmini": {
 			"profile": "vixmini",
