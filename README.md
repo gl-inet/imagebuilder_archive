@@ -15,9 +15,9 @@ sudo apt-get install subversion build-essential git-core libncurses5-dev zlib1g-
 
 ## Usage
 
-To build all the router firmwares, run **./gl_image -a**. To build a specific firmware, run **./gl_image -p <image_name>**. You can list all the images names by running **./gl_image -l**.
+To build all the router firmwares, run **python2.7 gl_image -a**. To build a specific firmware, run **python2.7 gl_image -p <image_name>**. You can list all the images names by running **python2.7 gl_image -l**.
 
-Run **./gl_image -h** to see more details and advanced options.
+Run **python2.7 gl_image -h** to see more details and advanced options.
 
 ## Complete Usage Example
 
@@ -26,7 +26,7 @@ To make an image for the **Mifi** with some extra packages included:
 ```bash
 git clone https://github.com/gl-inet/imagebuilder.git
 cd imagebuilder
-./gl_image -p mifi -e "openssh-sftp-server nano htop"
+python2.7 gl_image -p mifi -e "openssh-sftp-server nano htop"
 ```
 
 The compiled image becomes: *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
@@ -68,5 +68,5 @@ Assuming that we have a helloworld.ipk (created by the sdk), and we want to crea
 }
 ```
 
-Placing the helloworld.ipk in the *glinet/ar71xx* folder and running **./gl_image -c myfirst.json -p helloworld** will build our clean image with our helloworld.ipk included.
+Placing the helloworld.ipk in the *glinet/ar71xx* folder and running **python2.7 gl_image -c myfirst.json -p helloworld** will build our clean image with our helloworld.ipk included.
 
