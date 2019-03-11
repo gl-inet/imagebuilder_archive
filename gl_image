@@ -193,7 +193,7 @@ def main(argv):
 	usage(pname)
 
     extra_ipks = ""
-    branch = "master"
+    branch = "develop"
     ignore = False
     clean = False
     update = False
