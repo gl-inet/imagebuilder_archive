@@ -29,6 +29,7 @@ def usage(pname):
 
 def GetFirmwareInfo(f):
     files = os.listdir(f)
+    files.sort()
     for file in files:
         t_path = os.path.join(f, file)
         if not os.path.isdir(t_path):
