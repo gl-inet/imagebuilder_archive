@@ -327,7 +327,7 @@ def main(argv):
                 
                 return_code, output = commands.getstatusoutput("find bin/ -name ipq40xx-nor-apps.img")
                 if output != "":
-                    fw_name = bin_dir + "/" + "gl-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                    fw_name = bin_dir + "/" + "qsdk-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
                     os.system('mv ' + output + ' ' + fw_name)
                 # return_code, output = commands.getstatusoutput("basename %s" % output)
             elif image == "s1300":
@@ -337,7 +337,7 @@ def main(argv):
                 
                 return_code, output = commands.getstatusoutput("find bin/ -name ipq40xx-noremmc-apps.img")
                 if output != "":
-                    fw_name = bin_dir + "/" + "gl-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                    fw_name = bin_dir + "/" + "qsdk-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
                     os.system('mv ' + output + ' ' + fw_name)
                 # return_code, output = commands.getstatusoutput("basename %s" % output)
             else:
@@ -347,9 +347,9 @@ def main(argv):
                 # print(image)
                 return_code, output = commands.getstatusoutput("find bin/ -name \"*-%s-*sysupgrade*\"" % (image.lower()))
                 if filename != "images.json":
-                    fw_name = bin_dir + "/" + "gl-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
+                    fw_name = bin_dir + "/" + "openwrt-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
                 else:
-                    fw_name = bin_dir + "/" + "gl-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                    fw_name = bin_dir + "/" + "openwrt-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
                 if output != "":
                     os.system('mv ' + output + ' ' + fw_name)
 
@@ -359,9 +359,9 @@ def main(argv):
                     
                     return_code, output = commands.getstatusoutput("find bin/ -name \"*%s*ubi-factory*\"" % (c.getProfile(image).lower()))
                     if filename != "images.json":
-                        fw_name = bin_dir + "/" + "gl-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
+                        fw_name = bin_dir + "/" + "openwrt-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
                     else:
-                        fw_name = bin_dir + "/" + "gl-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                        fw_name = bin_dir + "/" + "openwrt-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
                     if output != "":
                         os.system('mv ' + output + ' ' + fw_name)
 
