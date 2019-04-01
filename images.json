@@ -90,12 +90,14 @@
 			"profile": "QSDK_Premium",
 			"version": "3.021",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
+			"files": "3.0/openwrt-imagebuilder-ipq806x-qsdk/files",
 			"packages": "gl-wifison gl-base-files-ipq $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"s1300": {
 			"profile": "QSDK_Premium",
 			"version": "3.021",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
+			"files": "3.0/openwrt-imagebuilder-ipq806x-qsdk/files",
 			"packages": "gl-wifison gl-base-files-ipq gl-ble-api gl-ble-daemon $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"vixmini": {

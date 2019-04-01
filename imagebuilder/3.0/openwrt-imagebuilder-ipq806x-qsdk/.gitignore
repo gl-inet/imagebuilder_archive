@@ -10,5 +10,4 @@ packages/Packages.gz
 /.profiles.mk
 /tmp
 /staging_dir/host/.prereq-build
-/files
 /glinet
