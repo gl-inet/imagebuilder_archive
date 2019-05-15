@@ -10,99 +10,99 @@
 	"profiles": {
 		"x1200": {
 			"profile": "GL-X1200",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand_x1200",
 			"packages": "gl-base-files-ar gl-base-files-x1200 $basic $vpn $storage $usb $glinet -gl-qos gl-qos-internal gl-gps gl-uart kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"ar150": {
 			"profile": "gl-ar150",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
 		"mifi": {
 			"profile": "gl-mifi",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
 		"ar300m16": {
 			"profile": "gl-ar300m",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
 		"ar750": {
 			"profile": "gl-ar750",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
        		 "x750": {
            		 "profile": "gl-x750",
-           		 "version": "3.022",
+           		 "version": "3.023",
            		 "imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic_x750",
            		 "packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet -gl-qos gl-qos-internal"
        			 },
 		"usb150": {
 			"profile": "gl-usb150",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $glinet mwan3 -gl-modem"
 		},
 		"ar300m": {
 			"profile": "GL-AR300M",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet ath10k-firmware-qca9887 kmod-ath10k"
 		},
 		"ar750s": {
 			"profile": "GL-AR750S",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"ar750sm16": {
 			"profile": "gl-ar750s",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"mt300a": {
 			"profile": "gl-mt300a",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$glinet -gl-qos gl-qos-internal gl-base-files-mt $basic $vpn $storage $usb kmod-mmc kmod-sdhci kmod-sdhci-mt7620"
 		},
 		"mt300n": {
 			"profile": "gl-mt300n",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt7620",
 			"packages": "$glinet -gl-qos gl-qos-internal gl-base-files-mt $basic $vpn $storage $usb"
 		},
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "$glinet -gl-qos gl-qos-internal -gl-tertf gl-tertf-mt76x8 gl-base-files-mt -kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb -wpa-cli"
 		},
 		"b1300": {
 			"profile": "QSDK_Premium",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
 			"files": "imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/files",
 			"packages": "gl-wifison gl-base-files-ipq $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"s1300": {
 			"profile": "QSDK_Premium",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ipq806x-qsdk",
 			"files": "imagebuilder/3.0/openwrt-imagebuilder-ipq806x-qsdk/files",
 			"packages": "gl-wifison gl-base-files-ipq gl-ble-api gl-ble-daemon $glinet -gl-qos gl-qos-internal $vpn $basic $storage $usb -wpad -wpa-cli -kmod-rt2800-usb"
 		},
 		"vixmini": {
 			"profile": "vixmini",
-			"version": "3.022",
+			"version": "3.023",
 			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "gl-base-files-mt $basic $glinet_vixmini -kmod-mt76 kmod-mt7628 uci2dat -wpad -wpa-cli -unbound -stubby"
 		}
