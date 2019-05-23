@@ -61,9 +61,6 @@ ifdef CONFIG_CLEAN_IPKG
 endif
 
 define prepare_rootfs
-	$(if $(2),@if [ -d '$(2)' ]; then \
-		$(call file_copy,$(2)/.,$(1)); \
-	fi)
 	@mkdir -p $(1)/etc/rc.d
 	@mkdir -p $(1)/var/lock
 	@( \
@@ -81,6 +78,9 @@ define prepare_rootfs
 			IPKG_INSTROOT=$(1) $$(which bash) ./etc/rc.common $$script enable; \
 		done || true \
 	)
+	$(if $(2),@if [ -d '$(2)' ]; then \
+		$(call file_copy,$(2)/.,$(1)); \
+	fi)
 	$(if $(SOURCE_DATE_EPOCH),sed -i "s/Installed-Time: .*/Installed-Time: $(SOURCE_DATE_EPOCH)/" $(1)/usr/lib/opkg/status)
 	@-find $(1) -name CVS   | $(XARGS) rm -rf
 	@-find $(1) -name .svn  | $(XARGS) rm -rf
