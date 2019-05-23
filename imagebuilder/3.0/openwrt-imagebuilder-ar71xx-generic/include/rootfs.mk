@@ -72,15 +72,18 @@ define prepare_rootfs
 				echo "postinst script $$script has failed with exit code $$ret" >&2; \
 				exit 1; \
 			fi; \
-		done; \
-		for script in ./etc/init.d/*; do \
-			grep '#!/bin/sh /etc/rc.common' $$script >/dev/null || continue; \
-			IPKG_INSTROOT=$(1) $$(which bash) ./etc/rc.common $$script enable; \
 		done || true \
 	)
 	$(if $(2),@if [ -d '$(2)' ]; then \
 		$(call file_copy,$(2)/.,$(1)); \
 	fi)
+	@( \
+		cd $(1); \
+		for script in ./etc/init.d/*; do \
+			grep '#!/bin/sh /etc/rc.common' $$script >/dev/null || continue; \
+			IPKG_INSTROOT=$(1) $$(which bash) ./etc/rc.common $$script enable; \
+		done || true \
+	)
 	$(if $(SOURCE_DATE_EPOCH),sed -i "s/Installed-Time: .*/Installed-Time: $(SOURCE_DATE_EPOCH)/" $(1)/usr/lib/opkg/status)
 	@-find $(1) -name CVS   | $(XARGS) rm -rf
 	@-find $(1) -name .svn  | $(XARGS) rm -rf
@@ -88,7 +91,7 @@ define prepare_rootfs
 	@-find $(1) -name '.#*' | $(XARGS) rm -f
 	rm -rf $(1)/tmp/*
 	rm -f $(1)/usr/lib/opkg/lists/*
-	rm -f $(1)/usr/lib/opkg/info/*.postinst*
+	# rm -f $(1)/usr/lib/opkg/info/*.postinst*
 	rm -f $(1)/var/lock/*.lock
 	$(call clean_ipkg,$(1))
 	$(call mklibs,$(1))
