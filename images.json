@@ -11,61 +11,67 @@
 		"x1200": {
 			"profile": "GL-X1200",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand_x1200",
-			"packages": "gl-base-files-ar gl-base-files-x1200 $basic $vpn $storage $usb $glinet -gl-qos gl-qos-internal gl-gps gl-uart kmod-fast-classifier kmod-shortcut-fe"
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-nand",
+			"packages": "gl-base-files-ar gl-base-files-x1200 $basic $vpn $storage $usb $glinet -gl-ui gl-ui-x1200 -gl-qos gl-qos-internal gl-gps gl-uart kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"ar150": {
 			"profile": "gl-ar150",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
 		"mifi": {
 			"profile": "gl-mifi",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
+			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
+		},
+		"mifi-v3": {
+			"profile": "gl-mifi-v3",
+			"version": "3.023",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
 		"ar300m16": {
 			"profile": "gl-ar300m",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
 		"ar750": {
 			"profile": "gl-ar750",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet"
 		},
-       		 "x750": {
-           		 "profile": "gl-x750",
-           		 "version": "3.023",
-           		 "imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic_x750",
-           		 "packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet -gl-qos gl-qos-internal"
-       			 },
+       	"x750": {
+           	 "profile": "gl-x750",
+           	 "version": "3.023",
+           	 "imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
+           	 "packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet -gl-qos gl-qos-internal"
+       	 },
 		"usb150": {
 			"profile": "gl-usb150",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $glinet mwan3 -gl-modem"
 		},
 		"ar300m": {
 			"profile": "GL-AR300M",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet ath10k-firmware-qca9887 kmod-ath10k"
 		},
 		"ar750s": {
 			"profile": "GL-AR750S",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-nand",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-nand",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"ar750sm16": {
 			"profile": "gl-ar750s",
 			"version": "3.023",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ar71xx-generic",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-generic",
 			"packages": "gl-base-files-ar $basic $vpn $storage $usb $glinet kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"mt300a": {
