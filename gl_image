@@ -259,7 +259,8 @@ def main(argv):
         dir_name = "glinet"
 
         if not os.path.isdir(dir_name):
-            check_call("git clone --single-branch -b %s --depth=1 %s %s" % (branch, url, dir_name), shell=True)
+            # check_call("git clone --single-branch -b %s --depth=1 %s %s" % (branch, url, dir_name), shell=True)
+            check_call("git clone %s %s" % (url, dir_name), shell=True)
         else:
             check_call("git pull", shell=True, cwd=dir_name)
 
