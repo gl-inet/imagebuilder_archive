@@ -5,6 +5,7 @@ Imagebuilder for GL.iNet devices. The Image Builder (previously called the Image
 ## System Requirements ##
 
 - x86_64 platform
+
 - Ubuntu or another linux distro
 
 Running Imagebuilder under Windows can be done using the Windows Subsystem For Linux (WSL) with Ubuntu installed to it. Follow the guide bellow, installing Ubuntu 18.04 LTS from the Windows Store:
@@ -49,6 +50,37 @@ python2.7 gl_image -p mifi -e "openssh-sftp-server nano htop"
 The compiled image becomes: *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
 
 For other firmwares, the compiled firmware file is in **bin/<device_name>/**.
+
+## Docker build environment ##
+
+You can also use a docker container as build environment.
+
+Get the source code by cloning the git repository:
+
+```bash
+git clone https://github.com/gl-inet/imagebuilder.git
+cd imagebuilder
+```
+
+Build the docker image by running the following:
+
+```bash
+docker build --rm -t gl-inet/imagebuilder - < Dockerfile
+```
+
+To list all the possible firmware images names:
+
+```bash
+docker run -v "$(pwd)":/src gl-inet/imagebuilder -l
+```
+
+And to make an image for the **Mifi** with some extra packages included:
+
+```bash
+docker run -v "$(pwd)":/src gl-inet/imagebuilder -p mifi -e "openssh-sftp-server nano htop"
+```
+
+You'll find the compiled firmware image in *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin* and **/bin/<device_name>/**.
 
 ## Advanced Configuration ##
 
