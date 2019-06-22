@@ -34,7 +34,7 @@ The Imagebuilder requires a "case sensitive" system, Windows is unfortunately no
 
 ## Usage ##
 
-To build all the device firmwares, run **python2.7 gl_image -a**. To build a specific firmware, run **python2.7 gl_image -p <image_name>**. You can list all the images names by running **python2.7 gl_image -l**.
+To build all the device firmwares, run **python2.7 gl_image -a**. To build a specific firmware, run **python2.7 gl_image -p <image_name>**. You can list all the device names by running **python2.7 gl_image -l**.
 
 Run **python2.7 gl_image -h** to see more details and advanced options.
 
@@ -68,13 +68,13 @@ After cloning the Imagebuilder to your system as in the previous section, build 
 sudo docker build --rm -t gl_imagebuilder - < Dockerfile
 ```
 
-To list all the possible firmware images names:
+To list all the possible device names:
 
 ```bash
 sudo docker run -v "$(pwd)":/src gl_imagebuilder -l
 ```
 
-And to make an image for the **Mifi** with some extra packages included:
+And to make a firmware image for the **Mifi** with some extra packages included:
 
 ```bash
 sudo docker run -v "$(pwd)":/src gl_imagebuilder -p mifi -e openssh-sftp-server nano htop
