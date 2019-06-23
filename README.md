@@ -2,13 +2,12 @@
 
 Imagebuilder for GL.iNet devices. The Image Builder (previously called the Image Generator) is a pre-compiled environment suitable for creating custom images without having to compile the entire OpenWRT build environment.
 
-## System Requirements ##
+## System requirements ##
 
 - x86_64 platform
-
 - Ubuntu or another linux distro
 
-Running Imagebuilder under Windows can be done using the Windows Subsystem For Linux (WSL) with Ubuntu installed to it. Follow the guide bellow, installing Ubuntu 18.04 LTS from the Windows Store:
+Running Imagebuilder under Windows can be done using the Windows Subsystem For Linux (WSL) with Ubuntu installed to it. Follow the guide bellow, installing Ubuntu 18.04 LTS from the Microsoft Store:
 
 https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
@@ -19,13 +18,14 @@ To use the Imagebuilder on your system will usually require you to install some 
 For **Ubuntu 18.04 LTS**, run the following commands to install the required packages:
 
 ```bash
-sudo apt-get update && sudo apt-get upgrade
-sudo apt-get install asciidoc bash bc binutils bzip2 fastjar flex gawk gcc genisoimage gettext git intltool jikespg libgtk2.0-dev libncurses5-dev libssl1.0-dev make mercurial patch perl-modules python2.7-dev rsync ruby sdcc subversion unzip util-linux wget xsltproc zlib1g-dev zlib1g-dev
+sudo apt update && sudo apt upgrade -y
+sudo apt install gcc git g++ make ncurses-dev python2.7-dev unzip -y
 ```
 ## Clone the Imagebuilder to your system ##
 
 ```bash
 git clone https://github.com/gl-inet/imagebuilder gl_imagebuilder
+cd gl_imagebuilder
 ```
 
 **Note for Windows Subsystem For Linux (WSL) users:**
@@ -34,55 +34,57 @@ The Imagebuilder requires a "case sensitive" system, Windows is unfortunately no
 
 ## Usage ##
 
-To build all the device firmwares, run **python2.7 gl_image -a**. To build a specific firmware, run **python2.7 gl_image -p <image_name>**. You can list all the images names by running **python2.7 gl_image -l**.
+To build all the device firmwares, run **python2.7 gl_image -a**. To build a specific firmware, run **python2.7 gl_image -p <image_name>**. You can list all the device names by running **python2.7 gl_image -l**.
 
 Run **python2.7 gl_image -h** to see more details and advanced options.
 
-## Complete Usage Example ##
+## Complete usage example ##
 
 To make an image for the **Mifi** with some extra packages included:
 
 ```bash
-cd gl_imagebuilder
 python2.7 gl_image -p mifi -e "openssh-sftp-server nano htop"
 ```
 
-The compiled image becomes: *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
+You'll find the compiled firmware image in *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
 
-For other firmwares, the compiled firmware file is in **bin/<device_name>/**.
+For other firmwares, the compiled firmware file is in **bin/<device_name>/**
 
 ## Docker build environment ##
 
 You can also use a docker container as build environment.
 
-Get the source code by cloning the git repository:
+Install Docker to your system, here is how to do it for Ubuntu:
 
 ```bash
-git clone https://github.com/gl-inet/imagebuilder.git
-cd imagebuilder
+sudo apt install docker.io
+sudo apt install docker.io
+sudo systemctl enable docker
 ```
 
-Build the docker image by running the following:
+After cloning the Imagebuilder to your system as in the previous section, build the Docker image by running the following:
 
 ```bash
-docker build --rm -t gl-inet/imagebuilder - < Dockerfile
+sudo docker build --rm -t gl_imagebuilder - < Dockerfile
 ```
 
-To list all the possible firmware images names:
+To list all the possible device names:
 
 ```bash
-docker run -v "$(pwd)":/src gl-inet/imagebuilder -l
+sudo docker run -v "$(pwd)":/src gl_imagebuilder -l
 ```
 
-And to make an image for the **Mifi** with some extra packages included:
+And to make a firmware image for the **Mifi** with some extra packages included:
 
 ```bash
-docker run -v "$(pwd)":/src gl-inet/imagebuilder -p mifi -e "openssh-sftp-server nano htop"
+sudo docker run -v "$(pwd)":/src gl_imagebuilder -p mifi -e openssh-sftp-server nano htop
 ```
 
-You'll find the compiled firmware image in *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin* and **/bin/<device_name>/**.
+You'll find the compiled firmware image in *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
 
-## Advanced Configuration ##
+For other firmwares, the compiled firmware file is in **bin/<device_name>/**
+
+## Advanced configuration ##
 
 All the GL device package configuration is done with the **images.json** file. The following options control the configuration:
 
