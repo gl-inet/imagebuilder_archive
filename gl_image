@@ -17,7 +17,7 @@ def usage(pname):
     print " -a|--all            Build all images from the specified profiles in images.json"
     print " -p|--profile        Build a specified image from the specified profiles"
     print " -e|--extra          Extra packages allows to include and/or exclude packages"
-    print " -b|--branch         Change package branch. Default: master"
+    print " -b|--branch         Change package branch. Default: develop"
     print " -l|--list           List all available profiles"
     print " -i|--ignore         Ignore ipk update from glinet repo"
     print " -n|--clean          Remove images and temporary build files before build"
