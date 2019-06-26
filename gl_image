@@ -7,6 +7,7 @@ import json
 import getopt
 import time
 import commands
+import platform
 from subprocess import check_call
 from subprocess import check_output
 
@@ -241,6 +242,11 @@ def main(argv):
     if show:
         show_images(c.imagesList())
         return 0
+
+    # If WSL, Fix PATH variable (Required for building QSDK)
+    if ('microsoft' in platform.uname()[3].lower()):
+        print('WSL detected, fixed PATH')
+        os.environ['PATH'] = ':'.join([r for r in os.environ['PATH'].split(':') if not r.startswith('/mnt')])
 
     if build_all:
         images = c.imagesList()
