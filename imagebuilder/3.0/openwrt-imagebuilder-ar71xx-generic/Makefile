@@ -130,7 +130,7 @@ package_index: FORCE
 	(cd $(PACKAGE_DIR); $(SCRIPT_DIR)/ipkg-make-index.sh . > Packages && \
 		gzip -9nc Packages > Packages.gz \
 	) >/dev/null 2>/dev/null
-	$(OPKG) update >&2 || true
+	# $(OPKG) update >&2 || true
 
 package_reload:
 	if [ ! -f "$(PACKAGE_DIR)/Packages" ] || [ ! -f "$(PACKAGE_DIR)/Packages.gz" ] || [ "`find $(PACKAGE_DIR) -cnewer $(PACKAGE_DIR)/Packages.gz`" ]; then \
@@ -138,7 +138,7 @@ package_reload:
 		$(MAKE) package_index; \
 	else \
 		mkdir -p $(TARGET_DIR)/tmp; \
-		$(OPKG) update >&2 || true; \
+		# $(OPKG) update >&2 || true; \
 	fi
 
 package_list: FORCE

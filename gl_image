@@ -199,7 +199,7 @@ def main(argv):
     clean = False
     update = False
     show = False
-    offline = False
+    offline = True
     profile = ""
     filename = "images.json"
     files = ""
