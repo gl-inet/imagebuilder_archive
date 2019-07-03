@@ -19,8 +19,9 @@ For **Ubuntu 18.04 LTS**, run the following commands to install the required pac
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-sudo apt install gcc git g++ make ncurses-dev python2.7-dev unzip -y
+sudo apt install device-tree-compiler gawk gcc git g++ make ncurses-dev python unzip -y
 ```
+
 ## Clone the Imagebuilder to your system ##
 
 ```bash
@@ -34,16 +35,16 @@ The Imagebuilder requires a "case sensitive" system, Windows is unfortunately no
 
 ## Usage ##
 
-To build all the device firmwares, run **python2.7 gl_image -a**. To build a specific firmware, run **python2.7 gl_image -p <image_name>**. You can list all the device names by running **python2.7 gl_image -l**.
+To build all the device firmwares, run **./gl_image -a**. To build a specific firmware, run **./gl_image -p <image_name>**. You can list all the device names by running **./gl_image -l**.
 
-Run **python2.7 gl_image -h** to see more details and advanced options.
+Run **./gl_image -h** to see more details and advanced options.
 
 ## Complete usage example ##
 
 To make an image for the **Mifi** with some extra packages included:
 
 ```bash
-python2.7 gl_image -p mifi -e "openssh-sftp-server nano htop"
+./gl_image -p mifi -e "openssh-sftp-server nano htop"
 ```
 
 You'll find the compiled firmware image in *bin/gl-mifi/openwrt-mifi-ar71xx-generic-gl-mifi-squashfs-sysupgrade.bin*
@@ -57,8 +58,8 @@ You can also use a docker container as build environment.
 Install Docker to your system, here is how to do it for Ubuntu:
 
 ```bash
-sudo apt install docker.io
-sudo apt install docker.io
+sudo apt install docker.io -y
+sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
@@ -124,4 +125,4 @@ And we want to create a clean customized firmware for our AR150 device that incl
 }
 ```
 
-Placing the helloworld.ipk in the *glinet/ar71xx* folder and running **python2.7 gl_image -c myfirst.json -p helloworld** will build our clean image with our helloworld.ipk included.
+Placing the helloworld.ipk in the *glinet/ar71xx* folder and running **./gl_image -c myfirst.json -p helloworld** will build our clean image with our helloworld.ipk included.

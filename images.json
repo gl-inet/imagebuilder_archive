@@ -11,7 +11,7 @@
 		"x1200": {
 			"profile": "GL-X1200",
 			"version": "3.025",
-			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-nand",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ar71xx-nand_x1200",
 			"packages": "gl-base-files-ar gl-base-files-x1200 $basic $vpn $storage $usb $glinet -gl-ui gl-ui-x1200 -gl-qos gl-qos-internal gl-gps gl-uart kmod-fast-classifier kmod-shortcut-fe"
 		},
 		"ar150": {
