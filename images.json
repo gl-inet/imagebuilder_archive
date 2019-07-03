@@ -89,7 +89,7 @@
 		"mt300n-v2": {
 			"profile": "gl-mt300n-v2",
 			"version": "3.025",
-			"imagebuilder": "3.0/openwrt-imagebuilder-ramips-mt76x8",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ramips-mt76x8",
 			"packages": "$glinet -gl-qos gl-qos-internal -gl-tertf gl-tertf-mt76x8 gl-base-files-mt -kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb -wpa-cli -kmod-GobiNet -kmod-GobiSerial"
 		},
 		"b1300": {

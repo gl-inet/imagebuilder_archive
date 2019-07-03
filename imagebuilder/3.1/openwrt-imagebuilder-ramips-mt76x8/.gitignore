@@ -1,0 +1,14 @@
+/build_dir/target-mipsel_24kc_musl/root*
+/build_dir/target-mipsel_24kc_musl/linux-ramips_mt76x8/tmp
+/build_dir/target-mipsel_24kc_musl/linux-ramips_mt76x8/*initramfs*
+/build_dir/target-mipsel_24kc_musl/linux-ramips_mt76x8/*squashfs*
+/bin
+/dl
+*.sig
+packages/Packages
+packages/Packages.gz
+/.profiles.mk
+/tmp
+/staging_dir/host/.prereq-build
+/files
+/glinet
