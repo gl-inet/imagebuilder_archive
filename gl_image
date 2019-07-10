@@ -21,10 +21,20 @@ def usage(pname):
     print " -b|--branch         Change package branch. Default: develop"
     print " -l|--list           List all available profiles"
     print " -i|--ignore         Ignore ipk update from glinet repo"
-    print " -n|--clean          Remove images and temporary build files before build"
+    print " -n|--clean          Remove images and temporary build files"
     print " -c|--config         User-defined configuration file"
     print " -h|--help           Show this text message"
     print " -o|--output         Get firmware info, firmware name/md5sum/size"
+    print ""
+    print "Example: "
+    print '''
+    The following command compiles a firmware for mifi with basic packages and
+    extra package(openssh-sftp-server, nano, htop), using images.json as default
+    configuration file.
+            '''
+    print ""
+    print '    python2.7 gl_image -p mifi -e "openssh-sftp-server nano htop"'
+    print ""
 
     sys.exit(1)
 
@@ -259,6 +269,8 @@ def main(argv):
         for image in images:
             im_path = os.getcwd() + "/imagebuilder/" + c.getImagebuilderPath(image)
             check_call("make clean", shell=True, cwd=im_path)
+
+        return 0
 
     if not ignore:
         url = "https://github.com/gl-inet/glinet.git"
