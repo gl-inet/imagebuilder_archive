@@ -90,7 +90,13 @@
 			"profile": "gl-mt300n-v2",
 			"version": "3.025",
 			"imagebuilder": "3.1/openwrt-imagebuilder-ramips-mt76x8",
-			"packages": "$glinet -gl-qos gl-qos-internal -gl-tertf gl-tertf-mt76x8 gl-base-files-mt -kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb -wpa-cli -kmod-GobiNet -kmod-GobiSerial"
+			"packages": "$glinet -gl-qos gl-qos-internal -gl-tertf gl-tertf-mt76x8 gl-base-files-mt -kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb -wpa-cli -kmod-rt2800-usb"
+		},
+		"mt300n-v4": {
+			"profile": "gl-mt300n-v4",
+			"version": "3.025",
+			"imagebuilder": "3.1/openwrt-imagebuilder-ramips-mt76x8",
+			"packages": "$glinet -gl-ui gl-ui-mt300n-v4 gl-files-brower -gl-modem -gl-portal -gl-qos gl-qos-internal -gl-tertf gl-tertf-mt76x8 gl-base-files-mt -kmod-mt76 kmod-mt7628 $basic $vpn $storage $usb -wpa-cli -kmod-rt2800-usb"
 		},
 		"b1300": {
 			"profile": "QSDK_Premium",
