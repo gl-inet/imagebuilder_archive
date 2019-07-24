@@ -6250,7 +6250,7 @@ Title: GL iNet Qos Function
 Maintainer: 
 Source: 
 Type: ipkg
-Kernel-Config: CONFIG_NETFILTER_XT_MATCH_U32=m CONFIG_NET_SCH_CBQ=m CONFIG_NET_CLS=m CONFIG_NET_CLS_FLOW=m CONFIG_NET_SCH_INGRESS=m CONFIG_NET_CLS_U32=m CONFIG_NET_SCH_SFQ=m CONFIG_NET_SCH_PRIO=m 
+Kernel-Config: CONFIG_NETFILTER_XT_MATCH_U32=m CONFIG_NET_SCH_CBQ=m CONFIG_NET_CLS=m CONFIG_NET_CLS_FLOW=m CONFIG_NET_SCH_INGRESS=m CONFIG_NET_CLS_U32=m CONFIG_NET_SCH_SFQ=m CONFIG_NET_SCH_PRIO=m CONFIG_NET_SCH_MULTIQ=m
 Description: GL iNet Qos Function
 
 @@
@@ -6259,7 +6259,7 @@ Description: GL iNet Qos Function
 Source-Makefile: package/gli/gl-tertf/Makefile
 
 Package: gl-tertf
-Version: 3.0.72-1
+Version: 3.0.73-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +gl-util +libjson-c +libsqlite3
 Conflicts: 
 Menu-Depends: 
@@ -6277,7 +6277,7 @@ Description: GL iNet Get Terminal traffic
 @@
 
 Package: gl-tertf-mt76x8
-Version: 3.0.72-1
+Version: 3.0.73-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +gl-util +libjson-c +libsqlite3
 Conflicts: 
 Menu-Depends: 
@@ -6295,7 +6295,7 @@ Description: GL iNet Get Terminal traffic
 @@
 
 Package: gl-tertf-internal
-Version: 3.0.72-1
+Version: 3.0.73-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +gl-util +libjson-c +libsqlite3 +kmod-ter-traffic
 Conflicts: 
 Menu-Depends: 
@@ -6336,7 +6336,7 @@ Description: Driver for Traffic Statistics (used by all router)
 Source-Makefile: package/gli/gl-util/Makefile
 
 Package: gl-util
-Version: 3.0.101-1
+Version: 3.0.110-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libuci +libjson-c +libiwinfo +libcurl +libubox +libubus +libblobmsg-json
 Conflicts: 
 Menu-Depends: 
@@ -6378,7 +6378,7 @@ Source-Makefile: package/gli/mt7628/Makefile
 Package: kmod-mt7628
 Menu: 1
 Submenu: Wireless Drivers
-Version: <LINUX_VERSION>+4.0.2-3
+Version: <LINUX_VERSION>+4.0.2-4
 Depends: @TARGET_ramips_mt76x8 +wireless-tools +uci2dat
 Conflicts: 
 Menu-Depends: 
@@ -6393,14 +6393,14 @@ Description: MediaTek MT7628/MT7688 wireless driver
 
 @@
 Config:
-	source "/home/lancer/workspace/gl-image/gli/mt7628/config.in"
+	source "/home/lancer/workspace/gl-image/packages/gli/mt7628/config.in"
 @@
 
 
 Source-Makefile: package/gli/uci2dat/Makefile
 
 Package: uci2dat
-Version: 3.0.3-1
+Version: 3.0.4-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_ramips_mt76x8 +libuci
 Conflicts: 
 Menu-Depends: 
@@ -25901,7 +25901,7 @@ Felix Fietkau <nbd@nbd.name>
 Source-Makefile: package/libs/ustream-ssl/Makefile
 
 Package: libustream-mbedtls
-Version: 2018-05-24-189cd38b4188bfcb4c8cf67d8ae71741ffc2b906-4
+Version: 2018-05-22-5322f9db23b69fdc2b4760a6cfd67848a11818a4-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libubox +libmbedtls
 Conflicts: 
 Menu-Depends: 
@@ -25913,7 +25913,7 @@ Category: Libraries
 Repository: base
 Title: ustream SSL Library (mbedtls)
 Maintainer: Felix Fietkau <nbd@nbd.name>
-Source: ustream-ssl-2018-05-24-189cd38b4188bfcb4c8cf67d8ae71741ffc2b906.tar.xz
+Source: ustream-ssl-2018-05-22-5322f9db23b69fdc2b4760a6cfd67848a11818a4.tar.xz
 License: ISC
 Type: ipkg
 Description: ustream SSL Library (mbedtls)
@@ -25921,7 +25921,7 @@ Felix Fietkau <nbd@nbd.name>
 @@
 
 Package: libustream-wolfssl
-Version: 2018-05-24-189cd38b4188bfcb4c8cf67d8ae71741ffc2b906-4
+Version: 2018-05-22-5322f9db23b69fdc2b4760a6cfd67848a11818a4-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libubox +PACKAGE_libustream-wolfssl:libwolfssl
 Conflicts: 
 Menu-Depends: 
@@ -25932,7 +25932,7 @@ Category: Libraries
 Repository: base
 Title: ustream SSL Library (wolfssl)
 Maintainer: Felix Fietkau <nbd@nbd.name>
-Source: ustream-ssl-2018-05-24-189cd38b4188bfcb4c8cf67d8ae71741ffc2b906.tar.xz
+Source: ustream-ssl-2018-05-22-5322f9db23b69fdc2b4760a6cfd67848a11818a4.tar.xz
 License: ISC
 Type: ipkg
 Description: ustream SSL Library (wolfssl)
@@ -25940,7 +25940,7 @@ Felix Fietkau <nbd@nbd.name>
 @@
 
 Package: libustream-openssl
-Version: 2018-05-24-189cd38b4188bfcb4c8cf67d8ae71741ffc2b906-4
+Version: 2018-05-22-5322f9db23b69fdc2b4760a6cfd67848a11818a4-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libubox +PACKAGE_libustream-openssl:libopenssl
 Conflicts: 
 Menu-Depends: 
@@ -25951,7 +25951,7 @@ Category: Libraries
 Repository: base
 Title: ustream SSL Library (openssl)
 Maintainer: Felix Fietkau <nbd@nbd.name>
-Source: ustream-ssl-2018-05-24-189cd38b4188bfcb4c8cf67d8ae71741ffc2b906.tar.xz
+Source: ustream-ssl-2018-05-22-5322f9db23b69fdc2b4760a6cfd67848a11818a4.tar.xz
 License: ISC
 Type: ipkg
 Description: ustream SSL Library (openssl)
