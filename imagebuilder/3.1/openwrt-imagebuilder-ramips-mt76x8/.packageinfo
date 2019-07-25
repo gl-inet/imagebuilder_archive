@@ -6336,7 +6336,7 @@ Description: Driver for Traffic Statistics (used by all router)
 Source-Makefile: package/gli/gl-util/Makefile
 
 Package: gl-util
-Version: 3.0.110-1
+Version: 3.0.114-1
 Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libuci +libjson-c +libiwinfo +libcurl +libubox +libubus +libblobmsg-json
 Conflicts: 
 Menu-Depends: 
@@ -6349,26 +6349,6 @@ Maintainer:
 Source: 
 Type: ipkg
 Description: GL.iNet SDK3.0.
-
-@@
-
-
-Source-Makefile: package/gli/mqtt/Makefile
-
-Package: mqtt
-Version: 3.0.1-1
-Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpthread +libopenssl
-Conflicts: 
-Menu-Depends: 
-Provides: 
-Section: utils
-Category: Utilities
-Repository: base
-Title: MQTT common libary
-Maintainer: 
-Source: 
-Type: ipkg
-Description: MQTT common libary
 
 @@
 
@@ -35374,6 +35354,26 @@ Roger D <rogerdammit@gmail.com>, Ted Hess <thess@kitschensync.net>
 @@
 Config:
   source "feeds/gli_pub/mjpg-streamer/Config.in"
+@@
+
+
+Source-Makefile: package/feeds/gli_pub/mqtt/Makefile
+
+Package: mqtt
+Version: 3.0.1-1
+Depends: +libc +GCC_LIBSSP:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpthread +libopenssl
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Repository: gli_pub
+Title: MQTT common libary
+Maintainer: 
+Source: 
+Type: ipkg
+Description: MQTT common libary
+
 @@
 
 
