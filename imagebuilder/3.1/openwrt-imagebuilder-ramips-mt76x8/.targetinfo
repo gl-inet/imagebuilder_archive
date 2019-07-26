@@ -8924,11 +8924,11 @@ Target-Profile-Description:
 Build firmware images for GL-iNet VIXMINI
 @@
 
-Target-Profile: DEVICE_n300
-Target-Profile-Name: GL-iNet N300
+Target-Profile: DEVICE_microuter-n300
+Target-Profile-Name: GL-iNet microuter N300
 Target-Profile-Packages:  
 Target-Profile-Description:
-Build firmware images for GL-iNet N300
+Build firmware images for GL-iNet microuter N300
 @@
 
 Target-Profile: DEVICE_hc5661a
