@@ -557,11 +557,11 @@ Target-Profile-Description:
 Build firmware images for GL.iNet GL-MiFi
 @@
 
-Target-Profile: DEVICE_gl-mifi-v3
-Target-Profile-Name: GL.iNet GL-MIFI-V3
+Target-Profile: DEVICE_gl-e750
+Target-Profile-Name: GL.iNet GL-E750
 Target-Profile-Packages: kmod-ath10k ath10k-firmware-qca9887 kmod-usb-core kmod-usb2 kmod-usb-storage 
 Target-Profile-Description:
-Build firmware images for GL.iNet GL-MIFI-V3
+Build firmware images for GL.iNet GL-E750
 @@
 
 Target-Profile: DEVICE_gl-usb150
