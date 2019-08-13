@@ -363,6 +363,23 @@ def main(argv):
                     check_call("find single_img_dir/ -maxdepth 1 -name *.img | xargs cp -t %s/" \
                             % (bin_dir), shell=True, cwd=im_path)
                     # return_code, output = commands.getstatusoutput("basename %s" % output)
+            elif image == "mv1000-emmc":
+                print(c.getProfile(image))
+                print(image)
+                print(bin_dir)
+                check_call("find bin/ -name \"*%s-squashfs-emmc*\" | xargs cp -t %s/" \
+                        % (c.getProfile(image).lower(), bin_dir), shell=True, cwd=im_path)
+                return_code, output = commands.getstatusoutput("find bin/ -name \"*-%s-squashfs-emmc*\"" % (c.getProfile(image).lower()))
+                if filename != "images.json":
+                    fw_name = bin_dir + "/" + "openwrt-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + "_" + os.path.splitext(filename)[0] + os.path.splitext(output)[-1]
+                else:
+                    fw_name = bin_dir + "/" + "openwrt-" + image + "-" + c.getVersion(image) + "-" + time.strftime("%m%d", time.localtime()) + os.path.splitext(output)[-1]
+                if output != "":
+                    os.system('mv ' + output + ' ' + fw_name)
+
+                print"------------------------------------------------------------------------"
+                print("Copy " + output + " to " + fw_name)
+
             else:
                 #print(c.getProfile(image))
                 #print(image)
