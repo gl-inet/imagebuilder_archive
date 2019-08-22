@@ -1,0 +1,13 @@
+/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/root*
+/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/tmp
+/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/*initramfs*
+/build_dir/target-arm_cortex-a7_uClibc-1.0.14_eabi/linux-ipq806x/*squashfs*
+/bin
+/dl
+*.sig
+packages/Packages
+packages/Packages.gz
+/.profiles.mk
+/tmp
+/staging_dir/host/.prereq-build
+/glinet

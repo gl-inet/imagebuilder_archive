@@ -1,0 +1,70 @@
+/* Copyright (c) 2015 - 2016, The Linux Foundation. All rights reserved.
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ */
+
+#include "qcom-ipq4019-ap.dk04.1.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. IPQ4019/AP-DK04.1-C1";
+
+	soc {
+
+		spi_1: spi@78b6000 { /* BLSP1 QUP2 */
+			status = "ok";
+		};
+
+		pinctrl@0x01000000 {
+			wifi_0_pins: wifi1_pinmux {
+				mux_1 {
+					pins = "gpio37";
+					function="wcss0_dbg16";
+					bias-pull-down;
+					drive-cap = <DRV_CAP_QUARTER>;
+				};
+				mux_2 {
+					pins = "gpio43";
+					function="wifi_wci1";
+					bias-pull-down;
+					drive-cap = <DRV_CAP_QUARTER>;
+				};
+				mux_3 {
+					pins = "gpio52";
+					output-high;
+					function="gpio";
+					bias-pull-up;
+					drive-cap = <DRV_CAP_QUARTER>;
+				};
+				mux_4 {
+					pins = "gpio61";
+					output-high;
+					function="gpio";
+					bias-pull-down;
+				};
+			};
+		};
+
+		wifi0: wifi@a000000 {
+			pinctrl-0 = <&wifi_0_pins>;
+			pinctrl-names = "default";
+			btcoex_support = <1>;
+			wlan_prio_gpio = <52>;
+			dual_band_switch_gpio = <61>;
+		};
+
+		wifi1: wifi@a800000 {
+			btcoex_support = <0>;
+		};
+	};
+};
